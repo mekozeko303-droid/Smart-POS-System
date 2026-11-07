@@ -390,7 +390,7 @@ body {
 <div id="toastNotif">تم الحفظ بنجاح</div>
 
 <!-- =========================================================================
-     شاشة الزبون التفاعلية 3D الكاملة (تفتح تلقائياً عند مسح الباركود)
+     شاشة الزبون التفاعلية 3D الكاملة
      ========================================================================= -->
 <div id="customerFullView">
   <div class="sticky top-0 z-30 backdrop-blur-xl bg-black/85 border-b border-yellow-500/30 px-4 py-3">
@@ -439,7 +439,7 @@ body {
       <div class="flex items-center flex-wrap gap-2">
         <button onclick="openLiveQRLinkInBrowser()" class="btn-luxury !py-2 !px-3.5 text-xs border-emerald-400/50 text-emerald-300">
           <i class="fa-solid fa-up-right-from-square"></i>
-          <span>اختبار فتح رابط الباركود</span>
+          <span>اختبار فتح رابط الباركود الفعلي</span>
         </button>
         <button onclick="openCustomerFullView(false)" class="btn-luxury !py-2 !px-3.5 text-xs">
           <i class="fa-solid fa-mobile-screen-button text-yellow-400"></i>
@@ -460,12 +460,8 @@ body {
     </div>
 
     <h1 class="text-2xl sm:text-4xl font-black leading-tight mb-2 gold-gradient-text">
-      لكل مطعم منيو 3D وباركود QR مستقل وفواتير حرارية فورية
+      لكل مطعم منيو 3D وباركود QR مستقل يفتح فوراً بدون أخطاء
     </h1>
-
-    <p class="text-gray-300 max-w-2xl mx-auto text-xs sm:text-sm mb-3 leading-relaxed">
-      يفتح الباركود <b class="text-yellow-400">المنيو التفاعلي 3D مع سلة الطلبات</b> مباشرة عند رفع الملف أو تحديد رابط استضافتك، كما يدعم <b class="text-emerald-400">النشر السحابي الفوري</b> بتصميم مرتب ومنسق عند التشغيل المحلي.
-    </p>
   </section>
 
   <!-- شريط إدارة المطاعم والمحلات المستقلة -->
@@ -519,7 +515,7 @@ body {
           <input id="inpName" class="luxury-input" placeholder="مثال: كافيه لافنة" oninput="updateField('name', this.value)">
         </div>
         <div class="col-span-2 sm:col-span-1">
-          <label class="text-xs text-gray-300 font-bold mb-1 block">رقم واتساب / هاتف المحل</label>
+          <label class="text-xs text-gray-300 font-bold mb-1 block">رقم واتساب المحل (للطلبات)</label>
           <input id="inpPhone" class="luxury-input" dir="ltr" placeholder="734755062" oninput="updateField('phone', this.value)">
         </div>
 
@@ -539,40 +535,45 @@ body {
 
         <div class="col-span-2">
           <label class="text-xs text-gray-300 font-bold mb-1 block">رسالة الترحيب / العنوان في المنيو والفاتورة</label>
-          <input id="inpWelcome" class="luxury-input" placeholder="أهلاً بكم في منيو كافيه لافنة - أرقى المشروبات والمخبوزات الطازجة" oninput="updateField('welcome', this.value)">
+          <input id="inpWelcome" class="luxury-input" placeholder="أهلاً بكم في منيو كافيه لافنة" oninput="updateField('welcome', this.value)">
         </div>
       </div>
 
-      <!-- إعدادات رابط الباركود الذكي 3D والسحابة -->
+      <!-- إعدادات رابط الباركود الذكي 3D والسحابة (Telegra.ph) -->
       <div class="p-3.5 rounded-2xl bg-yellow-500/5 border border-yellow-500/30 space-y-2.5">
         <div class="flex items-center justify-between gap-2">
           <span class="text-xs font-extrabold text-yellow-300 flex items-center gap-1.5">
             <i class="fa-solid fa-qrcode"></i>
-            <span>محرك الباركود الذكي (منيو 3D + سحابة فورية)</span>
+            <span>محرك المزامنة (Telegra.ph / GitHub)</span>
           </span>
-          <span id="qrModeIndicator" class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold">
+          <span id="qrModeIndicator" class="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold">
             جاهز للمسح
           </span>
         </div>
 
         <div>
           <label class="text-[11px] text-gray-300 font-bold mb-1 block">
-            رابط استضافة المنيو 3D (ضع رابط موقعك/GitHub Pages ليفتح المنيو 3D مباشرة حتى من ملف محلي):
+            رابط استضافة المنيو 3D (أو دعه فارغاً لاستخدام Telegra.ph السحابي):
           </label>
           <div class="flex gap-2">
-            <input id="inpHostUrl" class="luxury-input !text-xs" dir="ltr" placeholder="https://username.github.io/smartpos/index.html" oninput="updateHostUrl(this.value)">
+            <input id="inpHostUrl" class="luxury-input !text-xs" dir="ltr" placeholder="https://your-site.github.io" oninput="updateHostUrl(this.value)">
             <button onclick="syncCloudTelegraphMenu(true)" id="btnCloudSync" class="btn-luxury btn-gold-solid !py-2 !px-3 !text-xs whitespace-nowrap">
               <i class="fa-solid fa-cloud-arrow-up"></i>
-              <span>تحديث الرابط السحابي</span>
+              <span>تحديث سحابي</span>
             </button>
           </div>
         </div>
 
         <div class="flex items-center justify-between gap-2 pt-1 text-[11px] text-gray-400">
           <span class="truncate">الرابط الفعال في الباركود: <b id="activeQrUrlText" class="text-yellow-300" dir="ltr">...</b></span>
-          <button onclick="copyActiveQRLink()" class="text-yellow-400 hover:underline font-bold flex-shrink-0">
-            <i class="fa-regular fa-copy"></i> نسخ الرابط
-          </button>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <button onclick="openLiveQRLinkInBrowser()" class="text-emerald-400 hover:underline font-bold">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> فتح
+            </button>
+            <button onclick="copyActiveQRLink()" class="text-yellow-400 hover:underline font-bold">
+              <i class="fa-regular fa-copy"></i> نسخ
+            </button>
+          </div>
         </div>
       </div>
 
@@ -792,11 +793,11 @@ body {
 const SMARTPOS_PHONE = '967785619054';
 const SMARTPOS_DISPLAY_PHONE = '785619054';
 const SMARTPOS_IG = '@SMAR.TPOS';
-const STORAGE_KEY = 'SMARTPOS_3D_SHOPS_V4';
-const HOST_URL_KEY = 'SMARTPOS_3D_HOST_URL_V4';
+const STORAGE_KEY = 'SMARTPOS_3D_SHOPS_V1';
+const HOST_URL_KEY = 'SMARTPOS_3D_HOST_URL_V1';
 
 /* =========================================================================
-   البيانات الافتراضية المستقلة (تشمل كافيه لافنة كما في صورة الزبون)
+   البيانات الافتراضية المستقلة
    ========================================================================= */
 const DEFAULT_SHOPS = [
   {
@@ -810,6 +811,7 @@ const DEFAULT_SHOPS = [
     tableNo: 'طاولة 1',
     discount: 0,
     cloudUrl: '',
+    cloudPath: '',
     items: [
       { id: 1, icon: '🧋', name: 'آيس موكا بالكراميل', price: 2000, category: 'قهوة باردة', popular: true },
       { id: 2, icon: '🫖', name: 'قهوة مختصة V60 إثيوبي', price: 2200, category: 'قهوة مقطرة', popular: true },
@@ -832,6 +834,7 @@ const DEFAULT_SHOPS = [
     tableNo: 'طاولة 3',
     discount: 0,
     cloudUrl: '',
+    cloudPath: '',
     items: [
       { id: 101, icon: '🍖', name: 'مندي لحم بلدي نفر', price: 6500, category: 'الأطباق الرئيسية', popular: true },
       { id: 102, icon: '🍗', name: 'مندي دجاج نصف حبة', price: 2800, category: 'الأطباق الرئيسية', popular: true },
@@ -846,13 +849,21 @@ const DEFAULT_SHOPS = [
 
 let shops = [];
 let activeShopId = 'S101';
-let customHostUrl = '';
+let customHostUrl = 'https://mekozeko303-droid.github.io/Smart-POS-System/';
 let activeCategoryFilter = 'الكل';
-let customerCart = {}; // { itemId: qty }
+let customerCart = {};
 let customerOrderType = 'داخل المحل (طاولة)';
 let customerTableInput = '';
 let invoiceFormat = 'thermal';
 let cloudSyncTimer = null;
+
+/* =========================================================================
+   فحص سلامة الرابط السحابي
+   ========================================================================= */
+function isCleanAsciiTelegraphUrl(url) {
+  if (!url || typeof url !== 'string') return false;
+  return /^https:\/\/telegra\.ph\/SmartPOS-Menu-[A-Za-z0-9\-]+$/.test(url.trim());
+}
 
 /* =========================================================================
    تشفير وفك تشفير بيانات المنيو 3D داخل رابط الباركود
@@ -900,21 +911,26 @@ function decodeShopPayload(b64) {
    التهيئة الأولية وفحص ما إذا كان الرابط مفتوحاً من جوال الزبون
    ========================================================================= */
 function initApp() {
-  // ربط أزرار واتساب النظام
   const sysWaUrl = `https://wa.me/${SMARTPOS_PHONE}?text=${encodeURIComponent('مرحباً، أرغب بالحصول على نظام SmartPOS 3D للمنيو والكاشير لمحلي')}`;
   document.querySelectorAll('[data-wa-link]').forEach(el => el.setAttribute('href', sysWaUrl));
 
-  // استرجاع البيانات المخزنة
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     shops = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_SHOPS));
     if (!Array.isArray(shops) || !shops.length) shops = JSON.parse(JSON.stringify(DEFAULT_SHOPS));
-    customHostUrl = localStorage.getItem(HOST_URL_KEY) || '';
+    customHostUrl = localStorage.getItem(HOST_URL_KEY) || 'https://mekozeko303-droid.github.io/Smart-POS-System/';
   } catch (e) {
     shops = JSON.parse(JSON.stringify(DEFAULT_SHOPS));
   }
 
-  // فحص بارامترات الرابط (إذا مسح الزبون الباركود)
+  // تنظيف أي رابط سحابي قديم يحتوي على حروف عربية
+  shops.forEach(s => {
+    if (!isCleanAsciiTelegraphUrl(s.cloudUrl)) {
+      s.cloudUrl = '';
+      s.cloudPath = '';
+    }
+  });
+
   const params = new URLSearchParams(window.location.search);
   const encodedShop = params.get('s');
   if (encodedShop) {
@@ -941,9 +957,8 @@ function initApp() {
   initNeuralBackground();
   initTiltAndSpotlight();
 
-  // إن لم يكن للمحل رابط سحابي بعد، ننشئه في الخلفية
   const current = getActiveShop();
-  if (current && !current.cloudUrl) {
+  if (current && !isCleanAsciiTelegraphUrl(current.cloudUrl)) {
     syncCloudTelegraphMenu(false);
   }
 }
@@ -992,7 +1007,9 @@ function switchShop(id) {
   renderShopsSwitcher();
   loadShopIntoEditor();
   const shop = getActiveShop();
-  if (shop && !shop.cloudUrl) syncCloudTelegraphMenu(false);
+  if (shop && !isCleanAsciiTelegraphUrl(shop.cloudUrl)) {
+    syncCloudTelegraphMenu(false);
+  }
 }
 
 function createNewIndependentShop() {
@@ -1010,6 +1027,7 @@ function createNewIndependentShop() {
     tableNo: 'طاولة 1',
     discount: 0,
     cloudUrl: '',
+    cloudPath: '',
     items: [
       { id: Date.now(), icon: '🍹', name: 'صنف تجريبي أول', price: 1500, category: 'القائمة الرئيسية', popular: true }
     ],
@@ -1080,6 +1098,7 @@ function updateHostUrl(val) {
   customHostUrl = val.trim();
   try { localStorage.setItem(HOST_URL_KEY, customHostUrl); } catch (e) {}
   refreshAllPreviews();
+  scheduleCloudSync();
 }
 
 function renderEditorItems() {
@@ -1144,14 +1163,19 @@ function removeMenuItem(id) {
 }
 
 /* =========================================================================
-   توليد رابط المنيو 3D المباشر + المزامنة السحابية المحسّنة (بدون كسر السطور)
+   توليد رابط المنيو 3D المباشر + المزامنة السحابية (Telegra.ph)
    ========================================================================= */
 function getEffective3DUrl(shop) {
   const payload = encodeShopPayload(shop);
-  if (customHostUrl && /^https?:\/\//i.test(customHostUrl)) {
-    const base = customHostUrl.split('?')[0];
+  let safeHostUrl = customHostUrl.trim();
+  
+  if (safeHostUrl && /^https?:\/\//i.test(safeHostUrl)) {
+    // إزالة الأقواس المربعة التي قد تسبب البحث في جوجل
+    safeHostUrl = safeHostUrl.replace(/^\[/, '').replace(/\]$/, '');
+    const base = safeHostUrl.split('?')[0];
     return `${base}?s=${encodeURIComponent(payload)}`;
   }
+  
   if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
     const base = window.location.origin + window.location.pathname;
     return `${base}?s=${encodeURIComponent(payload)}`;
@@ -1162,7 +1186,7 @@ function getEffective3DUrl(shop) {
 function getActiveQRTargetUrl(shop) {
   const direct3d = getEffective3DUrl(shop);
   if (direct3d) return direct3d;
-  if (shop.cloudUrl) return shop.cloudUrl;
+  if (isCleanAsciiTelegraphUrl(shop.cloudUrl)) return shop.cloudUrl;
   const cleanPhone = (shop.phone || SMARTPOS_DISPLAY_PHONE).replace(/\D/g, '');
   const waPhone = cleanPhone.startsWith('967') ? cleanPhone : `967${cleanPhone}`;
   return `https://wa.me/${waPhone}?text=${encodeURIComponent('مرحباً ' + shop.name + '، أرغب بالاطلاع على المنيو والطلب')}`;
@@ -1170,7 +1194,7 @@ function getActiveQRTargetUrl(shop) {
 
 function scheduleCloudSync() {
   if (cloudSyncTimer) clearTimeout(cloudSyncTimer);
-  cloudSyncTimer = setTimeout(() => syncCloudTelegraphMenu(false), 1200);
+  cloudSyncTimer = setTimeout(() => syncCloudTelegraphMenu(false), 900);
 }
 
 async function syncCloudTelegraphMenu(manualNotify = false) {
@@ -1183,13 +1207,13 @@ async function syncCloudTelegraphMenu(manualNotify = false) {
   }
 
   try {
-    let token = localStorage.getItem('SMARTPOS_TG_TOKEN');
+    let token = localStorage.getItem('SMARTPOS_TG_TOKEN_V2');
     if (!token) {
-      const accRes = await fetch('https://api.telegra.ph/createAccount?short_name=SmartPOS3D&author_name=' + encodeURIComponent('نظام SmartPOS الذكي | 785619054'));
+      const accRes = await fetch('https://api.telegra.ph/createAccount?short_name=SmartPOS3D&author_name=' + encodeURIComponent('نظام SmartPOS الذكي - 785619054'));
       const accData = await accRes.json();
-      if (accData && accData.ok && accData.result.access_token) {
+      if (accData && accData.ok && accData.result && accData.result.access_token) {
         token = accData.result.access_token;
-        localStorage.setItem('SMARTPOS_TG_TOKEN', token);
+        localStorage.setItem('SMARTPOS_TG_TOKEN_V2', token);
       }
     }
 
@@ -1199,7 +1223,7 @@ async function syncCloudTelegraphMenu(manualNotify = false) {
 
     const nodes = [];
 
-    // ترويسة منسقة ونظيفة
+    // بطاقة الترحيب والواي فاي والاتصال
     nodes.push({
       tag: 'blockquote',
       children: [
@@ -1209,7 +1233,7 @@ async function syncCloudTelegraphMenu(manualNotify = false) {
       ]
     });
 
-    // إذا توفر رابط المنيو 3D التفاعلي نضعه في زر بارز بأعلى الصفحة
+    // زر الانتقال للمنيو 3D الفاخر
     if (direct3dLink) {
       nodes.push({
         tag: 'p',
@@ -1217,13 +1241,29 @@ async function syncCloudTelegraphMenu(manualNotify = false) {
           {
             tag: 'a',
             attrs: { href: direct3dLink },
-            children: ['🌟 اضغط هنا لفتح المنيو التفاعلي 3D الكامل مع سلة الطلبات 🌟']
+            children: ['🌟 اضغط هنا لفتح واجهة المنيو التفاعلي 3D الكاملة مع سلة الطلبات 🌟']
           }
         ]
       });
     }
 
-    // تجميع الأصناف حسب القسم بدون كسر السطر في الشاشات الصغيرة
+    // زر سريع لطلب سلة متنوعة
+    const multiItemsTemplate = shop.items.map(i => `• ${i.name}: (الكمية:   )`).join('\n');
+    const multiCartTopLink = `https://wa.me/${waShopPhone}?text=${encodeURIComponent(
+      `مرحباً *${shop.name}* 🌟\nأود طلب سلة الأصناف التالية:\n${multiItemsTemplate}\n────────────\n🪑 رقم الطاولة / العنوان: `
+    )}`;
+    nodes.push({
+      tag: 'p',
+      children: [
+        {
+          tag: 'a',
+          attrs: { href: multiCartTopLink },
+          children: ['🛍️ اضغط هنا لطلب عدة أصناف معاً في رسالة واتساب واحدة']
+        }
+      ]
+    });
+
+    // تجميع الأصناف حسب القسم
     const categories = {};
     shop.items.forEach(item => {
       const cat = item.category || 'الأصناف الرئيسية';
@@ -1232,42 +1272,34 @@ async function syncCloudTelegraphMenu(manualNotify = false) {
     });
 
     Object.keys(categories).forEach(cat => {
+      nodes.push({ tag: 'hr' });
       nodes.push({ tag: 'h4', children: [`🍽️ قسم: ${cat}`] });
-      categories[cat].forEach(item => {
-        const formattedPrice = `${Number(item.price).toLocaleString()} ${shop.currency}`;
-        const waItemLink = `https://wa.me/${waShopPhone}?text=${encodeURIComponent(`مرحباً ${shop.name}، أود طلب:\n• ${item.name} (${formattedPrice})`)}`;
 
-        // وضع الاسم والسعر في سطر متماسك بدون الفاصل العريض الذي يكسر السطر
+      categories[cat].forEach(item => {
+        const unitPrice = Number(item.price) || 0;
+        const formattedPrice = `${unitPrice.toLocaleString()} ${shop.currency}`;
+
+        const waQty1 = `https://wa.me/${waShopPhone}?text=${encodeURIComponent(`مرحباً *${shop.name}* ✨\nأود طلب:\n• ${item.icon} *${item.name}* (العدد: 1)\n💰 الإجمالي: ${unitPrice.toLocaleString()} ${shop.currency}\n🪑 الطاولة / العنوان: `)}`;
+        const waQty2 = `https://wa.me/${waShopPhone}?text=${encodeURIComponent(`مرحباً *${shop.name}* ✨\nأود طلب:\n• ${item.icon} *${item.name}* (العدد: 2)\n💰 الإجمالي: ${(unitPrice * 2).toLocaleString()} ${shop.currency}\n🪑 الطاولة / العنوان: `)}`;
+        const waQty3 = `https://wa.me/${waShopPhone}?text=${encodeURIComponent(`مرحباً *${shop.name}* ✨\nأود طلب:\n• ${item.icon} *${item.name}* (العدد: 3)\n💰 الإجمالي: ${(unitPrice * 3).toLocaleString()} ${shop.currency}\n🪑 الطاولة / العنوان: `)}`;
+
         nodes.push({
           tag: 'p',
           children: [
-            { tag: 'b', children: [`${item.icon} ${item.name} • [${formattedPrice}] 🔥`] },
+            { tag: 'b', children: [`${item.icon} ${item.name} • [ ${formattedPrice} ]`] },
             { tag: 'br' },
-            {
-              tag: 'a',
-              attrs: { href: waItemLink },
-              children: [`🛒 اضغط هنا لطلب (${item.name}) عبر واتساب`]
-            }
+            { tag: 'a', attrs: { href: waQty1 }, children: [`🛒 اطلب (1)`] },
+            '   |   ',
+            { tag: 'a', attrs: { href: waQty2 }, children: [`🛒 اطلب (2)`] },
+            '   |   ',
+            { tag: 'a', attrs: { href: waQty3 }, children: [`🛒 اطلب (3)`] }
           ]
         });
       });
     });
 
-    // زر طلب مجمع في أسفل المنيو
-    const allOrderWa = `https://wa.me/${waShopPhone}?text=${encodeURIComponent(`مرحباً ${shop.name}، أود إرسال طلبي من المنيو الرقمي:`)}`;
+    // تذييل SmartPOS
     nodes.push({ tag: 'hr' });
-    nodes.push({
-      tag: 'p',
-      children: [
-        {
-          tag: 'a',
-          attrs: { href: allOrderWa },
-          children: ['🛍️ اضغط هنا لإرسال طلب متعدد الأصناف مباشرة عبر واتساب']
-        }
-      ]
-    });
-
-    // بطاقة حقوق SmartPOS بدون تداخل أقواس عربي/إنجليزي
     const sysWa = `https://wa.me/${SMARTPOS_PHONE}?text=${encodeURIComponent('مرحباً، شاهدت منيو SmartPOS وأرغب بطلب النظام لمحلي')}`;
     nodes.push({
       tag: 'aside',
@@ -1276,31 +1308,62 @@ async function syncCloudTelegraphMenu(manualNotify = false) {
         {
           tag: 'a',
           attrs: { href: sysWa },
-          children: [`📲 لطلب النظام لمطعمك أو كافيهك تواصل واتساب: ${SMARTPOS_DISPLAY_PHONE} | انستقرام: SMAR.TPOS@`]
+          children: [`📲 لطلب النظام لمطعمك أو كافيهك تواصل واتساب: ${SMARTPOS_DISPLAY_PHONE}`]
         }
       ]
     });
 
-    const formData = new FormData();
-    formData.append('access_token', token);
-    formData.append('title', `منيو ${shop.name} | قائمة الأصناف والأسعار`);
-    formData.append('author_name', `نظام SmartPOS الذكي | ${SMARTPOS_DISPLAY_PHONE}`);
-    formData.append('content', JSON.stringify(nodes));
-    formData.append('return_content', 'false');
+    const arabicTitle = `منيو ${shop.name} | قائمة الأصناف والأسعار`;
+    const authorLabel = `نظام SmartPOS الذكي - ${SMARTPOS_DISPLAY_PHONE}`;
+    const authorLink = `https://wa.me/${SMARTPOS_PHONE}`;
 
-    const res = await fetch('https://api.telegra.ph/createPage', { method: 'POST', body: formData });
-    const data = await res.json();
-    if (data && data.ok && data.result && data.result.url) {
-      shop.cloudUrl = data.result.url;
-      saveAllShops();
-      refreshAllPreviews();
-      if (manualNotify) showToast('تم تحديث رابط الباركود السحابي بنجاح');
+    let pagePath = shop.cloudPath;
+    let pageUrl = shop.cloudUrl;
+
+    if (!pagePath || !isCleanAsciiTelegraphUrl(pageUrl)) {
+      const asciiSlugTitle = `SmartPOS-Menu-${shop.id}-${Math.floor(100 + Math.random() * 899)}`;
+      const createForm = new FormData();
+      createForm.append('access_token', token);
+      createForm.append('title', asciiSlugTitle);
+      createForm.append('author_name', authorLabel);
+      createForm.append('author_url', authorLink);
+      createForm.append('content', JSON.stringify(nodes));
+      createForm.append('return_content', 'false');
+
+      const createRes = await fetch('https://api.telegra.ph/createPage', { method: 'POST', body: createForm });
+      const createData = await createRes.json();
+      if (createData && createData.ok && createData.result && createData.result.path) {
+        pagePath = createData.result.path;
+        pageUrl = `https://telegra.ph/${pagePath}`;
+        shop.cloudPath = pagePath;
+        shop.cloudUrl = pageUrl;
+      }
+    }
+
+    if (pagePath) {
+      const editForm = new FormData();
+      editForm.append('access_token', token);
+      editForm.append('path', pagePath);
+      editForm.append('title', arabicTitle);
+      editForm.append('author_name', authorLabel);
+      editForm.append('author_url', authorLink);
+      editForm.append('content', JSON.stringify(nodes));
+      editForm.append('return_content', 'false');
+
+      const editRes = await fetch('https://api.telegra.ph/editPage', { method: 'POST', body: editForm });
+      const editData = await editRes.json();
+      if (editData && editData.ok && editData.result) {
+        shop.cloudUrl = `https://telegra.ph/${pagePath}`;
+        saveAllShops();
+        refreshAllPreviews();
+        if (manualNotify) showToast('تم تحديث المنيو السحابي بنجاح بدون أخطاء');
+      }
     }
   } catch (err) {
-    if (manualNotify) showToast('تم اعتماد رابط الباركود المباشر');
+    if (manualNotify) showToast('تعذر الاتصال بالسحابة حالياً، تأكد من اتصال الإنترنت');
   } finally {
     if (btn && manualNotify) {
-      btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> <span>تحديث الرابط السحابي</span>';
+      btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> <span>تحديث سحابي</span>';
     }
   }
 }
@@ -1314,7 +1377,6 @@ function buildInteractive3DMenuHTML(shop) {
     ? shop.items
     : shop.items.filter(i => (i.category || 'عام') === activeCategoryFilter);
 
-  // حساب سلة الزبون
   let totalQty = 0;
   let totalAmount = 0;
   shop.items.forEach(item => {
@@ -1326,7 +1388,6 @@ function buildInteractive3DMenuHTML(shop) {
   });
 
   return `
-    <!-- بطاقة الترويسة للمطعم -->
     <div class="p-3.5 rounded-3xl bg-gradient-to-br from-yellow-500/20 via-amber-500/5 to-black border border-yellow-500/40 mb-3 text-center shadow-lg">
       <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-[10px] font-bold mb-1">
         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
@@ -1347,7 +1408,6 @@ function buildInteractive3DMenuHTML(shop) {
       </div>
     </div>
 
-    <!-- شريط الأقسام -->
     <div class="flex items-center gap-1.5 overflow-x-auto pb-2 mb-2.5 scrollbar-none">
       ${categories.map(cat => `
         <button onclick="setCustomerCategory('${escapeHtml(cat)}')" class="px-3 py-1.5 rounded-xl text-[11px] font-extrabold whitespace-nowrap transition ${
@@ -1360,7 +1420,6 @@ function buildInteractive3DMenuHTML(shop) {
       `).join('')}
     </div>
 
-    <!-- بطاقات الأصناف الثلاثية الأبعاد -->
     <div class="space-y-2.5">
       ${filtered.map(item => {
         const qty = customerCart[item.id] || 0;
@@ -1379,7 +1438,6 @@ function buildInteractive3DMenuHTML(shop) {
                 </div>
               </div>
 
-              <!-- أزرار التحكم بالكمية في السلة -->
               <div class="flex flex-col items-end gap-1.5">
                 ${qty === 0 ? `
                   <button onclick="changeCustomerCart(${item.id}, 1)" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-yellow-300 to-amber-500 text-black font-black text-[11px] shadow-md flex items-center gap-1">
@@ -1403,7 +1461,6 @@ function buildInteractive3DMenuHTML(shop) {
       }).join('')}
     </div>
 
-    <!-- سلة الطلبات المجمعة للزبون -->
     ${totalQty > 0 ? `
       <div class="mt-4 p-3.5 rounded-2xl bg-gradient-to-r from-emerald-950/95 via-slate-900/95 to-emerald-950/95 border-2 border-emerald-400/60 shadow-2xl space-y-2.5">
         <div class="flex items-center justify-between text-xs font-black">
@@ -1427,7 +1484,6 @@ function buildInteractive3DMenuHTML(shop) {
       </div>
     ` : ''}
 
-    <!-- بطاقة التسويق الفيروسي لنظام SmartPOS -->
     <div class="smartpos-viral-card">
       <div class="text-[10px] font-extrabold text-yellow-300 mb-0.5">⚡ هل تمتلك مطعماً أو كافيه؟</div>
       <div class="text-xs font-black text-white mb-2">
@@ -1507,11 +1563,12 @@ function sendCustomerCartWhatsApp() {
 }
 
 /* =========================================================================
-   تحديث الباركود، ستاند الطاولة، والفاتورة الحرارية / A5
+   توليد الباركود وتحديث المعاينات
    ========================================================================= */
 function generateQRDataURL(text, size = 500) {
+  const safeAsciiUrl = encodeURI(String(text || '').trim());
   const qr = new QRious({
-    value: text,
+    value: safeAsciiUrl,
     size: size,
     level: 'M',
     background: '#FFFFFF',
@@ -1525,7 +1582,6 @@ function refreshAllPreviews() {
   const shop = getActiveShop();
   if (!shop) return;
 
-  // 1. تحديث المنيو 3D في الجوال وفي شاشة الزبون الكاملة
   const menuHtml = buildInteractive3DMenuHTML(shop);
   const phoneMount = document.getElementById('phoneScreenMount');
   if (phoneMount) phoneMount.innerHTML = menuHtml;
@@ -1539,7 +1595,6 @@ function refreshAllPreviews() {
   const wifiFloat = document.getElementById('badgeWifiFloating');
   if (wifiFloat) wifiFloat.textContent = `Wi-Fi: ${shop.wifi || 'مجاني'}`;
 
-  // 2. تحديث الرابط الفعال والباركود
   const qrUrl = getActiveQRTargetUrl(shop);
   const qrImgData = generateQRDataURL(qrUrl, 520);
 
@@ -1550,39 +1605,30 @@ function refreshAllPreviews() {
   if (modeBadge) {
     if (getEffective3DUrl(shop)) {
       modeBadge.textContent = 'يفتح المنيو 3D مباشرة';
-    } else if (shop.cloudUrl) {
-      modeBadge.textContent = 'منيو سحابي مباشر';
+    } else if (isCleanAsciiTelegraphUrl(shop.cloudUrl)) {
+      modeBadge.textContent = 'منيو سحابي نشط';
     } else {
-      modeBadge.textContent = 'جاهز للمسح';
+      modeBadge.textContent = 'جاري التجهيز...';
     }
   }
 
-  // 3. تحديث ستاند الطاولة
   document.getElementById('tentShopName').textContent = shop.name;
   document.getElementById('tentWelcome').textContent = shop.welcome || '';
   document.getElementById('tentPhone').textContent = shop.phone || '';
   document.getElementById('tentWifi').textContent = shop.wifi || '';
   document.getElementById('tentQrImg').src = qrImgData;
 
-  // 4. تحديث الفاتورة
   renderInvoicePreview(shop, qrImgData);
 }
 
-/* =========================================================================
-   إدارة الفاتورة الحرارية والضريبية (تبدأ من رقم 1)
-   ========================================================================= */
 function addItemToInvoice(itemId) {
   const shop = getActiveShop();
   const item = shop.items.find(i => i.id === itemId);
   if (!item) return;
   if (!Array.isArray(shop.invoiceCart)) shop.invoiceCart = [];
-
   const existing = shop.invoiceCart.find(c => c.id === item.id);
-  if (existing) {
-    existing.qty += 1;
-  } else {
-    shop.invoiceCart.push({ id: item.id, name: item.name, price: Number(item.price), qty: 1 });
-  }
+  if (existing) existing.qty += 1;
+  else shop.invoiceCart.push({ id: item.id, name: item.name, price: Number(item.price), qty: 1 });
   saveAllShops();
   refreshAllPreviews();
   showToast(`تمت إضافة "${item.name}" للفاتورة #${shop.invoiceNo}`);
@@ -1604,7 +1650,6 @@ function resetInvoiceNumberToOne() {
   document.getElementById('inpInvoiceNo').value = 1;
   saveAllShops();
   refreshAllPreviews();
-  showToast('تم تصفير عداد الفواتير ليبدأ من رقم #1');
 }
 
 function nextInvoiceOrder() {
@@ -1614,7 +1659,6 @@ function nextInvoiceOrder() {
   document.getElementById('inpInvoiceNo').value = shop.invoiceNo;
   saveAllShops();
   refreshAllPreviews();
-  showToast(`تم فتح فاتورة جديدة رقم #${shop.invoiceNo}`);
 }
 
 function renderInvoicePreview(shop, qrImgData) {
@@ -1633,13 +1677,11 @@ function renderInvoicePreview(shop, qrImgData) {
       <div class="text-xs text-gray-600">${escapeHtml(shop.welcome || '')}</div>
       <div class="text-xs font-bold text-gray-800 mt-1" dir="ltr">Tel: ${escapeHtml(shop.phone)} | Wi-Fi: ${escapeHtml(shop.wifi)}</div>
     </div>
-
     <div class="flex items-center justify-between text-xs font-bold bg-gray-100 px-3 py-2 rounded-lg mb-3 text-gray-900">
       <span>فاتورة رقم: <b class="text-sm">#${shop.invoiceNo || 1}</b></span>
       <span>${escapeHtml(shop.tableNo || 'طاولة 1')}</span>
       <span class="text-[11px] text-gray-600">${nowStr}</span>
     </div>
-
     <table class="w-full text-xs border-collapse mb-3 text-gray-900">
       <thead>
         <tr class="border-b-2 border-gray-800 text-gray-900 font-black">
@@ -1666,7 +1708,6 @@ function renderInvoicePreview(shop, qrImgData) {
         `}
       </tbody>
     </table>
-
     <div class="border-t-2 border-dashed border-gray-400 pt-2 space-y-1 text-xs text-gray-900">
       <div class="flex justify-between">
         <span>المجموع الفرعي:</span>
@@ -1683,7 +1724,6 @@ function renderInvoicePreview(shop, qrImgData) {
         <span>${finalTotal.toLocaleString()} ${escapeHtml(shop.currency)}</span>
       </div>
     </div>
-
     <div class="mt-4 pt-3 border-t border-gray-300 text-center">
       <div class="qr-box-full w-28 h-28 mx-auto mb-1.5 !p-1.5 !rounded-xl">
         <img src="${qrImgData}" alt="Menu QR">
@@ -1694,9 +1734,6 @@ function renderInvoicePreview(shop, qrImgData) {
   `;
 }
 
-/* =========================================================================
-   التبديل بين التبويبات، الطباعة في صفحة واحدة، واختبار الباركود
-   ========================================================================= */
 function switchStudioTab(tab) {
   ['3d', 'tent', 'invoice'].forEach(t => {
     const panel = document.getElementById('panel' + t.charAt(0).toUpperCase() + t.slice(1));
@@ -1754,7 +1791,6 @@ function openLiveQRLinkInBrowser() {
     window.open(getEffective3DUrl(shop), '_blank');
   } else {
     openCustomerFullView(false);
-    showToast('هذه معاينة المنيو 3D؛ وعند رفع الملف على استضافة سيفتح الباركود هذه الشاشة مباشرة على جوال الزبون');
   }
 }
 
@@ -1775,7 +1811,7 @@ function escapeHtml(str) {
 }
 
 /* =========================================================================
-   المؤثرات البصرية الثلاثية الأبعاد (Neural Gold Canvas + Tilt)
+   الخلفية العصبية والمؤثرات (Neural Background & Tilt)
    ========================================================================= */
 function initNeuralBackground() {
   const canvas = document.getElementById('neuralCanvas');
