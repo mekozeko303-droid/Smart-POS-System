@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SmartPOS | منيو 3D وبطاقة QR وفواتير مجاناً</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style id="pg"></style>
 <style>
 :root{--g:#D4AF37;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -109,8 +112,8 @@ body.pv #fab,body.cu #fab{display:none}
 <body>
 <canvas id="cv"></canvas><div id="spot"></div><div id="toast"></div>
 
-<div id="ld" style="position:fixed;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;font-weight:800;color:#D4AF37;font-family:Cairo,sans-serif">جارٍ التحميل…</div>
-<div id="studio" hidden>
+<div id="ld" hidden style="position:fixed;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;font-weight:800;color:#D4AF37;font-family:Cairo,sans-serif">جارٍ التحميل…</div>
+<div id="studio">
 <section class="max-w-5xl mx-auto px-4 pt-12 pb-6 text-center">
   <div class="inline-block gl px-5 py-2 mb-5 text-sm gt font-extrabold">✦ مُقدم مجاناً من نظام الكاشير الذكي SmartPOS ✦</div>
   <h1 class="text-3xl md:text-6xl font-extrabold leading-tight mb-4 gt">حوّل مطعمك أو متجرك إلى تجربة رقمية فاخرة في 60 ثانية مجاناً</h1>
@@ -143,7 +146,7 @@ body.pv #fab,body.cu #fab{display:none}
     <h2 class="text-xl font-extrabold gt mb-3">① بيانات المحل والأصناف <span class="text-xs opacity-60">(تُحفظ تلقائياً)</span></h2>
     <div class="grid grid-cols-2 gap-2 mb-3">
       <input id="sn" class="in" data-f="name" placeholder="اسم المطعم / المحل">
-      <input id="sp" class="in" dir="ltr" inputmode="tel" data-f="phone" placeholder="واتساب المحل للطلبات 777123456">
+      <input id="sp" class="in" dir="ltr" inputmode="tel" data-f="phone" placeholder="واتساب المحل للطلبات 734755062">
       <select id="sc" class="in" data-f="cur"><option value="ر.ي">ريال يمني</option><option value="ر.س">ريال سعودي</option><option value="$">دولار</option></select>
       <input id="sw" class="in" dir="ltr" data-f="wifi" placeholder="كلمة سر الواي فاي (اختياري)">
       <label class="in cursor-pointer text-center relative overflow-hidden" style="padding:0"><input type="file" accept="image/*" id="lf" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:0"><span class="block" style="padding:9px 11px;pointer-events:none">🖼️ رفع شعار المحل</span></label>
@@ -185,23 +188,17 @@ body.pv #fab,body.cu #fab{display:none}
       <div id="cardWrap" data-tilt><div id="card" class="card dk"></div></div>
       <div id="dn" class="text-center text-sm mt-3 font-bold"></div>
       <div class="gl p-4 mt-4">
-        <b class="gt">🔗 رابط موقعك (الذي يفتحه الـ QR)</b>
-        <p class="text-xs opacity-75 my-2 leading-6">الـ QR يفتح هذه الصفحة نفسها وفيها بيانات منيو محلك داخل الرابط، فلا يحتاج الزبون لأي حساب أو تسجيل. تم ضبطه تلقائياً على مستودعك في GitHub Pages:</p>
-        <input id="site" class="in" dir="ltr" data-f="site" placeholder="https://mekozeko303-droid.github.io/-smart-pos-/">
+        <b class="gt">🔗 رابط موقعك الفعال (مضبوط على Smart-POS-System)</b>
+        <p class="text-xs opacity-75 my-2 leading-6">الـ QR يفتح هذه الصفحة نفسها وفيها بيانات منيو محلك داخل الرابط مباشرة بدون تسجيل:</p>
+        <input id="site" class="in" dir="ltr" data-f="site" placeholder="https://mekozeko303-droid.github.io/Smart-POS-System/">
         <div class="mt-3 p-3 rounded-2xl" style="border:1px dashed rgba(212,175,55,.5)">
-        <b class="gt text-sm">⚡ رمز قصير ومنيو بشعارك عبر GitHub</b>
-        <ol class="text-xs leading-6 my-2 pr-5 list-decimal opacity-90">
-          <li>ارفع هذا الملف باسم index.html في مستودعك mekozeko303-droid/-smart-pos- وفعّل Pages.</li>
-          <li>اختياري للرمز القصير: أنشئ Fine-grained token بصلاحية Contents (Read and write).</li>
-          <li>أدخل التوكن ثم اضغط نشر. التوكن يُحفظ على جهازك فقط.</li>
-        </ol>
-        <input id="gh" class="in" dir="ltr" data-f="gh" placeholder="mekozeko303-droid/-smart-pos-">
-        <input id="tk" class="in mt-2" dir="ltr" type="password" data-f="tk" placeholder="GitHub token (github_pat_...)" autocomplete="off">
-        <button id="pubb" class="btn gold w-full mt-2" data-a="pub">🚀 نشر / تحديث المنيو (رمز قصير + الشعار)</button>
+          <b class="gt text-sm">⚡ رمز قصير ومنيو بشعارك عبر GitHub</b>
+          <input id="gh" class="in mt-2" dir="ltr" data-f="gh" placeholder="mekozeko303-droid/Smart-POS-System">
+          <input id="tk" class="in mt-2" dir="ltr" type="password" data-f="tk" placeholder="GitHub token (اختياري للرمز القصير)" autocomplete="off">
+          <button id="pubb" class="btn gold w-full mt-2" data-a="pub">🚀 نشر / تحديث المنيو (رمز قصير + الشعار)</button>
+        </div>
+        <a id="tl" class="btn w-full mt-2" target="_blank" rel="noopener">🔎 اختبر فتح رابط الباركود الآن</a>
       </div>
-        <a id="tl" class="btn w-full mt-2" target="_blank" rel="noopener">🔎 اختبر فتح المنيو</a>
-      </div>
-      <div class="text-center text-xs opacity-60 mt-3">إن لم تظهر نافذة الطباعة اضغط «حفظ كصورة» ثم اطبعها. اطبع الرمز بحجم 6 سم أو أكثر على ورق أبيض.</div>
     </div>
     <div id="p3" class="pane" hidden>
       <div class="grid grid-cols-2 gap-2 mb-2">
@@ -251,13 +248,14 @@ body.pv #fab,body.cu #fab{display:none}
 <div id="pr"></div>
 
 <script>
-//PURE-START
-const DEF_SITE='https://mekozeko303-droid.github.io/-smart-pos-/';
-const DEF_GH='mekozeko303-droid/-smart-pos-';
+// الرابط الرسمي الصحيح لمستودعك الذي رفعت فيه الملف
+const DEF_SITE='https://mekozeko303-droid.github.io/Smart-POS-System/';
+const DEF_GH='mekozeko303-droid/Smart-POS-System';
 const WA='https://wa.me/967785619054?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20SmartPOS%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%AD%D8%B5%D9%88%D9%84%20%D8%B9%D9%84%D9%89%20%D9%86%D8%B8%D8%A7%D9%85%20%D8%A7%D9%84%D9%83%D8%A7%D8%B4%D9%8A%D8%B1%20%D8%A7%D9%84%D9%83%D8%A7%D9%85%D9%84%20%D9%88%D8%AD%D8%B0%D9%81%20%D8%A7%D9%84%D8%B9%D9%84%D8%A7%D9%85%D8%A9%20%D8%A7%D9%84%D9%85%D8%A7%D8%A6%D9%8A%D8%A9';
 const IG='https://www.instagram.com/smar.tpos?rpxt=YzUwMTR4ZWl2b3J6';
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const AB='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
 function t2b(s){const o=[];for(const ch of s){const c=ch.codePointAt(0);if(c<128)o.push(c);else if(c>=0x621&&c<=0x64A)o.push(c-0x621+128);else{const u=new TextEncoder().encode(ch);o.push(255,u.length);for(const x of u)o.push(x)}}return o}
 function b2t(b){let s='';for(let i=0;i<b.length;i++){const x=b[i];if(x<128)s+=String.fromCharCode(x);else if(x==255){const n=b[i+1];s+=new TextDecoder().decode(new Uint8Array(b.slice(i+2,i+2+n)));i+=1+n}else s+=String.fromCharCode(x-128+0x621)}return s}
 function enc(s){let n=0n;for(const x of [1,...t2b(s)])n=n*256n+BigInt(x);let o='';while(n>0n){o=AB[Number(n%62n)]+o;n/=62n}return o}
@@ -267,6 +265,7 @@ function pack(d){const cs=[...new Set(d.items.map(i=>i.cat))];return enc([cl(d.n
 function unpack(t){const p=dec(t).split('~'),cs=p[5].split(',');return{name:p[0],phone:p[1],cur:p[2],emo:p[3],wifi:p[4],logo:'',logoUrl:p.slice(7).join('~'),items:p[6].split(';').filter(Boolean).map((x,i)=>{const a=x.split(':');return{id:i+1,icon:a[0],name:a[1],cat:cs[a[2]]||'',price:+a[3]||0}})}}
 function waNum(p){let d=String(p||'').replace(/\D/g,'');if(d.startsWith('00'))d=d.slice(2);if(d.length==9&&d[0]=='7')d='967'+d;else if(d.length==10&&d[0]=='0')d='967'+d.slice(1);return d.length>=9?d:''}
 const fmt=(D,n)=>Number(n).toLocaleString('en-US')+' '+D.cur;
+
 function orderURL(D,st){
   let t=0;
   const L=D.items.filter(i=>st.cart[i.id]>0).map(i=>{const v=i.price*st.cart[i.id];t+=v;return '• '+st.cart[i.id]+'× '+i.icon+' '+i.name+' — '+fmt(D,v)});
@@ -296,7 +295,7 @@ function mvBuild(el,D,st,o){
   el.innerHTML=h;el._o=o;
   mvChips(el,D,st);mvList(el,D,st);
 }
-//PURE-END
+
 const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
 const TPL={
  cafe:{name:'كافيه لافنة',phone:'734755062',cur:'ر.ي',emo:'☕',wifi:'12345678',items:'🧋|آيس موكا بالكراميل|قهوة باردة|2000;🫖|قهوة مختصة V60 إثيوبي|قهوة مقطرة|2200;🥐|كرواسون زبدة فرنسي|المخبوزات|1200'},
@@ -304,22 +303,44 @@ const TPL={
  store:{name:'متجر التقنية',phone:'777000000',cur:'$',emo:'📱',wifi:'',items:'🔌|شاحن سريع 25W|إكسسوارات|12;🎧|سماعة بلوتوث|صوتيات|25;📱|جراب حماية|إكسسوارات|6;🔋|باور بانك 20000|طاقة|30;⌚|ساعة ذكية|أجهزة|45;💾|فلاش 64GB|تخزين|8'},
  blank:{name:'محل جديد',phone:'',cur:'ر.ي',emo:'🏪',wifi:'',items:'🍴|صنف جديد|عام|1000'}
 };
-let DB=(function(){try{const j=JSON.parse(localStorage.getItem('spos3'));if(j&&j.shops&&j.shops.length){if(!j.site)j.site=DEF_SITE;if(!j.gh)j.gh=DEF_GH;return j}}catch(e){}return{shops:[],cur:'',site:DEF_SITE,gh:DEF_GH,n:100}})();
+
+function cleanSiteUrl(u){
+  if(!u||typeof u!=='string')return DEF_SITE;
+  let s=u.trim();
+  // إصلاح الروابط المدمجة بالخطأ أو التي تشير للمستودع القديم الفارغ
+  if(s.includes('-smart-pos-')||s.indexOf('http',5)>0||s.includes('google.com'))return DEF_SITE;
+  if(!/^https?:\/\//i.test(s))s='https://'+s;
+  s=s.split('#')[0].split('?')[0];
+  if(!/\/$|\.html?$/i.test(s))s+='/';
+  return s;
+}
+
+let DB=(function(){
+  try{
+    const j=JSON.parse(localStorage.getItem('spos3_v2'));
+    if(j&&j.shops&&j.shops.length){
+      j.site=cleanSiteUrl(j.site);
+      if(!j.gh||j.gh.includes('-smart-pos-'))j.gh=DEF_GH;
+      return j;
+    }
+  }catch(e){}
+  return{shops:[],cur:'',site:DEF_SITE,gh:DEF_GH,n:100};
+})();
+
 function mkShop(k){const t=TPL[k]||TPL.blank;let u=0;return{id:'S'+(++DB.n),name:t.name,phone:t.phone,cur:t.cur,emo:t.emo,wifi:t.wifi,logo:'',logoUrl:'',theme:0,size:'80',invN:1,items:t.items.split(';').filter(Boolean).map(r=>{const a=r.split('|');return{id:++u,icon:a[0],name:a[1],cat:a[2],price:+a[3]}})}}
 if(!DB.shops.length)DB.shops.push(mkShop('cafe'),mkShop('restaurant'));
 if(!DB.shops.some(s=>s.id==DB.cur))DB.cur=DB.shops[0].id;
 const cur=()=>DB.shops.find(s=>s.id==DB.cur)||DB.shops[0];
-function save(){try{localStorage.setItem('spos3',JSON.stringify(DB))}catch(e){}}
+function save(){try{localStorage.setItem('spos3_v2',JSON.stringify(DB))}catch(e){}}
 let ST_S={cart:{},cat:'الكل',q:''},ST_C={cart:{},cat:'الكل',q:''},CUST=null,inv={},IMG=null,arm=0;
 const f=n=>Number(n).toLocaleString('en-US')+' '+cur().cur;
 const logoH=s=>s.logo?'<img class="lg" src="'+s.logo+'" alt="">':esc(s.emo||'🍽️');
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),2400)}
 function openUrl(u){const a=document.createElement('a');a.href=u;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove()}
+
 function siteBase(){
-  let s=(DB.site||'').trim();
-  if(s){if(!/^https?:\/\//i.test(s))s='https://'+s;s=s.split('#')[0].split('?')[0];if(!/\/$|\.html?$/i.test(s))s+='/';return s}
-  if(/^https?:$/.test(location.protocol)&&!/claude|anthropic/i.test(location.hostname))return location.href.split('#')[0].split('?')[0];
-  return DEF_SITE;
+  if(/^https?:$/.test(location.protocol)&&location.hostname.endsWith('github.io'))return location.href.split('#')[0].split('?')[0];
+  return cleanSiteUrl(DB.site);
 }
 function menuLink(){
   const b=siteBase(),s=cur();
@@ -345,7 +366,7 @@ function rCard(){
   const qb=$('#qrb');
   if(L.u)qr(qb,L.u,220);else qb.innerHTML='<div style="width:220px;height:220px;display:flex;align-items:center;justify-content:center;text-align:center;color:#555;font-size:13px;line-height:1.8;border:2px dashed #bbb;padding:14px">ضع رابط موقعك<br>ليظهر رمز QR هنا</div>';
   $('#tl').href=L.u||'#';
-  const n=L.u.length,M={nosite:['🔶 ارفع الملف على GitHub Pages أو الصق رابط موقعك أدناه ليظهر الرمز','#F59E0B'],long:[n<=480?'✓ الرمز جاهز ويفتح منيو محلك 3D بدون تسجيل':'⚠ الرمز كثيف. انشر المنيو عبر GitHub أدناه للحصول على رمز قصير','#34d399'],pub:['✓ رمز قصير ومنشور — يفتح منيو محلك مباشرة','#34d399'],dirty:['⚠ لديك تعديلات غير منشورة — اضغط «نشر / تحديث المنيو»','#F59E0B']}[L.k],d=$('#dn');
+  const n=L.u.length,M={nosite:['🔶 الصق رابط موقعك أدناه ليظهر الرمز','#F59E0B'],long:[n<=480?'✓ الرمز جاهز ومربوط بمستودعك Smart-POS-System ويفتح المنيو 3D فوراً':'⚠ الرمز كثيف. انشر المنيو عبر GitHub أدناه للحصول على رمز قصير','#34d399'],pub:['✓ رمز قصير ومنشور — يفتح منيو محلك مباشرة','#34d399'],dirty:['⚠ لديك تعديلات غير منشورة — اضغط «نشر / تحديث المنيو»','#F59E0B']}[L.k],d=$('#dn');
   d.textContent=M[0];d.style.color=M[1];
 }
 function rInv(){
@@ -371,7 +392,7 @@ function fill(){const s=cur();$('#sn').value=s.name;$('#sp').value=s.phone;$('#s
 function rAll(){for(const fn of [rMenu,rCard,rInv])try{fn()}catch(e){console.error(e)}}
 function switchTo(id){DB.cur=id;inv={};ST_S={cart:{},cat:'الكل',q:''};fill();rShops();rList();rAll();save()}
 function chg(){const s=cur();if(s.pub)s.dirty=1;save()}
-function loadJS(u){return new Promise(r=>{const s=document.createElement('script');s.src=u;s.onload=s.onerror=()=>r();document.head.appendChild(s)})}
+
 async function publishMenu(){
   const s=cur(),b=siteBase();
   const gh=(DB.gh||DEF_GH).trim().replace(/^https?:\/\/github\.com\//i,'').replace(/\/+$/,''),tk=(DB.tk||'').trim();
@@ -411,9 +432,6 @@ async function saveImg(sel,name){
   try{const c=await html2canvas($(sel),{scale:2,backgroundColor:null,useCORS:true});IMG={c,name};im.src=c.toDataURL('image/png');ms.textContent='اضغط مطولاً على الصورة لحفظها أو مشاركتها، ثم اطبعها';if(sel=='#inv'){cur().invN++;save();rInv()}}
   catch(e){ms.textContent='تعذر إنشاء الصورة هنا. جرّب من المتصفح مباشرة.'}
 }
-async function dlImg(){
-  try{if(typeof claude=='undefined'||!IMG)return;const d=await claude.use('downloads');if(d){const b=await new Promise(r=>IMG.c.toBlob(r,'image/png'));await d.save({filename:IMG.name+'.png',data:b})}}catch(e){}
-}
 function copyText(t){
   const ok=()=>toast('تم النسخ ✓');
   const fb=()=>{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){toast('تعذر النسخ، انسخه يدوياً')}a.remove()};
@@ -424,7 +442,7 @@ function lfH(e){
   if(!fl)return;
   st.textContent='جارٍ الرفع…';
   const r=new FileReader();r.onerror=er;
-  r.onload=()=>{const im=new Image();im.onerror=er;im.onload=()=>{const c=document.createElement('canvas'),k=Math.min(1,160/Math.max(im.width,im.height));c.width=Math.max(1,Math.round(im.width*k));c.height=Math.max(1,Math.round(im.height*k));c.getContext('2d').drawImage(im,0,0,c.width,c.height);cur().logo=c.toDataURL('image/png');chg();st.textContent='✓ تم رفع الشعار — يظهر في البطاقة والفاتورة. لإظهاره في منيو الزبون ضع رابط صورته أدناه.';toast('تم رفع شعار المحل ✓');rAll()};im.src=r.result};
+  r.onload=()=>{const im=new Image();im.onerror=er;im.onload=()=>{const c=document.createElement('canvas'),k=Math.min(1,160/Math.max(im.width,im.height));c.width=Math.max(1,Math.round(im.width*k));c.height=Math.max(1,Math.round(im.height*k));c.getContext('2d').drawImage(im,0,0,c.width,c.height);cur().logo=c.toDataURL('image/png');chg();st.textContent='✓ تم رفع الشعار — يظهر في البطاقة والفاتورة.';toast('تم رفع شعار المحل ✓');rAll()};im.src=r.result};
   r.readAsDataURL(fl);e.target.value='';
 }
 const gd=el=>el.dataset.src=='c'?CUST:cur(),gs=el=>el.dataset.src=='c'?ST_C:ST_S;
@@ -450,9 +468,9 @@ const A={
   img(b){if(b.dataset.v=='#card'&&!menuLink().u){toast('ضع رابط موقعك أولاً ليظهر رمز QR');return}saveImg(b.dataset.v,b.dataset.n)},
   cm(){CUST=cur();ST_C={cart:{},cat:'الكل',q:''};$('#cmode').dataset.pv='1';$('#cmode').classList.add('on');document.body.classList.add('pv');mvBuild($('#cmm'),CUST,ST_C,{pv:true,promo:true})},
   closecm(){$('#cmode').classList.remove('on');document.body.classList.remove('pv');delete $('#cmode').dataset.pv},
-  ovx(){$('#ov').classList.remove('on')},
-  dl(){dlImg()}
+  ovx(){$('#ov').classList.remove('on')}
 };
+
 document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(b&&A[b.dataset.a]){e.preventDefault();try{A[b.dataset.a](b)}catch(x){console.error(x)}}});
 document.addEventListener('input',e=>{
   const t=e.target,k=t.dataset.f;
@@ -460,7 +478,7 @@ document.addEventListener('input',e=>{
   if(k){
     if(k=='cust'||k=='pay'||k=='disc'){rInv();return}
     if(k=='gh'||k=='tk'){DB[k]=t.value.trim();save();return}
-    if(k=='site'){DB.site=t.value;save();$('#site').placeholder=siteBase();rCard();rInv();return}
+    if(k=='site'){DB.site=cleanSiteUrl(t.value);save();rCard();rInv();return}
     const s=cur();s[k]=(k=='emo'&&!t.value)?'🍽️':t.value;chg();if(k=='name'||k=='emo')rShops();rAll();return;
   }
   const r=t.closest('[data-id]');
@@ -494,18 +512,31 @@ for(let i=0;i<70;i++)P.push({x:Math.random()*innerWidth,y:Math.random()*innerHei
   requestAnimationFrame(loop);
 })();
 
-(async()=>{try{if(typeof claude!='undefined'){const d=await claude.use('downloads');if(d)$('#dlb').hidden=false}}catch(e){}})();
-const SID=(new URLSearchParams(location.search).get('s')||'').toLowerCase(),HS=location.hash;
-function showCust(D){CUST=D;document.title=D.name||'منيو';document.body.classList.add('cu');$('#ld').hidden=true;$('#studio').hidden=true;$('#cbk').hidden=true;$('#cmode').classList.add('on');mvBuild($('#cmm'),D,ST_C,{pv:false,promo:true,home:location.href.split('#')[0].split('?')[0]})}
-let hashD=null;
-if(HS.startsWith('#m')&&HS.length>10){try{hashD=unpack(HS.slice(2))}catch(e){}}
-if(hashD){showCust(hashD)}
-else if(/^[a-z0-9]{4,12}$/.test(SID)){
-  $('#ld').textContent='جارٍ تحميل المنيو…';
-  getMenu(SID).then(D=>{if(D)showCust(D);else $('#ld').innerHTML='<div style="text-align:center;padding:20px;line-height:1.9">تعذر تحميل المنيو.<br><small style="opacity:.7">قد يحتاج المنيو دقيقة بعد النشر، جرّب التحديث.</small><br><button class="btn" style="margin-top:14px" onclick="location.reload()">↻ تحديث</button></div>'});
-}else{
-  Promise.all(['https://cdn.tailwindcss.com/3.4.17','https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js','https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'].map(loadJS)).then(()=>{$('#ld').hidden=true;$('#studio').hidden=false;fill();rShops();rList();rAll()});
+function showCust(D){
+  CUST=D;document.title=D.name||'منيو';
+  document.body.classList.add('cu');
+  $('#ld').hidden=true;$('#studio').hidden=true;$('#cbk').hidden=true;
+  $('#cmode').classList.add('on');
+  mvBuild($('#cmm'),D,ST_C,{pv:false,promo:true,home:location.href.split('#')[0].split('?')[0]});
 }
+
+function checkRoute(){
+  const SID=(new URLSearchParams(location.search).get('s')||'').toLowerCase(),HS=location.hash;
+  let hashD=null;
+  if(HS.startsWith('#m')&&HS.length>10){try{hashD=unpack(HS.slice(2))}catch(e){}}
+  if(hashD){
+    showCust(hashD);
+  }else if(/^[a-z0-9]{4,12}$/.test(SID)){
+    $('#ld').hidden=false;$('#ld').textContent='جارٍ تحميل المنيو…';
+    getMenu(SID).then(D=>{if(D)showCust(D);else $('#ld').innerHTML='<div style="text-align:center;padding:20px;line-height:1.9">تعذر تحميل المنيو.<br><button class="btn" style="margin-top:14px" onclick="location.reload()">↻ تحديث</button></div>'});
+  }else{
+    $('#ld').hidden=true;$('#studio').hidden=false;
+    fill();rShops();rList();rAll();
+  }
+}
+
+window.addEventListener('hashchange',checkRoute);
+window.addEventListener('DOMContentLoaded',checkRoute);
 </script>
 </body>
 </html>
