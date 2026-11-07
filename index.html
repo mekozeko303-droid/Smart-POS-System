@@ -30,6 +30,20 @@ body {
   overflow-x: hidden;
 }
 
+/* عزل قاطع 100%: إخفاء استوديو المالك فوراً إذا كان الرابط مفتوحاً من باركود الزبون */
+html.is-customer-scan #studioMainWrapper,
+body.customer-only-mode #studioMainWrapper {
+  display: none !important;
+}
+html.is-customer-scan #customerFullView,
+body.customer-only-mode #customerFullView {
+  display: block !important;
+}
+html.is-customer-scan #exitCustomerBtn,
+body.customer-only-mode #exitCustomerBtn {
+  display: none !important;
+}
+
 #neuralCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
 #mouseSpotlight {
   position: fixed; inset: 0; z-index: 1; pointer-events: none;
@@ -47,13 +61,6 @@ body {
   position: relative;
   overflow: hidden;
 }
-.luxury-glass::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(380px circle at var(--gx, -500px) var(--gy, -500px), rgba(255, 235, 150, 0.15), transparent 70%);
-  pointer-events: none;
-}
 
 .gold-gradient-text {
   background: linear-gradient(135deg, #FFF7CC 0%, #D4AF37 45%, #F59E0B 80%, #FFF3B0 100%);
@@ -63,32 +70,32 @@ body {
 }
 
 .btn-luxury {
-  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-  padding: 12px 20px; border-radius: 16px; font-weight: 800; font-size: 13.5px;
-  cursor: pointer; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 11px 18px; border-radius: 15px; font-weight: 800; font-size: 13px;
+  cursor: pointer; transition: all 0.22s ease;
   border: 1px solid rgba(212, 175, 55, 0.4);
   background: rgba(255, 255, 255, 0.05); color: #F9F6F0;
   text-decoration: none; user-select: none;
 }
 .btn-luxury:hover {
-  transform: translateY(-3px) scale(1.01);
+  transform: translateY(-2px);
   border-color: #F59E0B;
-  box-shadow: 0 12px 28px rgba(212, 175, 55, 0.22);
+  box-shadow: 0 10px 24px rgba(212, 175, 55, 0.2);
 }
 .btn-gold-solid {
   background: linear-gradient(135deg, #FFE885 0%, #D4AF37 50%, #F59E0B 100%);
   color: #140E00; border: none;
-  box-shadow: 0 8px 30px rgba(245, 158, 11, 0.42), inset 0 1px 2px rgba(255, 255, 255, 0.7);
+  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
 }
 .btn-gold-solid:hover {
-  box-shadow: 0 14px 38px rgba(245, 158, 11, 0.68);
+  box-shadow: 0 12px 32px rgba(245, 158, 11, 0.65);
   color: #000;
 }
 
 .luxury-input {
-  background: rgba(4, 7, 14, 0.82);
-  border: 1px solid rgba(212, 175, 55, 0.32);
-  border-radius: 12px; padding: 10px 14px;
+  background: rgba(4, 7, 14, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 12px; padding: 9px 13px;
   color: #FFF; font-family: inherit; font-size: 13.5px; width: 100%;
   transition: 0.2s;
 }
@@ -123,13 +130,13 @@ body {
   box-shadow: 0 6px 18px rgba(245, 158, 11, 0.35);
 }
 
-/* مجسم المنيو الثلاثي الأبعاد الفائق (Ultra 3D Showcase) */
+/* مجسم الجوال ثلاثي الأبعاد */
 .phone-3d-stage {
   perspective: 1400px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 10px 30px;
+  padding: 16px 10px 24px;
   position: relative;
 }
 .phone-3d-rig {
@@ -148,32 +155,31 @@ body {
 .floating-3d-badge {
   position: absolute;
   z-index: 30;
-  background: rgba(15, 20, 34, 0.88);
-  backdrop-filter: blur(12px);
+  background: rgba(15, 20, 34, 0.9);
   border: 1.5px solid #D4AF37;
   border-radius: 16px;
-  padding: 8px 13px;
+  padding: 7px 12px;
   font-size: 11px;
   font-weight: 800;
   color: #FFF5C0;
-  box-shadow: 0 18px 35px rgba(0,0,0,0.75), 0 0 15px rgba(212, 175, 55, 0.25);
+  box-shadow: 0 18px 35px rgba(0,0,0,0.75);
   transform: translateZ(55px);
   pointer-events: none;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   white-space: nowrap;
   animation: floatBadge 3.5s ease-in-out infinite;
 }
-.floating-3d-badge.badge-right { top: 68px; right: -42px; }
-.floating-3d-badge.badge-left { bottom: 135px; left: -45px; animation-delay: 1.7s; }
+.floating-3d-badge.badge-right { top: 68px; right: -38px; }
+.floating-3d-badge.badge-left { bottom: 135px; left: -38px; animation-delay: 1.7s; }
 @keyframes floatBadge {
   0%, 100% { transform: translateZ(55px) translateY(0px); }
   50% { transform: translateZ(65px) translateY(-7px); }
 }
 @media (max-width: 640px) {
-  .floating-3d-badge.badge-right { right: -10px; transform: translateZ(35px) scale(0.88); }
-  .floating-3d-badge.badge-left { left: -10px; transform: translateZ(35px) scale(0.88); }
+  .floating-3d-badge.badge-right { right: -8px; transform: translateZ(35px) scale(0.88); }
+  .floating-3d-badge.badge-left { left: -8px; transform: translateZ(35px) scale(0.88); }
 }
 
 .iphone-mockup {
@@ -183,34 +189,19 @@ body {
   border-radius: 54px;
   border: 10px solid #221E17;
   background: linear-gradient(165deg, #0B0F1A 0%, #05070C 100%);
-  box-shadow:
-    0 40px 90px rgba(0, 0, 0, 0.9),
-    0 0 0 2.5px #D4AF37,
-    0 0 0 6px #12100B,
-    0 0 35px rgba(212, 175, 55, 0.35),
-    inset 0 0 22px rgba(212, 175, 55, 0.12);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.9), 0 0 0 2.5px #D4AF37, 0 0 0 6px #12100B, 0 0 35px rgba(212, 175, 55, 0.35);
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transform-style: preserve-3d;
-}
-.iphone-screen-glare {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(125deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.01) 35%, transparent 50%);
-  pointer-events: none;
-  z-index: 15;
 }
 .dynamic-island {
   position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
-  width: 118px; height: 27px; background: #000; border-radius: 24px; z-index: 25;
+  width: 118px; height: 26px; background: #000; border-radius: 24px; z-index: 25;
   display: flex; align-items: center; justify-content: space-between; padding: 0 11px;
   border: 1px solid rgba(212, 175, 55, 0.35);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.8);
 }
-.island-dot { width: 8px; height: 8px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981; animation: pulseDot 2s infinite; }
-@keyframes pulseDot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+.island-dot { width: 8px; height: 8px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981; }
 
 .phone-screen {
   flex: 1; overflow-y: auto; padding: 44px 13px 16px;
@@ -224,14 +215,12 @@ body {
   border: 1px solid rgba(212, 175, 55, 0.28);
   border-radius: 22px;
   padding: 12px;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.14);
-  transform-style: preserve-3d;
+  transition: all 0.22s ease;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
 }
 .menu-item-3d:hover {
-  transform: translateY(-4px) scale(1.015);
+  transform: translateY(-3px);
   border-color: rgba(245, 158, 11, 0.8);
-  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.75), 0 0 20px rgba(212, 175, 55, 0.25);
 }
 .icon-pedestal {
   width: 54px; height: 54px; border-radius: 17px;
@@ -239,7 +228,19 @@ body {
   border: 1px solid rgba(212, 175, 55, 0.45);
   display: flex; align-items: center; justify-content: center;
   font-size: 27px; flex-shrink: 0;
-  box-shadow: inset 0 2px 6px rgba(255,255,255,0.22), 0 8px 16px rgba(0,0,0,0.45);
+}
+
+.shop-logo-circle {
+  width: 68px; height: 68px; border-radius: 50%;
+  margin: 0 auto 8px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.25), rgba(0,0,0,0.6));
+  border: 2px solid #D4AF37;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+.shop-logo-circle img {
+  width: 100%; height: 100%; object-fit: cover;
 }
 
 .smartpos-viral-card {
@@ -249,24 +250,20 @@ body {
   border-radius: 20px;
   padding: 14px;
   text-align: center;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 14px 34px rgba(0,0,0,0.7), 0 0 22px rgba(212, 175, 55, 0.2);
 }
 
 .table-tent-card {
-  width: 365px; margin: 0 auto; border-radius: 28px; padding: 26px 22px 18px;
-  text-align: center; position: relative; overflow: hidden; transition: 0.3s;
+  width: 390px; max-width: 100%; margin: 0 auto; border-radius: 28px; padding: 24px 20px 18px;
+  text-align: center; position: relative; overflow: hidden;
 }
 .tent-royal {
   background: radial-gradient(circle at top, #241C08 0%, #080B12 72%);
   border: 2.5px solid #D4AF37; color: #FFF8E7;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.8), inset 0 0 35px rgba(212,175,55,0.15);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.8);
 }
 .tent-light {
   background: linear-gradient(180deg, #FFFFFF 0%, #FFF9E6 100%);
   border: 2.5px solid #D4AF37; color: #181204;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.45);
 }
 .tent-emerald {
   background: radial-gradient(circle at top, #073325 0%, #04120E 75%);
@@ -275,24 +272,24 @@ body {
 
 .invoice-sheet {
   background: #FFFFFF; color: #111827; margin: 0 auto;
-  border-radius: 16px; padding: 22px; box-shadow: 0 20px 50px rgba(0,0,0,0.65);
+  border-radius: 16px; padding: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.65);
 }
 .invoice-thermal {
-  max-width: 345px; font-family: 'Cairo', monospace;
+  max-width: 365px; font-family: 'Cairo', sans-serif;
   border-top: 6px dashed #D4AF37; border-bottom: 6px dashed #D4AF37;
   border-radius: 8px; padding: 16px 14px;
 }
-.invoice-a5 { max-width: 495px; border: 2px solid #D4AF37; }
+.invoice-a5 { max-width: 500px; border: 2px solid #D4AF37; }
 
-/* مربع الباركود القياسي الممتلئ 100% */
+/* مربع الباركود فائق الوضوح بمربعات كبيرة وهامش أبيض نقي */
 .qr-box-full {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: #FFFFFF !important;
-  padding: 10px !important;
-  border-radius: 20px;
-  border: 3px solid #D4AF37;
+  padding: 14px !important;
+  border-radius: 22px;
+  border: 4px solid #D4AF37;
   line-height: 0;
   overflow: hidden;
   box-sizing: border-box;
@@ -308,34 +305,23 @@ body {
   image-rendering: pixelated;
 }
 
-[data-tilt] {
-  transition: transform 0.16s cubic-bezier(0.03, 0.98, 0.52, 0.99);
-  transform-style: preserve-3d; will-change: transform;
-}
-
 .floating-bar {
   position: fixed; bottom: 20px; left: 20px; z-index: 60;
   display: flex; align-items: center; gap: 12px;
 }
 .fab-btn {
-  width: 56px; height: 56px; border-radius: 50%;
+  width: 54px; height: 54px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 25px; color: #FFF; text-decoration: none;
+  font-size: 24px; color: #FFF; text-decoration: none;
   box-shadow: 0 10px 25px rgba(0,0,0,0.55); transition: 0.25s;
 }
-.fab-btn:hover { transform: scale(1.1) translateY(-4px); }
-.fab-wa { background: linear-gradient(135deg, #25D366, #128C7E); animation: waPulse 1.8s infinite; }
+.fab-wa { background: linear-gradient(135deg, #25D366, #128C7E); }
 .fab-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
-@keyframes waPulse {
-  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.75); }
-  100% { box-shadow: 0 0 0 22px rgba(37, 211, 102, 0); }
-}
 
 #customerFullView {
   position: fixed; inset: 0; z-index: 100;
-  background: radial-gradient(circle at top, rgba(30, 22, 6, 0.94) 0%, rgba(3, 5, 9, 0.98) 75%);
+  background: radial-gradient(circle at top, rgba(30, 22, 6, 0.96) 0%, rgba(3, 5, 9, 0.99) 75%);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   overflow-y: auto; display: none;
 }
 #customerFullView.active { display: block; }
@@ -344,7 +330,7 @@ body {
   position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
   z-index: 200; background: rgba(15, 23, 42, 0.95); border: 1.5px solid #D4AF37;
   color: #FFF5C0; padding: 10px 20px; border-radius: 999px; font-weight: 800; font-size: 13px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.8); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.8); transition: transform 0.35s ease;
   pointer-events: none;
 }
 #toastNotif.show { transform: translateX(-50%) translateY(0); }
@@ -376,12 +362,35 @@ body {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
+  .no-print {
+    display: none !important;
+  }
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 }
 </style>
+<script>
+// حارس فوري قبل تحميل الصفحة: إذا كان الرابط من باركود الزبون نخفي لوحة المالك فوراً
+(function() {
+  var href = window.location.href || '';
+  var q = window.location.search || '';
+  var h = window.location.hash || '';
+  if (
+    q.indexOf('m=') !== -1 ||
+    q.indexOf('i=') !== -1 ||
+    q.indexOf('s=') !== -1 ||
+    h.indexOf('#t') === 0 ||
+    h.indexOf('#i') === 0 ||
+    h.indexOf('#m') === 0 ||
+    href.indexOf('?m=') !== -1
+  ) {
+    window.__FORCE_CUSTOMER_ONLY = true;
+    document.documentElement.classList.add('is-customer-scan');
+  }
+})();
+</script>
 </head>
 <body>
 
@@ -390,7 +399,7 @@ body {
 <div id="toastNotif">تم الحفظ بنجاح</div>
 
 <!-- =========================================================================
-     شاشة الزبون التفاعلية 3D الكاملة
+     شاشة الزبون التفاعلية 3D الكاملة (تظهر وحدها فقط عند مسح الباركود)
      ========================================================================= -->
 <div id="customerFullView">
   <div class="sticky top-0 z-30 backdrop-blur-xl bg-black/85 border-b border-yellow-500/30 px-4 py-3">
@@ -398,7 +407,7 @@ body {
       <div class="flex items-center gap-2 text-xs">
         <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
         <span class="px-3 py-1 rounded-full bg-yellow-500/20 border border-yellow-400/50 text-yellow-300 font-extrabold">
-          ⚡ منيو <span id="topCustomerShopName">المطعم</span> 3D
+          ⚡ منيو <span id="topCustomerShopName">المطعم</span>
         </span>
       </div>
       <div class="flex items-center gap-2">
@@ -418,13 +427,13 @@ body {
 </div>
 
 <!-- =========================================================================
-     واجهة الاستوديو الرئيسية (SmartPOS Studio)
+     واجهة الاستوديو الرئيسية لصاحب المطعم (تُحذف تلقائياً عند الزبون)
      ========================================================================= -->
 <div class="content-layer" id="studioMainWrapper">
   <header class="sticky top-0 z-40 backdrop-blur-xl bg-black/55 border-b border-yellow-500/20">
     <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-yellow-300 via-yellow-500 to-amber-600 flex items-center justify-center text-black font-black text-xl shadow-lg shadow-amber-500/30">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-yellow-300 via-yellow-500 to-amber-600 flex items-center justify-center text-black font-black text-xl shadow-lg">
           SP
         </div>
         <div>
@@ -432,18 +441,18 @@ body {
             <span class="font-black text-lg tracking-wide gold-gradient-text">SmartPOS 3D</span>
             <span class="text-[11px] bg-yellow-500/15 border border-yellow-500/40 text-yellow-300 px-2 py-0.5 rounded-full font-bold" dir="ltr">@SMAR.TPOS</span>
           </div>
-          <p class="text-xs text-gray-400 m-0">نظام المنيو التفاعلي 3D والباركود المستقل والفواتير للمطاعم</p>
+          <p class="text-xs text-gray-400 m-0">نظام المنيو التفاعلي 3D والباركود الخفيف والكاشير للمطاعم</p>
         </div>
       </div>
 
       <div class="flex items-center flex-wrap gap-2">
-        <button onclick="openLiveQRLinkInBrowser()" class="btn-luxury !py-2 !px-3.5 text-xs border-emerald-400/50 text-emerald-300">
-          <i class="fa-solid fa-up-right-from-square"></i>
-          <span>اختبار فتح رابط الباركود الفعلي</span>
+        <button onclick="openLiveQRLinkInBrowser('table')" class="btn-luxury !py-2 !px-3.5 text-xs border-emerald-400/50 text-emerald-300">
+          <i class="fa-solid fa-utensils"></i>
+          <span>معاينة شاشة باركود الطاولة</span>
         </button>
-        <button onclick="openCustomerFullView(false)" class="btn-luxury !py-2 !px-3.5 text-xs">
-          <i class="fa-solid fa-mobile-screen-button text-yellow-400"></i>
-          <span>معاينة شاشة الزبون 3D</span>
+        <button onclick="openLiveQRLinkInBrowser('invoice')" class="btn-luxury !py-2 !px-3.5 text-xs border-amber-400/50 text-amber-300">
+          <i class="fa-solid fa-receipt"></i>
+          <span>معاينة شاشة باركود الفاتورة</span>
         </button>
         <a data-wa-link target="_blank" class="btn-luxury btn-gold-solid !py-2 !px-4 text-xs">
           <i class="fa-brands fa-whatsapp text-base"></i>
@@ -453,19 +462,17 @@ body {
     </div>
   </header>
 
-  <section class="max-w-6xl mx-auto px-4 pt-7 pb-3 text-center">
-    <div class="inline-flex items-center gap-2 luxury-glass px-5 py-2 mb-3 text-xs sm:text-sm font-extrabold text-yellow-300 border-yellow-400/40">
-      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-      <span>مُقدم من نظام الكاشير والمحاسبة الذكي SmartPOS 3D</span>
-    </div>
-
+  <section class="max-w-6xl mx-auto px-4 pt-6 pb-2 text-center">
     <h1 class="text-2xl sm:text-4xl font-black leading-tight mb-2 gold-gradient-text">
-      لكل مطعم منيو 3D وباركود QR مستقل يفتح فوراً بدون أخطاء
+      باركود فائق الوضوح بنقاط قليلة يفتح منيو المطعم فقط للزبون
     </h1>
+    <p class="text-xs sm:text-sm text-gray-300 max-w-2xl mx-auto">
+      <b class="text-yellow-400">باركود الطاولة</b> يفتح منيو المطعم فقط للطلب من الطاولة، و<b class="text-emerald-400">باركود الفاتورة</b> يعرض للزبون فاتورته الإلكترونية فقط مع زر إعادة طلبها عبر واتساب!
+    </p>
   </section>
 
   <!-- شريط إدارة المطاعم والمحلات المستقلة -->
-  <section class="max-w-7xl mx-auto px-4 mb-5">
+  <section class="max-w-7xl mx-auto px-4 mb-5 mt-3">
     <div class="luxury-glass p-4 border-yellow-400/40">
       <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
         <div class="flex items-center gap-2">
@@ -473,15 +480,15 @@ body {
             <i class="fa-solid fa-store"></i>
           </span>
           <div>
-            <h3 class="text-sm font-black text-yellow-300 m-0">إدارة المطاعم والمحلات المستقلة (بدون تشابك)</h3>
-            <p class="text-[11px] text-gray-400 m-0">كل مطعم هنا له قاعدة بيانات، عداد فواتير يبدأ من 1، وباركود QR خاص به وحده:</p>
+            <h3 class="text-sm font-black text-yellow-300 m-0">مطاعمك ومحلاتك المستقلة (لكل مطعم منيو وشعار وباركود خاص)</h3>
+            <p class="text-[11px] text-gray-400 m-0">اضغط على اسم المطعم للتعديل عليه أو أنشئ مطعماً جديداً:</p>
           </div>
         </div>
 
         <div class="flex items-center gap-2">
           <button onclick="createNewIndependentShop()" class="btn-luxury btn-gold-solid !py-2 !px-4 !text-xs">
             <i class="fa-solid fa-plus-circle"></i>
-            <span>إنشاء مطعم / محل جديد مستقل</span>
+            <span>+ إنشاء مطعم / كافيه جديد مستقل</span>
           </button>
           <button onclick="deleteCurrentShop()" class="btn-luxury !py-2 !px-3 !text-xs border-red-500/40 text-red-300 hover:bg-red-500/15" title="حذف هذا المطعم">
             <i class="fa-solid fa-trash-can"></i>
@@ -496,27 +503,27 @@ body {
   <!-- مساحة العمل التفاعلية -->
   <section id="studioSection" class="max-w-7xl mx-auto px-4 py-2 grid lg:grid-cols-12 gap-7 items-start pb-16">
     
-    <!-- العمود الأيمن: بيانات المحل والباركود الذكي والأصناف -->
+    <!-- العمود الأيمن: بيانات المحل والشعار والأصناف -->
     <div class="lg:col-span-5 luxury-glass p-5 sm:p-6 space-y-5">
       <div class="flex items-center justify-between border-b border-yellow-500/20 pb-3">
         <h2 class="text-base sm:text-lg font-black gold-gradient-text flex items-center gap-2 m-0">
           <i class="fa-solid fa-sliders text-yellow-400"></i>
-          <span>1. بيانات وأصناف: <span id="editorActiveShopTitle" class="text-white"></span></span>
+          <span>1. بيانات وشعار: <span id="editorActiveShopTitle" class="text-white"></span></span>
         </h2>
         <span id="saveStatusBadge" class="text-[11px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 rounded-full font-bold">
-          <i class="fa-solid fa-floppy-disk"></i> محفوظ ومستقل
+          <i class="fa-solid fa-floppy-disk"></i> محفوظ تلقائياً
         </span>
       </div>
 
-      <!-- الحقول الأساسية للمطعم -->
+      <!-- الحقول الأساسية للمطعم + رفع الشعار -->
       <div class="grid grid-cols-2 gap-3">
         <div class="col-span-2 sm:col-span-1">
-          <label class="text-xs text-gray-300 font-bold mb-1 block">اسم المطعم / الكافيه / المحل</label>
-          <input id="inpName" class="luxury-input" placeholder="مثال: كافيه لافنة" oninput="updateField('name', this.value)">
+          <label class="text-xs text-gray-300 font-bold mb-1 block">اسم المطعم / الكافيه</label>
+          <input id="inpName" class="luxury-input" placeholder="مثال: مطعم المندي الملكي" oninput="updateField('name', this.value)">
         </div>
         <div class="col-span-2 sm:col-span-1">
-          <label class="text-xs text-gray-300 font-bold mb-1 block">رقم واتساب المحل (للطلبات)</label>
-          <input id="inpPhone" class="luxury-input" dir="ltr" placeholder="734755062" oninput="updateField('phone', this.value)">
+          <label class="text-xs text-gray-300 font-bold mb-1 block">رقم واتساب المحل (لاستقبال الطلبات)</label>
+          <input id="inpPhone" class="luxury-input" dir="ltr" placeholder="770000000" oninput="updateField('phone', this.value)">
         </div>
 
         <div>
@@ -533,47 +540,32 @@ body {
           </select>
         </div>
 
+        <!-- قسم شعار المطعم -->
+        <div class="col-span-2 p-3 rounded-2xl bg-yellow-500/5 border border-yellow-500/30 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-yellow-300">🖼️ شعار المطعم (يظهر في المنيو والبطاقة والفاتورة)</span>
+            <button onclick="clearShopLogo()" class="text-[11px] text-red-300 hover:underline">حذف الشعار</button>
+          </div>
+          <div class="grid grid-cols-12 gap-2 items-center">
+            <div class="col-span-8">
+              <label class="btn-luxury btn-gold-solid w-full !py-2 !px-3 !text-xs cursor-pointer relative overflow-hidden">
+                <i class="fa-solid fa-upload"></i>
+                <span>اختر صورة شعار المطعم من جهازك</span>
+                <input type="file" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" onchange="handleLogoUpload(event)">
+              </label>
+            </div>
+            <div class="col-span-4">
+              <input id="inpEmoji" class="luxury-input text-center" maxlength="4" placeholder="أو رمز 🍽️" oninput="updateField('emoji', this.value)">
+            </div>
+            <div class="col-span-12">
+              <input id="inpLogoUrl" class="luxury-input !text-xs" dir="ltr" placeholder="أو ضع رابط صورة الشعار المباشر (اختياري) https://..." oninput="updateField('logoUrl', this.value)">
+            </div>
+          </div>
+        </div>
+
         <div class="col-span-2">
           <label class="text-xs text-gray-300 font-bold mb-1 block">رسالة الترحيب / العنوان في المنيو والفاتورة</label>
-          <input id="inpWelcome" class="luxury-input" placeholder="أهلاً بكم في منيو كافيه لافنة" oninput="updateField('welcome', this.value)">
-        </div>
-      </div>
-
-      <!-- إعدادات رابط الباركود الذكي 3D والسحابة (Telegra.ph) -->
-      <div class="p-3.5 rounded-2xl bg-yellow-500/5 border border-yellow-500/30 space-y-2.5">
-        <div class="flex items-center justify-between gap-2">
-          <span class="text-xs font-extrabold text-yellow-300 flex items-center gap-1.5">
-            <i class="fa-solid fa-qrcode"></i>
-            <span>محرك المزامنة (Telegra.ph / GitHub)</span>
-          </span>
-          <span id="qrModeIndicator" class="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold">
-            جاهز للمسح
-          </span>
-        </div>
-
-        <div>
-          <label class="text-[11px] text-gray-300 font-bold mb-1 block">
-            رابط استضافة المنيو 3D (أو دعه فارغاً لاستخدام Telegra.ph السحابي):
-          </label>
-          <div class="flex gap-2">
-            <input id="inpHostUrl" class="luxury-input !text-xs" dir="ltr" placeholder="https://your-site.github.io" oninput="updateHostUrl(this.value)">
-            <button onclick="syncCloudTelegraphMenu(true)" id="btnCloudSync" class="btn-luxury btn-gold-solid !py-2 !px-3 !text-xs whitespace-nowrap">
-              <i class="fa-solid fa-cloud-arrow-up"></i>
-              <span>تحديث سحابي</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="flex items-center justify-between gap-2 pt-1 text-[11px] text-gray-400">
-          <span class="truncate">الرابط الفعال في الباركود: <b id="activeQrUrlText" class="text-yellow-300" dir="ltr">...</b></span>
-          <div class="flex items-center gap-2 flex-shrink-0">
-            <button onclick="openLiveQRLinkInBrowser()" class="text-emerald-400 hover:underline font-bold">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i> فتح
-            </button>
-            <button onclick="copyActiveQRLink()" class="text-yellow-400 hover:underline font-bold">
-              <i class="fa-regular fa-copy"></i> نسخ
-            </button>
-          </div>
+          <input id="inpWelcome" class="luxury-input" placeholder="أهلاً بكم - الطعم الأصيل" oninput="updateField('welcome', this.value)">
         </div>
       </div>
 
@@ -582,25 +574,25 @@ body {
         <div class="flex items-center justify-between mb-3">
           <h3 class="text-sm font-black text-yellow-300 m-0 flex items-center gap-2">
             <i class="fa-solid fa-utensils"></i>
-            <span>أصناف المنيو (<span id="itemsCountLabel">0</span>)</span>
+            <span>2. أصناف المنيو (<span id="itemsCountLabel">0</span>)</span>
           </h3>
-          <span class="text-[11px] text-gray-400">اضغط على أي صنف لإضافته للفاتورة</span>
+          <span class="text-[11px] text-emerald-300 font-bold">استخدم (+) و (−) لإضافتها للفاتورة</span>
         </div>
 
         <!-- نموذج إضافة صنف جديد -->
         <div class="p-3 rounded-2xl bg-black/40 border border-white/10 space-y-2.5 mb-3">
           <div class="grid grid-cols-12 gap-2">
             <div class="col-span-3 sm:col-span-2">
-              <input id="newItemIcon" class="luxury-input text-center !px-1" value="☕" placeholder="أيقونة">
+              <input id="newItemIcon" class="luxury-input text-center !px-1" value="🍔" placeholder="رمز">
             </div>
             <div class="col-span-9 sm:col-span-6">
-              <input id="newItemName" class="luxury-input" placeholder="اسم الصنف (مثال: موكا بارد)">
+              <input id="newItemName" class="luxury-input" placeholder="اسم الصنف (مثال: برجر لحم)">
             </div>
             <div class="col-span-6 sm:col-span-4">
-              <input id="newItemPrice" type="number" class="luxury-input" placeholder="السعر (2000)">
+              <input id="newItemPrice" type="number" class="luxury-input" placeholder="السعر (2500)">
             </div>
             <div class="col-span-6 sm:col-span-7">
-              <input id="newItemCategory" class="luxury-input !text-xs" placeholder="القسم (مثال: قهوة باردة)">
+              <input id="newItemCategory" class="luxury-input !text-xs" placeholder="القسم (مثال: الوجبات السريعة)">
             </div>
             <div class="col-span-12 sm:col-span-5">
               <button onclick="addNewMenuItem()" class="btn-luxury btn-gold-solid w-full !py-2.5 !text-xs">
@@ -612,49 +604,41 @@ body {
         </div>
 
         <!-- قائمة الأصناف الحالية -->
-        <div id="editorItemsList" class="space-y-2 max-h-64 overflow-y-auto pr-1"></div>
+        <div id="editorItemsList" class="space-y-2 max-h-72 overflow-y-auto pr-1"></div>
       </div>
 
-      <!-- إعدادات الفاتورة الفورية (تبدأ من رقم 1) -->
-      <div class="border-t border-yellow-500/20 pt-4 space-y-3">
-        <div class="flex items-center justify-between">
-          <h3 class="text-sm font-black text-yellow-300 m-0 flex items-center gap-2">
-            <i class="fa-solid fa-receipt"></i>
-            <span>إدارة الفاتورة الحرارية والضريبية</span>
-          </h3>
-          <div class="flex items-center gap-1.5">
-            <button onclick="resetInvoiceNumberToOne()" class="px-2.5 py-1 rounded-lg bg-yellow-500/15 border border-yellow-500/40 text-yellow-300 text-[11px] font-bold hover:bg-yellow-500/25">
-              تصفير لـ #1
-            </button>
-            <button onclick="nextInvoiceOrder()" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-bold hover:bg-emerald-500/30">
-              + فاتورة جديدة
-            </button>
-          </div>
+      <!-- إعدادات رابط الاستضافة للباركود -->
+      <div class="p-3.5 rounded-2xl bg-yellow-500/5 border border-yellow-500/30 space-y-2.5">
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-xs font-extrabold text-yellow-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-qrcode"></i>
+            <span>رابط موقعك المرفوع (Netlify أو GitHub)</span>
+          </span>
+          <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold">
+            باركود خفيف جداً
+          </span>
         </div>
 
-        <div class="grid grid-cols-3 gap-2">
-          <div>
-            <label class="text-[11px] text-gray-400 font-bold block mb-1">رقم الفاتورة</label>
-            <input id="inpInvoiceNo" type="number" min="1" class="luxury-input text-center font-black text-yellow-300" oninput="updateField('invoiceNo', Math.max(1, parseInt(this.value)||1))">
-          </div>
-          <div>
-            <label class="text-[11px] text-gray-400 font-bold block mb-1">الطاولة / العميل</label>
-            <input id="inpTableNo" class="luxury-input text-center" placeholder="طاولة 1" oninput="updateField('tableNo', this.value)">
-          </div>
-          <div>
-            <label class="text-[11px] text-gray-400 font-bold block mb-1">الخصم</label>
-            <input id="inpDiscount" type="number" min="0" class="luxury-input text-center" placeholder="0" oninput="updateField('discount', parseFloat(this.value)||0)">
-          </div>
+        <input id="inpHostUrl" class="luxury-input !text-xs" dir="ltr" placeholder="https://your-site.netlify.app" oninput="updateHostUrl(this.value)">
+        <p class="text-[11px] text-amber-300/90 m-0 leading-relaxed">
+          ⚠️ <b>مهم:</b> تأكد من رفع ملف <code>index.html</code> هذا على الرابط أعلاه حتى يفتح للجوال شاشة المنيو فقط.
+        </p>
+
+        <div class="flex items-center justify-between gap-2 pt-1 text-[11px] text-gray-400">
+          <span class="truncate">رابط الزبون: <b id="activeQrUrlText" class="text-yellow-300" dir="ltr">...</b></span>
+          <button onclick="copyActiveQRLink()" class="text-yellow-400 hover:underline font-bold flex-shrink-0">
+            <i class="fa-regular fa-copy"></i> نسخ الرابط
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- العمود الأيسر: منصة العرض الثلاثي الأبعاد والباركود والفواتير -->
+    <!-- العمود الأيسر: المنيو 3D، ستاند الطاولة، ولوحة الكاشير والفاتورة -->
     <div class="lg:col-span-7 space-y-5">
       <!-- أزرار التبديل بين أوضاع الاستوديو -->
       <div class="luxury-glass p-3 flex flex-wrap gap-2">
         <button class="studio-tab active" id="tabBtn3d" onclick="switchStudioTab('3d')">
-          <i class="fa-solid fa-cube"></i>
+          <i class="fa-solid fa-mobile-screen"></i>
           <span>1. المنيو التفاعلي 3D</span>
         </button>
         <button class="studio-tab" id="tabBtnTent" onclick="switchStudioTab('tent')">
@@ -662,8 +646,8 @@ body {
           <span>2. ستاند باركود الطاولات</span>
         </button>
         <button class="studio-tab" id="tabBtnInvoice" onclick="switchStudioTab('invoice')">
-          <i class="fa-solid fa-file-invoice-dollar"></i>
-          <span>3. الفاتورة الحرارية / A5</span>
+          <i class="fa-solid fa-cash-register"></i>
+          <span>3. قطع فاتورة للزبون (الكاشير)</span>
         </button>
       </div>
 
@@ -671,12 +655,12 @@ body {
       <div id="panel3d" class="luxury-glass p-4 sm:p-6">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
           <div>
-            <h3 class="text-base font-black gold-gradient-text m-0">معاينة جوال الزبون الثلاثية الأبعاد (Live 3D Menu)</h3>
-            <p class="text-xs text-gray-400 m-0">جرب إضافة الأصناف للسلة وإرسال الطلب عبر واتساب كما يراه الزبون تماماً</p>
+            <h3 class="text-base font-black gold-gradient-text m-0">معاينة منيو الزبون التفاعلي 3D</h3>
+            <p class="text-xs text-gray-400 m-0">هذه الشاشة فقط هي التي تفتح للزبون عند مسح الباركود (بدون لوحة التحكم نهائياً)</p>
           </div>
-          <button onclick="openCustomerFullView(false)" class="btn-luxury !py-2 !px-3.5 !text-xs">
+          <button onclick="openLiveQRLinkInBrowser('table')" class="btn-luxury !py-2 !px-3.5 !text-xs">
             <i class="fa-solid fa-expand text-yellow-400"></i>
-            <span>تكبير بملء الشاشة</span>
+            <span>تكبير شاشة الزبون</span>
           </button>
         </div>
 
@@ -689,11 +673,10 @@ body {
             </div>
             <div class="floating-3d-badge badge-left">
               <i class="fa-solid fa-wifi text-emerald-400"></i>
-              <span id="badgeWifiFloating">واي فاي مجاني للزبائن</span>
+              <span id="badgeWifiFloating">واي فاي مجاني</span>
             </div>
 
             <div class="iphone-mockup">
-              <div class="iphone-screen-glare"></div>
               <div class="dynamic-island">
                 <span class="text-[9px] text-yellow-400 font-black">SmartPOS</span>
                 <span class="island-dot"></span>
@@ -704,8 +687,15 @@ body {
         </div>
       </div>
 
-      <!-- اللوحة 2: ستاند باركود الطاولات القابل للطباعة -->
+      <!-- اللوحة 2: ستاند باركود الطاولات (نقاط قليلة جداً ومربعات كبيرة) -->
       <div id="panelTent" class="luxury-glass p-5 sm:p-6 hidden">
+        <div class="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 mb-4 text-xs text-emerald-200 flex items-center gap-2.5">
+          <i class="fa-solid fa-wand-magic-sparkles text-lg text-emerald-400"></i>
+          <div>
+            <b>باركود الطاولة (خفيف وسريع المسح):</b> يفتح للزبون <b>المنيو التفاعلي 3D فقط</b> مضبوطاً تلقائياً على <b>"🪑 طلب داخل المحل (طاولة)"</b>.
+          </div>
+        </div>
+
         <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
           <div class="flex items-center gap-2">
             <button onclick="setTentTheme('tent-royal')" class="btn-luxury !py-1.5 !px-3 !text-xs">ملكي ذهبي</button>
@@ -720,18 +710,20 @@ body {
 
         <div id="tentPrintTarget">
           <div id="tentCardElement" class="table-tent-card tent-royal">
+            <div id="tentLogoMount" class="shop-logo-circle">🍽️</div>
             <div class="text-xs font-extrabold tracking-widest uppercase text-yellow-400 mb-1">
-              ★ DIGITAL 3D MENU ★
+              ★ TABLE ORDER 3D MENU ★
             </div>
             <h2 id="tentShopName" class="text-2xl font-black mb-1">كافيه لافنة</h2>
-            <p id="tentWelcome" class="text-xs opacity-85 mb-4">أهلاً بكم في منيو كافيه لافنة</p>
+            <p id="tentWelcome" class="text-xs opacity-85 mb-3">أهلاً بكم في منيو كافيه لافنة</p>
 
-            <div class="qr-box-full w-56 h-56 mx-auto mb-4 shadow-2xl">
-              <img id="tentQrImg" alt="QR Code">
+            <!-- باركود عملاق (280×280) بنقاط قليلة وعريضة جداً للمسح الفوري -->
+            <div class="qr-box-full w-72 h-72 mx-auto mb-3 shadow-2xl">
+              <img id="tentQrImg" alt="Table QR Code">
             </div>
 
             <div class="text-sm font-black text-yellow-400 mb-3">
-              📱 وجّه كاميرا جوالك لمسح الباركود وفتح المنيو
+              📱 امسح الباركود بكاميرا جوالك لفتح المنيو والطلب لطاولتك
             </div>
 
             <div class="grid grid-cols-2 gap-2 text-xs font-bold bg-black/30 p-2.5 rounded-2xl border border-yellow-500/30 mb-3">
@@ -747,9 +739,69 @@ body {
         </div>
       </div>
 
-      <!-- اللوحة 3: الفاتورة الحرارية 80mm وفاتورة A5 -->
-      <div id="panelInvoice" class="luxury-glass p-5 sm:p-6 hidden">
-        <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+      <!-- اللوحة 3: كاشير الفاتورة الفورية + باركود الفاتورة الذكية فائق الخفة -->
+      <div id="panelInvoice" class="luxury-glass p-5 sm:p-6 hidden space-y-5">
+        
+        <div class="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs text-amber-200 flex items-center gap-2.5">
+          <i class="fa-solid fa-award text-lg text-yellow-400"></i>
+          <div>
+            <b>باركود الفاتورة فائق الوضوح:</b> يحمل أصناف الفاتورة فقط لتكون نقاطه قليلة وكبيرة جداً؛ وعند مسحه يفتح للزبون <b>فاتورته الإلكترونية الموثقة</b> مع زر <b>"🔄 إعادة طلب الفاتورة عبر واتساب"</b>!
+          </div>
+        </div>
+
+        <!-- لوحة الكاشير السريعة -->
+        <div class="p-4 rounded-2xl bg-black/45 border border-yellow-500/35 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-yellow-500/20 pb-2.5">
+            <div>
+              <h3 class="text-sm font-black text-yellow-300 m-0 flex items-center gap-2">
+                <i class="fa-solid fa-cash-register"></i>
+                <span>لوحة الكاشير السريعة (إضافة وتعديل وحذف أصناف الفاتورة)</span>
+              </h3>
+              <p class="text-[11px] text-gray-400 m-0">اضغط (+) للزيادة، أو (−) لإنقاص العدد لو زاد بالخطأ، أو (🗑) لحذف الصنف من الفاتورة</p>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button onclick="clearInvoiceCart()" class="px-2.5 py-1.5 rounded-xl bg-red-500/20 border border-red-500/40 text-red-300 text-xs font-bold hover:bg-red-500/30">
+                🗑 إفراغ الفاتورة
+              </button>
+              <button onclick="nextInvoiceOrder()" class="px-3 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold hover:bg-emerald-500/30">
+                + فاتورة زبون جديد
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div>
+              <label class="text-[11px] text-gray-400 font-bold block mb-1">رقم الفاتورة</label>
+              <div class="flex gap-1">
+                <input id="inpInvoiceNo" type="number" min="1" class="luxury-input text-center font-black text-yellow-300 !py-1.5" oninput="updateField('invoiceNo', Math.max(1, parseInt(this.value)||1))">
+                <button onclick="resetInvoiceNumberToOne()" class="px-2 rounded-xl bg-yellow-500/20 text-yellow-300 text-[10px] font-bold" title="تصفير لرقم 1">#1</button>
+              </div>
+            </div>
+            <div>
+              <label class="text-[11px] text-gray-400 font-bold block mb-1">اسم الزبون / الطاولة</label>
+              <input id="inpTableNo" class="luxury-input text-center !py-1.5" placeholder="طاولة 1" oninput="updateField('tableNo', this.value)">
+            </div>
+            <div>
+              <label class="text-[11px] text-gray-400 font-bold block mb-1">طريقة الدفع</label>
+              <select id="inpPayMethod" class="luxury-input !py-1.5" onchange="updateField('payMethod', this.value)">
+                <option value="نقداً">نقداً</option>
+                <option value="كريمي / محفظة">كريمي / محفظة</option>
+                <option value="شبكة">شبكة</option>
+                <option value="آجل">آجل</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[11px] text-gray-400 font-bold block mb-1">الخصم</label>
+              <input id="inpDiscount" type="number" min="0" class="luxury-input text-center !py-1.5" placeholder="0" oninput="updateField('discount', parseFloat(this.value)||0)">
+            </div>
+          </div>
+
+          <!-- أزرار الكاشير السريعة لكل صنف -->
+          <div id="cashierQuickPicker" class="grid sm:grid-cols-2 gap-2 max-h-56 overflow-y-auto pt-1"></div>
+        </div>
+
+        <!-- أزرار الطباعة واختيار المقاس -->
+        <div class="flex flex-wrap items-center justify-between gap-3">
           <div class="flex items-center gap-2">
             <button id="btnThermalMode" onclick="setInvoiceFormat('thermal')" class="btn-luxury btn-gold-solid !py-1.5 !px-3.5 !text-xs">
               <i class="fa-solid fa-receipt"></i> حرارية 80mm
@@ -758,12 +810,13 @@ body {
               <i class="fa-solid fa-file-lines"></i> قياس A5 رسمي
             </button>
           </div>
-          <button onclick="printElement('invoice')" class="btn-luxury btn-gold-solid !py-2 !px-5 !text-xs">
+          <button onclick="printElement('invoice')" class="btn-luxury btn-gold-solid !py-2.5 !px-6 !text-xs">
             <i class="fa-solid fa-print"></i>
             <span>طباعة الفاتورة الآن</span>
           </button>
         </div>
 
+        <!-- ورقة الفاتورة الجاهزة للطباعة -->
         <div id="invoicePrintTarget">
           <div id="invoiceSheetElement" class="invoice-sheet invoice-thermal"></div>
         </div>
@@ -777,7 +830,7 @@ body {
 <div id="printContainer"></div>
 
 <!-- أزرار التواصل العائمة -->
-<div class="floating-bar">
+<div class="floating-bar no-print">
   <a data-wa-link target="_blank" class="fab-btn fab-wa" title="تواصل واتساب لطلب نظام SmartPOS">
     <i class="fa-brands fa-whatsapp"></i>
   </a>
@@ -793,11 +846,220 @@ body {
 const SMARTPOS_PHONE = '967785619054';
 const SMARTPOS_DISPLAY_PHONE = '785619054';
 const SMARTPOS_IG = '@SMAR.TPOS';
-const STORAGE_KEY = 'SMARTPOS_3D_SHOPS_V1';
-const HOST_URL_KEY = 'SMARTPOS_3D_HOST_URL_V1';
+const STORAGE_KEY = 'SMARTPOS_3D_SHOPS_V9';
+const HOST_URL_KEY = 'SMARTPOS_3D_HOST_URL_V9';
 
 /* =========================================================================
-   البيانات الافتراضية المستقلة
+   توليد الأيقونة تلقائياً من اسم الصنف لتقليل حجم الباركود بنسبة 60%
+   ========================================================================= */
+function guessItemIcon(name) {
+  const s = String(name || '');
+  if (/برجر|بيرجر|زنجر|شاورما|سندوتش/.test(s)) return '🍔';
+  if (/مندي|لحم|مظبي|حنيذ|كباب|مشوي|أوصال/.test(s)) return '🍖';
+  if (/دجاج|فروج|شواية|مسحب|بروست/.test(s)) return '🍗';
+  if (/فحسة|سلتة|عقدة|مقلقل|قلابة|فول/.test(s)) return '🥘';
+  if (/قهوة|موكا|لاتيه|اسبريسو|كابتشينو|V60|شاي|عدني/.test(s)) return '☕';
+  if (/عصير|موهيتو|ليمون|مانجو|فراولة|مشروب|آيس/.test(s)) return '🧋';
+  if (/كرواسون|كنافة|بنت الصحن|حلى|كيك|فطيرة|مخبوزات/.test(s)) return '🥐';
+  if (/بيتزا/.test(s)) return '🍕';
+  if (/بطاطس|مقبلات|سلطة|سمبوسة/.test(s)) return '🍟';
+  return '🍽️';
+}
+
+/* =========================================================================
+   ضغط البيانات الذكي فائق القِصر (Base62) لتكبير مربعات الباركود وتقليل النقاط
+   ========================================================================= */
+const AB62 = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+function textToBytes(s) {
+  const o = [];
+  for (const ch of String(s || '')) {
+    const c = ch.codePointAt(0);
+    if (c < 128) o.push(c);
+    else if (c >= 0x621 && c <= 0x64A) o.push(c - 0x621 + 128);
+    else {
+      const u = new TextEncoder().encode(ch);
+      o.push(255, u.length);
+      for (const x of u) o.push(x);
+    }
+  }
+  return o;
+}
+function bytesToText(b) {
+  let s = '';
+  for (let i = 0; i < b.length; i++) {
+    const x = b[i];
+    if (x < 128) s += String.fromCharCode(x);
+    else if (x === 255) {
+      const n = b[i + 1];
+      s += new TextDecoder().decode(new Uint8Array(b.slice(i + 2, i + 2 + n)));
+      i += 1 + n;
+    } else s += String.fromCharCode(x - 128 + 0x621);
+  }
+  return s;
+}
+function enc62(s) {
+  let n = 0n;
+  for (const x of [1, ...textToBytes(s)]) n = n * 256n + BigInt(x);
+  let o = '';
+  while (n > 0n) {
+    o = AB62[Number(n % 62n)] + o;
+    n /= 62n;
+  }
+  return o;
+}
+function dec62(s) {
+  let n = 0n;
+  for (const c of String(s || '').trim()) {
+    const k = AB62.indexOf(c);
+    if (k < 0) continue;
+    n = n * 62n + BigInt(k);
+  }
+  const b = [];
+  while (n > 0n) {
+    b.unshift(Number(n % 256n));
+    n /= 256n;
+  }
+  return bytesToText(b.slice(1));
+}
+const cleanDelim = s => String(s == null ? '' : s).replace(/[~:;,]/g, ' ').trim();
+
+/* 1. حزم باركود الطاولة بأقل عدد حروف ممكن (بدون حشو أيقونات أو نصوص طويلة) */
+function packTableMenuUltraLight(shop) {
+  const itemsStr = shop.items.map(i => `${cleanDelim(i.name)}:${Math.round(Number(i.price) || 0)}`).join(';');
+  const raw = [
+    'T',
+    cleanDelim(shop.name),
+    cleanDelim(shop.phone),
+    cleanDelim(shop.wifi),
+    cleanDelim(shop.currency || 'ر.ي'),
+    itemsStr
+  ].join('~');
+  return enc62(raw);
+}
+
+/* 2. حزم باركود الفاتورة (يحمل أصناف الفاتورة فقط ليكون الباركود خفيفاً جداً وبنقاط قليلة!) */
+function packInvoiceUltraLight(shop) {
+  const cart = (Array.isArray(shop.invoiceCart) && shop.invoiceCart.length > 0)
+    ? shop.invoiceCart
+    : shop.items.slice(0, 2).map(i => ({ id: i.id, name: i.name, price: i.price, qty: 1 }));
+
+  const cartStr = cart.map(c => `${cleanDelim(c.name)}:${Math.round(Number(c.price) || 0)}:${c.qty || 1}`).join(';');
+  const raw = [
+    'I',
+    cleanDelim(shop.name),
+    cleanDelim(shop.phone),
+    cleanDelim(shop.currency || 'ر.ي'),
+    String(shop.invoiceNo || 1),
+    String(Math.round(Number(shop.discount) || 0)),
+    cartStr
+  ].join('~');
+  return enc62(raw);
+}
+
+/* فك التشفير الموحد والآمن (يدعم باركود الطاولة الخفيف + باركود الفاتورة الخفيف) */
+function unpackUltraLight(token) {
+  try {
+    const decodedStr = dec62(token);
+    const p = decodedStr.split('~');
+    const type = p[0];
+
+    if (type === 'I') {
+      // باركود الفاتورة الذكية
+      const name = p[1] || 'المطعم';
+      const phone = p[2] || '';
+      const currency = p[3] || 'ر.ي';
+      const invNo = Number(p[4]) || 1;
+      const discount = Number(p[5]) || 0;
+      const invItems = (p[6] || '').split(';').filter(Boolean).map((x, idx) => {
+        const a = x.split(':');
+        const itName = a[0] || 'صنف';
+        return {
+          id: idx + 1,
+          icon: guessItemIcon(itName),
+          name: itName,
+          price: Number(a[1]) || 0,
+          qty: Number(a[2]) || 1,
+          category: 'أصناف الفاتورة'
+        };
+      });
+      return {
+        id: 'CUST_INV',
+        name,
+        phone,
+        wifi: '',
+        currency,
+        emoji: guessItemIcon(name),
+        welcome: 'شكراً لزيارتكم ' + name,
+        logo: '',
+        logoUrl: '',
+        items: invItems,
+        scannedInvoice: { invoiceNo: invNo, discount, items: invItems }
+      };
+    }
+
+    if (type === 'T') {
+      // باركود الطاولة الخفيف
+      const name = p[1] || 'المطعم';
+      const phone = p[2] || '';
+      const wifi = p[3] || '';
+      const currency = p[4] || 'ر.ي';
+      const items = (p[5] || '').split(';').filter(Boolean).map((x, idx) => {
+        const a = x.split(':');
+        const itName = a[0] || 'صنف';
+        return {
+          id: idx + 1,
+          icon: guessItemIcon(itName),
+          name: itName,
+          price: Number(a[1]) || 0,
+          category: 'القائمة الرئيسية'
+        };
+      });
+      return {
+        id: 'CUST_TABLE',
+        name,
+        phone,
+        wifi,
+        currency,
+        emoji: guessItemIcon(name),
+        welcome: 'أهلاً بكم في منيو ' + name,
+        logo: '',
+        logoUrl: '',
+        items,
+        scannedInvoice: null
+      };
+    }
+
+    // دعم احتياطي للباركود السابق
+    const cats = (p[5] || '').split(',');
+    const items = (p[6] || '').split(';').filter(Boolean).map((x, idx) => {
+      const a = x.split(':');
+      return {
+        id: idx + 1,
+        icon: a[0] || '🍽️',
+        name: a[1] || 'صنف',
+        category: cats[Number(a[2])] || 'عام',
+        price: Number(a[3]) || 0
+      };
+    });
+    return {
+      id: 'CUST_SCAN',
+      name: p[0] || 'منيو المطعم',
+      phone: p[1] || '',
+      currency: p[2] || 'ر.ي',
+      emoji: p[3] || '🍽️',
+      wifi: p[4] || '',
+      welcome: 'أهلاً بكم في ' + (p[0] || 'المطعم'),
+      logo: '',
+      logoUrl: '',
+      items
+    };
+  } catch (e) {
+    return null;
+  }
+}
+
+/* =========================================================================
+   البيانات الافتراضية للمطاعم المستقلة
    ========================================================================= */
 const DEFAULT_SHOPS = [
   {
@@ -806,40 +1068,43 @@ const DEFAULT_SHOPS = [
     phone: '734755062',
     wifi: '12345678',
     currency: 'ر.ي',
+    emoji: '☕',
+    logo: '',
+    logoUrl: '',
     welcome: 'أهلاً بكم في منيو كافيه لافنة',
     invoiceNo: 1,
     tableNo: 'طاولة 1',
+    payMethod: 'نقداً',
     discount: 0,
-    cloudUrl: '',
-    cloudPath: '',
     items: [
-      { id: 1, icon: '🧋', name: 'آيس موكا بالكراميل', price: 2000, category: 'قهوة باردة', popular: true },
-      { id: 2, icon: '🫖', name: 'قهوة مختصة V60 إثيوبي', price: 2200, category: 'قهوة مقطرة', popular: true },
-      { id: 3, icon: '🥐', name: 'كرواسون زبدة فرنسي', price: 1200, category: 'المخبوزات', popular: true }
+      { id: 1, icon: '🧋', name: 'آيس موكا بالكراميل', price: 2000, category: 'قهوة باردة' },
+      { id: 2, icon: '☕', name: 'قهوة مختصة V60', price: 2200, category: 'قهوة مقطرة' },
+      { id: 3, icon: '🥐', name: 'كرواسون زبدة فرنسي', price: 1200, category: 'المخبوزات' }
     ],
     invoiceCart: [
       { id: 1, name: 'آيس موكا بالكراميل', price: 2000, qty: 1 },
-      { id: 2, name: 'قهوة مختصة V60 إثيوبي', price: 2200, qty: 1 },
-      { id: 3, name: 'كرواسون زبدة فرنسي', price: 1200, qty: 1 }
+      { id: 2, name: 'قهوة مختصة V60', price: 2200, qty: 1 }
     ]
   },
   {
     id: 'S102',
-    name: 'مطعم ومطبخ المندي الملكي',
+    name: 'مطعم المندي الملكي',
     phone: '770000000',
     wifi: '88889999',
     currency: 'ر.ي',
+    emoji: '🍖',
+    logo: '',
+    logoUrl: '',
     welcome: 'أهلاً بكم في مطعم المندي الملكي - الطعم الأصيل',
     invoiceNo: 1,
     tableNo: 'طاولة 3',
+    payMethod: 'نقداً',
     discount: 0,
-    cloudUrl: '',
-    cloudPath: '',
     items: [
-      { id: 101, icon: '🍖', name: 'مندي لحم بلدي نفر', price: 6500, category: 'الأطباق الرئيسية', popular: true },
-      { id: 102, icon: '🍗', name: 'مندي دجاج نصف حبة', price: 2800, category: 'الأطباق الرئيسية', popular: true },
-      { id: 103, icon: '🥘', name: 'فحسة يمنية بالحلبة', price: 3200, category: 'الشعبيات', popular: true },
-      { id: 104, icon: '🥗', name: 'سلطة خضراء مع سحاوق', price: 700, category: 'المقبلات', popular: false }
+      { id: 101, icon: '🍖', name: 'مندي لحم بلدي نفر', price: 6500, category: 'الأطباق الرئيسية' },
+      { id: 102, icon: '🍗', name: 'مندي دجاج نصف حبة', price: 2800, category: 'الأطباق الرئيسية' },
+      { id: 103, icon: '🥘', name: 'فحسة يمنية بالحلبة', price: 3200, category: 'الشعبيات' },
+      { id: 104, icon: '🍔', name: 'برجر لحم ملكي', price: 2200, category: 'الوجبات السريعة' }
     ],
     invoiceCart: [
       { id: 101, name: 'مندي لحم بلدي نفر', price: 6500, qty: 1 }
@@ -849,67 +1114,32 @@ const DEFAULT_SHOPS = [
 
 let shops = [];
 let activeShopId = 'S101';
-let customHostUrl = 'https://mekozeko303-droid.github.io/Smart-POS-System/';
+let customHostUrl = '';
 let activeCategoryFilter = 'الكل';
 let customerCart = {};
 let customerOrderType = 'داخل المحل (طاولة)';
 let customerTableInput = '';
 let invoiceFormat = 'thermal';
-let cloudSyncTimer = null;
+let scannedCustomerShop = null;
 
 /* =========================================================================
-   فحص سلامة الرابط السحابي
+   فحص الرابط عند الفتح: إذا كان من باركود الزبون يفتح المنيو فقط ويحذف الاستوديو!
    ========================================================================= */
-function isCleanAsciiTelegraphUrl(url) {
-  if (!url || typeof url !== 'string') return false;
-  return /^https:\/\/telegra\.ph\/SmartPOS-Menu-[A-Za-z0-9\-]+$/.test(url.trim());
-}
+function detectCustomerScanFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const hash = window.location.hash || '';
 
-/* =========================================================================
-   تشفير وفك تشفير بيانات المنيو 3D داخل رابط الباركود
-   ========================================================================= */
-function encodeShopPayload(shop) {
-  const minimal = {
-    i: shop.id,
-    n: shop.name,
-    p: shop.phone,
-    w: shop.wifi,
-    c: shop.currency,
-    m: shop.welcome,
-    it: shop.items.map(x => [x.icon, x.name, x.price, x.category])
-  };
-  const jsonStr = JSON.stringify(minimal);
-  return btoa(unescape(encodeURIComponent(jsonStr)));
-}
-
-function decodeShopPayload(b64) {
-  try {
-    const jsonStr = decodeURIComponent(escape(atob(b64)));
-    const d = JSON.parse(jsonStr);
-    return {
-      id: d.i || 'S101',
-      name: d.n || 'منيو المطعم',
-      phone: d.p || '',
-      wifi: d.w || '',
-      currency: d.c || 'ر.ي',
-      welcome: d.m || '',
-      items: Array.isArray(d.it) ? d.it.map((arr, idx) => ({
-        id: idx + 1,
-        icon: arr[0] || '🍽️',
-        name: arr[1] || 'صنف',
-        price: Number(arr[2]) || 0,
-        category: arr[3] || 'عام',
-        popular: true
-      })) : []
-    };
-  } catch (e) {
-    return null;
+  let rawToken = params.get('m') || params.get('i') || params.get('s') || '';
+  if (!rawToken && (hash.startsWith('#t') || hash.startsWith('#i') || hash.startsWith('#m'))) {
+    rawToken = hash.slice(2);
   }
+  if (rawToken) {
+    const decoded = unpackUltraLight(rawToken);
+    if (decoded) return decoded;
+  }
+  return null;
 }
 
-/* =========================================================================
-   التهيئة الأولية وفحص ما إذا كان الرابط مفتوحاً من جوال الزبون
-   ========================================================================= */
 function initApp() {
   const sysWaUrl = `https://wa.me/${SMARTPOS_PHONE}?text=${encodeURIComponent('مرحباً، أرغب بالحصول على نظام SmartPOS 3D للمنيو والكاشير لمحلي')}`;
   document.querySelectorAll('[data-wa-link]').forEach(el => el.setAttribute('href', sysWaUrl));
@@ -918,63 +1148,54 @@ function initApp() {
     const saved = localStorage.getItem(STORAGE_KEY);
     shops = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_SHOPS));
     if (!Array.isArray(shops) || !shops.length) shops = JSON.parse(JSON.stringify(DEFAULT_SHOPS));
-    customHostUrl = localStorage.getItem(HOST_URL_KEY) || 'https://mekozeko303-droid.github.io/Smart-POS-System/';
+    customHostUrl = localStorage.getItem(HOST_URL_KEY) || '';
   } catch (e) {
     shops = JSON.parse(JSON.stringify(DEFAULT_SHOPS));
   }
 
-  // تنظيف أي رابط سحابي قديم يحتوي على حروف عربية
-  shops.forEach(s => {
-    if (!isCleanAsciiTelegraphUrl(s.cloudUrl)) {
-      s.cloudUrl = '';
-      s.cloudPath = '';
-    }
-  });
+  // إذا كان الرابط مفتوحاً من باركود الزبون: نحذف لوحة التحكم من الصفحة تماماً ونعرض المنيو فقط!
+  const scanned = detectCustomerScanFromUrl();
+  if (scanned || window.__FORCE_CUSTOMER_ONLY) {
+    scannedCustomerShop = scanned || shops[0];
+    customerOrderType = (scannedCustomerShop && scannedCustomerShop.scannedInvoice)
+      ? 'توصيل للمنزل'
+      : 'داخل المحل (طاولة)';
 
-  const params = new URLSearchParams(window.location.search);
-  const encodedShop = params.get('s');
-  if (encodedShop) {
-    const decoded = decodeShopPayload(encodedShop);
-    if (decoded) {
-      const existingIdx = shops.findIndex(s => s.id === decoded.id);
-      if (existingIdx >= 0) {
-        shops[existingIdx] = { ...shops[existingIdx], ...decoded };
-      } else {
-        shops.unshift({ ...decoded, invoiceNo: 1, tableNo: 'طاولة 1', discount: 0, invoiceCart: [] });
-      }
-      activeShopId = decoded.id;
-      openCustomerFullView(true);
-    }
-  } else {
-    activeShopId = shops[0].id;
+    document.documentElement.classList.add('is-customer-scan');
+    document.body.classList.add('customer-only-mode');
+
+    // حذف عنصر الاستوديو بالكامل من الـ DOM حتى يستحيل ظهوره للزبون
+    const studioEl = document.getElementById('studioMainWrapper');
+    if (studioEl) studioEl.remove();
+
+    document.title = `منيو ${scannedCustomerShop.name}`;
+    openCustomerFullView(true);
+    initNeuralBackground();
+    return;
   }
 
+  activeShopId = shops[0].id;
   const hostInp = document.getElementById('inpHostUrl');
-  if (hostInp) hostInp.value = customHostUrl;
+  if (hostInp) {
+    hostInp.value = customHostUrl || (window.location.protocol.startsWith('http') ? window.location.origin + window.location.pathname : '');
+  }
 
   renderShopsSwitcher();
   loadShopIntoEditor();
   initNeuralBackground();
   initTiltAndSpotlight();
-
-  const current = getActiveShop();
-  if (current && !isCleanAsciiTelegraphUrl(current.cloudUrl)) {
-    syncCloudTelegraphMenu(false);
-  }
 }
 
 function getActiveShop() {
+  if (scannedCustomerShop) return scannedCustomerShop;
   return shops.find(s => s.id === activeShopId) || shops[0];
 }
 
 function saveAllShops() {
+  if (scannedCustomerShop) return;
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(shops));
   } catch (e) {}
-  const badge = document.getElementById('saveStatusBadge');
-  if (badge) {
-    badge.innerHTML = '<i class="fa-solid fa-check-double"></i> تم الحفظ تلقائياً';
-  }
 }
 
 function showToast(msg) {
@@ -982,18 +1203,18 @@ function showToast(msg) {
   if (!t) return;
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2600);
+  setTimeout(() => t.classList.remove('show'), 2500);
 }
 
 /* =========================================================================
-   إدارة المحلات المستقلة
+   إدارة المحلات المستقلة والشعارات
    ========================================================================= */
 function renderShopsSwitcher() {
   const bar = document.getElementById('shopsSwitcherBar');
   if (!bar) return;
   bar.innerHTML = shops.map(shop => `
     <button onclick="switchShop('${shop.id}')" class="shop-pill ${shop.id === activeShopId ? 'active' : ''}">
-      <i class="fa-solid fa-utensils"></i>
+      <span>${escapeHtml(shop.emoji || '🍽️')}</span>
       <span>${escapeHtml(shop.name)}</span>
       <span class="text-[10px] opacity-75">(${shop.items.length})</span>
     </button>
@@ -1001,15 +1222,12 @@ function renderShopsSwitcher() {
 }
 
 function switchShop(id) {
+  scannedCustomerShop = null;
   activeShopId = id;
   activeCategoryFilter = 'الكل';
   customerCart = {};
   renderShopsSwitcher();
   loadShopIntoEditor();
-  const shop = getActiveShop();
-  if (shop && !isCleanAsciiTelegraphUrl(shop.cloudUrl)) {
-    syncCloudTelegraphMenu(false);
-  }
 }
 
 function createNewIndependentShop() {
@@ -1022,17 +1240,19 @@ function createNewIndependentShop() {
     phone: '770000000',
     wifi: '12345678',
     currency: 'ر.ي',
+    emoji: '🍽️',
+    logo: '',
+    logoUrl: '',
     welcome: `أهلاً بكم في منيو ${newName.trim()}`,
     invoiceNo: 1,
     tableNo: 'طاولة 1',
+    payMethod: 'نقداً',
     discount: 0,
-    cloudUrl: '',
-    cloudPath: '',
     items: [
-      { id: Date.now(), icon: '🍹', name: 'صنف تجريبي أول', price: 1500, category: 'القائمة الرئيسية', popular: true }
+      { id: Date.now(), icon: '🍔', name: 'برجر لحم خاص', price: 2000, category: 'الوجبات الرئيسية' }
     ],
     invoiceCart: [
-      { id: Date.now(), name: 'صنف تجريبي أول', price: 1500, qty: 1 }
+      { id: Date.now(), name: 'برجر لحم خاص', price: 2000, qty: 1 }
     ]
   };
   shops.push(newShop);
@@ -1041,7 +1261,6 @@ function createNewIndependentShop() {
   saveAllShops();
   renderShopsSwitcher();
   loadShopIntoEditor();
-  syncCloudTelegraphMenu(true);
   showToast(`تم إنشاء منيو وباركود مستقل لـ "${newShop.name}"`);
 }
 
@@ -1057,7 +1276,51 @@ function deleteCurrentShop() {
   saveAllShops();
   renderShopsSwitcher();
   loadShopIntoEditor();
-  showToast('تم حذف المحل بنجاح');
+  showToast('تم حذف المطعم بنجاح');
+}
+
+function handleLogoUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const scale = Math.min(1, 180 / Math.max(img.width, img.height));
+      canvas.width = Math.max(1, Math.round(img.width * scale));
+      canvas.height = Math.max(1, Math.round(img.height * scale));
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      const shop = getActiveShop();
+      shop.logo = canvas.toDataURL('image/png');
+      saveAllShops();
+      refreshAllPreviews();
+      showToast('تم رفع شعار المطعم بنجاح ✓');
+    };
+    img.src = reader.result;
+  };
+  reader.readAsDataURL(file);
+  event.target.value = '';
+}
+
+function clearShopLogo() {
+  const shop = getActiveShop();
+  shop.logo = '';
+  shop.logoUrl = '';
+  document.getElementById('inpLogoUrl').value = '';
+  saveAllShops();
+  refreshAllPreviews();
+  showToast('تم حذف الشعار');
+}
+
+function getShopLogoHTML(shop, sizeClass = 'w-14 h-14 text-2xl') {
+  if (shop.logo) {
+    return `<div class="shop-logo-circle ${sizeClass}"><img src="${shop.logo}" alt="Logo"></div>`;
+  }
+  if (shop.logoUrl && /^https?:\/\//i.test(shop.logoUrl)) {
+    return `<div class="shop-logo-circle ${sizeClass}"><img src="${escapeHtml(shop.logoUrl)}" alt="Logo" onerror="this.remove()"></div>`;
+  }
+  return `<div class="shop-logo-circle ${sizeClass}"><span>${escapeHtml(shop.emoji || '🍽️')}</span></div>`;
 }
 
 /* =========================================================================
@@ -1072,9 +1335,12 @@ function loadShopIntoEditor() {
   document.getElementById('inpPhone').value = shop.phone || '';
   document.getElementById('inpWifi').value = shop.wifi || '';
   document.getElementById('inpCurrency').value = shop.currency || 'ر.ي';
+  document.getElementById('inpEmoji').value = shop.emoji || '🍽️';
+  document.getElementById('inpLogoUrl').value = shop.logoUrl || '';
   document.getElementById('inpWelcome').value = shop.welcome || '';
   document.getElementById('inpInvoiceNo').value = shop.invoiceNo || 1;
   document.getElementById('inpTableNo').value = shop.tableNo || 'طاولة 1';
+  document.getElementById('inpPayMethod').value = shop.payMethod || 'نقداً';
   document.getElementById('inpDiscount').value = shop.discount || 0;
 
   renderEditorItems();
@@ -1085,61 +1351,65 @@ function updateField(field, value) {
   const shop = getActiveShop();
   if (!shop) return;
   shop[field] = value;
-  if (field === 'name') {
-    document.getElementById('editorActiveShopTitle').textContent = value;
+  if (field === 'name' || field === 'emoji') {
+    document.getElementById('editorActiveShopTitle').textContent = shop.name;
     renderShopsSwitcher();
   }
   saveAllShops();
   refreshAllPreviews();
-  scheduleCloudSync();
 }
 
 function updateHostUrl(val) {
   customHostUrl = val.trim();
   try { localStorage.setItem(HOST_URL_KEY, customHostUrl); } catch (e) {}
   refreshAllPreviews();
-  scheduleCloudSync();
 }
 
 function renderEditorItems() {
   const shop = getActiveShop();
   const list = document.getElementById('editorItemsList');
+  if (!list) return;
   document.getElementById('itemsCountLabel').textContent = shop.items.length;
 
-  list.innerHTML = shop.items.map(item => `
-    <div class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-white/5 border border-yellow-500/20 hover:border-yellow-500/50 transition">
-      <div class="flex items-center gap-2.5 min-w-0 cursor-pointer flex-1" onclick="addItemToInvoice(${item.id})" title="اضغط لإضافته للفاتورة">
-        <span class="w-9 h-9 rounded-xl bg-yellow-500/15 border border-yellow-500/30 flex items-center justify-center text-lg flex-shrink-0">${escapeHtml(item.icon)}</span>
-        <div class="min-w-0">
-          <div class="text-xs font-extrabold text-white truncate">${escapeHtml(item.name)}</div>
-          <div class="text-[10px] text-gray-400">${escapeHtml(item.category)} • <b class="text-yellow-400">${Number(item.price).toLocaleString()} ${escapeHtml(shop.currency)}</b></div>
+  list.innerHTML = shop.items.map(item => {
+    const inCart = (shop.invoiceCart || []).find(c => c.id === item.id);
+    const qty = inCart ? inCart.qty : 0;
+    return `
+      <div class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-white/5 border border-yellow-500/20 hover:border-yellow-500/50 transition">
+        <div class="flex items-center gap-2.5 min-w-0 flex-1">
+          <span class="w-9 h-9 rounded-xl bg-yellow-500/15 border border-yellow-500/30 flex items-center justify-center text-lg flex-shrink-0">${escapeHtml(item.icon)}</span>
+          <div class="min-w-0">
+            <div class="text-xs font-extrabold text-white truncate">${escapeHtml(item.name)}</div>
+            <div class="text-[10px] text-gray-400">${escapeHtml(item.category)} • <b class="text-yellow-400">${Number(item.price).toLocaleString()} ${escapeHtml(shop.currency)}</b></div>
+          </div>
+        </div>
+        <div class="flex items-center gap-1">
+          <button onclick="updateInvoiceItemQty(${item.id}, -1)" class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-300 font-black text-xs hover:bg-amber-500/35" title="إنقاص من الفاتورة">−</button>
+          <span class="w-6 text-center text-xs font-black text-yellow-300">${qty}</span>
+          <button onclick="addItemToInvoice(${item.id})" class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-300 font-black text-xs hover:bg-emerald-500/35" title="إضافة للفاتورة">+</button>
+          <button onclick="removeMenuItem(${item.id})" class="w-7 h-7 rounded-lg bg-red-500/15 text-red-300 hover:bg-red-500/30 text-xs flex items-center justify-center mr-1" title="حذف الصنف نهائياً من المنيو">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
         </div>
       </div>
-      <div class="flex items-center gap-1">
-        <button onclick="addItemToInvoice(${item.id})" class="px-2 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 text-[11px] font-bold hover:bg-emerald-500/30" title="إضافة للفاتورة">
-          + فاتورة
-        </button>
-        <button onclick="removeMenuItem(${item.id})" class="w-7 h-7 rounded-lg bg-red-500/15 text-red-300 hover:bg-red-500/30 text-xs flex items-center justify-center" title="حذف الصنف">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
 function addNewMenuItem() {
   const shop = getActiveShop();
-  const icon = document.getElementById('newItemIcon').value.trim() || '🍽️';
   const name = document.getElementById('newItemName').value.trim();
+  const iconInput = document.getElementById('newItemIcon').value.trim();
+  const icon = iconInput || guessItemIcon(name);
   const price = parseFloat(document.getElementById('newItemPrice').value) || 0;
-  const category = document.getElementById('newItemCategory').value.trim() || 'الأصناف الرئيسية';
+  const category = document.getElementById('newItemCategory').value.trim() || 'القائمة الرئيسية';
 
   if (!name || price <= 0) {
     showToast('يرجى إدخال اسم الصنف والسعر بشكل صحيح');
     return;
   }
 
-  const newItem = { id: Date.now(), icon, name, price, category, popular: true };
+  const newItem = { id: Date.now(), icon, name, price, category };
   shop.items.push(newItem);
   document.getElementById('newItemName').value = '';
   document.getElementById('newItemPrice').value = '';
@@ -1148,228 +1418,51 @@ function addNewMenuItem() {
   renderShopsSwitcher();
   renderEditorItems();
   refreshAllPreviews();
-  scheduleCloudSync();
   showToast(`تمت إضافة "${name}" إلى المنيو`);
 }
 
 function removeMenuItem(id) {
   const shop = getActiveShop();
   shop.items = shop.items.filter(i => i.id !== id);
+  shop.invoiceCart = (shop.invoiceCart || []).filter(c => c.id !== id);
   saveAllShops();
   renderShopsSwitcher();
   renderEditorItems();
   refreshAllPreviews();
-  scheduleCloudSync();
 }
 
 /* =========================================================================
-   توليد رابط المنيو 3D المباشر + المزامنة السحابية (Telegra.ph)
+   توليد روابط الباركود القصيرة جداً (لتقليل النقاط وضمان فتح المنيو فقط)
    ========================================================================= */
-function getEffective3DUrl(shop) {
-  const payload = encodeShopPayload(shop);
-  let safeHostUrl = customHostUrl.trim();
-  
-  if (safeHostUrl && /^https?:\/\//i.test(safeHostUrl)) {
-    // إزالة الأقواس المربعة التي قد تسبب البحث في جوجل
-    safeHostUrl = safeHostUrl.replace(/^\[/, '').replace(/\]$/, '');
-    const base = safeHostUrl.split('?')[0];
-    return `${base}?s=${encodeURIComponent(payload)}`;
+function getBaseSiteUrl() {
+  let clean = (customHostUrl || '').trim().replace(/^\[/, '').replace(/\]$/, '');
+  if (clean && /^https?:\/\//i.test(clean)) {
+    clean = clean.split('?')[0].split('#')[0];
+    if (!/\/$|\.html?$/i.test(clean)) clean += '/';
+    return clean;
   }
-  
   if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
-    const base = window.location.origin + window.location.pathname;
-    return `${base}?s=${encodeURIComponent(payload)}`;
+    let u = window.location.origin + window.location.pathname;
+    if (!/\/$|\.html?$/i.test(u)) u += '/';
+    return u;
   }
-  return '';
+  return 'https://mekozeko303-droid.github.io/Smart-POS-System/';
 }
 
-function getActiveQRTargetUrl(shop) {
-  const direct3d = getEffective3DUrl(shop);
-  if (direct3d) return direct3d;
-  if (isCleanAsciiTelegraphUrl(shop.cloudUrl)) return shop.cloudUrl;
-  const cleanPhone = (shop.phone || SMARTPOS_DISPLAY_PHONE).replace(/\D/g, '');
-  const waPhone = cleanPhone.startsWith('967') ? cleanPhone : `967${cleanPhone}`;
-  return `https://wa.me/${waPhone}?text=${encodeURIComponent('مرحباً ' + shop.name + '، أرغب بالاطلاع على المنيو والطلب')}`;
+function getTableQRUrl(shop) {
+  const base = getBaseSiteUrl();
+  const compressed = packTableMenuUltraLight(shop);
+  return `${base}?m=${compressed}`;
 }
 
-function scheduleCloudSync() {
-  if (cloudSyncTimer) clearTimeout(cloudSyncTimer);
-  cloudSyncTimer = setTimeout(() => syncCloudTelegraphMenu(false), 900);
-}
-
-async function syncCloudTelegraphMenu(manualNotify = false) {
-  const shop = getActiveShop();
-  if (!shop) return;
-
-  const btn = document.getElementById('btnCloudSync');
-  if (btn && manualNotify) {
-    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري التحديث...';
-  }
-
-  try {
-    let token = localStorage.getItem('SMARTPOS_TG_TOKEN_V2');
-    if (!token) {
-      const accRes = await fetch('https://api.telegra.ph/createAccount?short_name=SmartPOS3D&author_name=' + encodeURIComponent('نظام SmartPOS الذكي - 785619054'));
-      const accData = await accRes.json();
-      if (accData && accData.ok && accData.result && accData.result.access_token) {
-        token = accData.result.access_token;
-        localStorage.setItem('SMARTPOS_TG_TOKEN_V2', token);
-      }
-    }
-
-    const cleanShopPhone = (shop.phone || '').replace(/\D/g, '');
-    const waShopPhone = cleanShopPhone.startsWith('967') ? cleanShopPhone : `967${cleanShopPhone}`;
-    const direct3dLink = getEffective3DUrl(shop);
-
-    const nodes = [];
-
-    // بطاقة الترحيب والواي فاي والاتصال
-    nodes.push({
-      tag: 'blockquote',
-      children: [
-        `✨ ${shop.welcome || ('أهلاً بكم في منيو ' + shop.name)}\n`,
-        `📞 للطلب والتواصل المباشر: ${shop.phone || '-'}\n`,
-        `📶 رمز الواي فاي المجاني (Wi-Fi): ${shop.wifi || '-'}`
-      ]
-    });
-
-    // زر الانتقال للمنيو 3D الفاخر
-    if (direct3dLink) {
-      nodes.push({
-        tag: 'p',
-        children: [
-          {
-            tag: 'a',
-            attrs: { href: direct3dLink },
-            children: ['🌟 اضغط هنا لفتح واجهة المنيو التفاعلي 3D الكاملة مع سلة الطلبات 🌟']
-          }
-        ]
-      });
-    }
-
-    // زر سريع لطلب سلة متنوعة
-    const multiItemsTemplate = shop.items.map(i => `• ${i.name}: (الكمية:   )`).join('\n');
-    const multiCartTopLink = `https://wa.me/${waShopPhone}?text=${encodeURIComponent(
-      `مرحباً *${shop.name}* 🌟\nأود طلب سلة الأصناف التالية:\n${multiItemsTemplate}\n────────────\n🪑 رقم الطاولة / العنوان: `
-    )}`;
-    nodes.push({
-      tag: 'p',
-      children: [
-        {
-          tag: 'a',
-          attrs: { href: multiCartTopLink },
-          children: ['🛍️ اضغط هنا لطلب عدة أصناف معاً في رسالة واتساب واحدة']
-        }
-      ]
-    });
-
-    // تجميع الأصناف حسب القسم
-    const categories = {};
-    shop.items.forEach(item => {
-      const cat = item.category || 'الأصناف الرئيسية';
-      if (!categories[cat]) categories[cat] = [];
-      categories[cat].push(item);
-    });
-
-    Object.keys(categories).forEach(cat => {
-      nodes.push({ tag: 'hr' });
-      nodes.push({ tag: 'h4', children: [`🍽️ قسم: ${cat}`] });
-
-      categories[cat].forEach(item => {
-        const unitPrice = Number(item.price) || 0;
-        const formattedPrice = `${unitPrice.toLocaleString()} ${shop.currency}`;
-
-        const waQty1 = `https://wa.me/${waShopPhone}?text=${encodeURIComponent(`مرحباً *${shop.name}* ✨\nأود طلب:\n• ${item.icon} *${item.name}* (العدد: 1)\n💰 الإجمالي: ${unitPrice.toLocaleString()} ${shop.currency}\n🪑 الطاولة / العنوان: `)}`;
-        const waQty2 = `https://wa.me/${waShopPhone}?text=${encodeURIComponent(`مرحباً *${shop.name}* ✨\nأود طلب:\n• ${item.icon} *${item.name}* (العدد: 2)\n💰 الإجمالي: ${(unitPrice * 2).toLocaleString()} ${shop.currency}\n🪑 الطاولة / العنوان: `)}`;
-        const waQty3 = `https://wa.me/${waShopPhone}?text=${encodeURIComponent(`مرحباً *${shop.name}* ✨\nأود طلب:\n• ${item.icon} *${item.name}* (العدد: 3)\n💰 الإجمالي: ${(unitPrice * 3).toLocaleString()} ${shop.currency}\n🪑 الطاولة / العنوان: `)}`;
-
-        nodes.push({
-          tag: 'p',
-          children: [
-            { tag: 'b', children: [`${item.icon} ${item.name} • [ ${formattedPrice} ]`] },
-            { tag: 'br' },
-            { tag: 'a', attrs: { href: waQty1 }, children: [`🛒 اطلب (1)`] },
-            '   |   ',
-            { tag: 'a', attrs: { href: waQty2 }, children: [`🛒 اطلب (2)`] },
-            '   |   ',
-            { tag: 'a', attrs: { href: waQty3 }, children: [`🛒 اطلب (3)`] }
-          ]
-        });
-      });
-    });
-
-    // تذييل SmartPOS
-    nodes.push({ tag: 'hr' });
-    const sysWa = `https://wa.me/${SMARTPOS_PHONE}?text=${encodeURIComponent('مرحباً، شاهدت منيو SmartPOS وأرغب بطلب النظام لمحلي')}`;
-    nodes.push({
-      tag: 'aside',
-      children: [
-        `⚡ يعمل بواسطة نظام SmartPOS 3D للكاشير والمنيو الذكي\n`,
-        {
-          tag: 'a',
-          attrs: { href: sysWa },
-          children: [`📲 لطلب النظام لمطعمك أو كافيهك تواصل واتساب: ${SMARTPOS_DISPLAY_PHONE}`]
-        }
-      ]
-    });
-
-    const arabicTitle = `منيو ${shop.name} | قائمة الأصناف والأسعار`;
-    const authorLabel = `نظام SmartPOS الذكي - ${SMARTPOS_DISPLAY_PHONE}`;
-    const authorLink = `https://wa.me/${SMARTPOS_PHONE}`;
-
-    let pagePath = shop.cloudPath;
-    let pageUrl = shop.cloudUrl;
-
-    if (!pagePath || !isCleanAsciiTelegraphUrl(pageUrl)) {
-      const asciiSlugTitle = `SmartPOS-Menu-${shop.id}-${Math.floor(100 + Math.random() * 899)}`;
-      const createForm = new FormData();
-      createForm.append('access_token', token);
-      createForm.append('title', asciiSlugTitle);
-      createForm.append('author_name', authorLabel);
-      createForm.append('author_url', authorLink);
-      createForm.append('content', JSON.stringify(nodes));
-      createForm.append('return_content', 'false');
-
-      const createRes = await fetch('https://api.telegra.ph/createPage', { method: 'POST', body: createForm });
-      const createData = await createRes.json();
-      if (createData && createData.ok && createData.result && createData.result.path) {
-        pagePath = createData.result.path;
-        pageUrl = `https://telegra.ph/${pagePath}`;
-        shop.cloudPath = pagePath;
-        shop.cloudUrl = pageUrl;
-      }
-    }
-
-    if (pagePath) {
-      const editForm = new FormData();
-      editForm.append('access_token', token);
-      editForm.append('path', pagePath);
-      editForm.append('title', arabicTitle);
-      editForm.append('author_name', authorLabel);
-      editForm.append('author_url', authorLink);
-      editForm.append('content', JSON.stringify(nodes));
-      editForm.append('return_content', 'false');
-
-      const editRes = await fetch('https://api.telegra.ph/editPage', { method: 'POST', body: editForm });
-      const editData = await editRes.json();
-      if (editData && editData.ok && editData.result) {
-        shop.cloudUrl = `https://telegra.ph/${pagePath}`;
-        saveAllShops();
-        refreshAllPreviews();
-        if (manualNotify) showToast('تم تحديث المنيو السحابي بنجاح بدون أخطاء');
-      }
-    }
-  } catch (err) {
-    if (manualNotify) showToast('تعذر الاتصال بالسحابة حالياً، تأكد من اتصال الإنترنت');
-  } finally {
-    if (btn && manualNotify) {
-      btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> <span>تحديث سحابي</span>';
-    }
-  }
+function getInvoiceQRUrl(shop) {
+  const base = getBaseSiteUrl();
+  const compressed = packInvoiceUltraLight(shop);
+  return `${base}?m=${compressed}`;
 }
 
 /* =========================================================================
-   بناء واجهة المنيو التفاعلي 3D (داخل الآيفون + شاشة الزبون الكاملة)
+   بناء واجهة الزبون التفاعلية 3D (المنيو فقط + الفاتورة الإلكترونية)
    ========================================================================= */
 function buildInteractive3DMenuHTML(shop) {
   const categories = ['الكل', ...new Set(shop.items.map(i => i.category || 'عام'))];
@@ -1387,11 +1480,58 @@ function buildInteractive3DMenuHTML(shop) {
     }
   });
 
+  // إذا مسح الزبون باركود الفاتورة، نعرض له بطاقة فاتورته الإلكترونية الموثقة
+  let digitalInvoiceBanner = '';
+  if (shop.scannedInvoice && Array.isArray(shop.scannedInvoice.items)) {
+    const inv = shop.scannedInvoice;
+    const sub = inv.items.reduce((a, c) => a + c.price * c.qty, 0);
+    const tot = Math.max(0, sub - (inv.discount || 0));
+    digitalInvoiceBanner = `
+      <div class="p-4 rounded-3xl bg-gradient-to-br from-emerald-950 via-slate-900 to-black border-2 border-emerald-400/70 mb-4 shadow-2xl">
+        <div class="flex items-center justify-between border-b border-emerald-500/30 pb-2 mb-2.5">
+          <span class="text-xs font-black text-emerald-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-circle-check text-emerald-400"></i>
+            <span>فاتورتك الإلكترونية الموثقة #${inv.invoiceNo}</span>
+          </span>
+          <span class="text-[11px] bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full font-bold">معتمدة ✓</span>
+        </div>
+
+        <div class="space-y-1.5 mb-3 text-xs">
+          ${inv.items.map(c => `
+            <div class="flex items-center justify-between text-gray-200 bg-white/5 px-2.5 py-1.5 rounded-xl">
+              <span>${escapeHtml(c.icon)} <b>${escapeHtml(c.name)}</b> × ${c.qty}</span>
+              <b class="text-yellow-300">${(c.price * c.qty).toLocaleString()} ${escapeHtml(shop.currency)}</b>
+            </div>
+          `).join('')}
+        </div>
+
+        <div class="flex items-center justify-between text-sm font-black bg-yellow-500/15 border border-yellow-500/40 px-3 py-2 rounded-xl text-yellow-300 mb-3">
+          <span>الإجمالي النهائي للفاتورة:</span>
+          <span>${tot.toLocaleString()} ${escapeHtml(shop.currency)}</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="reorderSameInvoiceWhatsApp()" class="py-2 px-3 rounded-xl bg-gradient-to-r from-emerald-400 to-green-500 text-black font-black text-xs flex items-center justify-center gap-1.5 shadow-md">
+            <i class="fa-solid fa-rotate-right"></i>
+            <span>إعادة طلب الفاتورة</span>
+          </button>
+          <button onclick="rateRestaurantWhatsApp()" class="py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-yellow-300 border border-yellow-500/40 font-black text-xs flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-star"></i>
+            <span>تقييم الخدمة</span>
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
   return `
+    ${digitalInvoiceBanner}
+
     <div class="p-3.5 rounded-3xl bg-gradient-to-br from-yellow-500/20 via-amber-500/5 to-black border border-yellow-500/40 mb-3 text-center shadow-lg">
+      ${getShopLogoHTML(shop, 'w-16 h-16 text-3xl')}
       <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-[10px] font-bold mb-1">
         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-        <span>منيو تفاعلي ثلاثي الأبعاد 3D</span>
+        <span>${shop.scannedInvoice ? '🛵 اطلب للتوصيل أو السفري مباشرة' : '🪑 أهلاً بك — اطلب لطاولتك مباشرة'}</span>
       </div>
       <h2 class="text-lg font-black gold-gradient-text m-0">${escapeHtml(shop.name)}</h2>
       <p class="text-[11px] text-gray-300 mt-0.5 mb-2.5">${escapeHtml(shop.welcome || '')}</p>
@@ -1403,22 +1543,24 @@ function buildInteractive3DMenuHTML(shop) {
         </a>
         <button onclick="copyShopWifi('${escapeHtml(shop.wifi)}')" class="py-1.5 px-2 rounded-xl bg-black/60 border border-emerald-500/30 text-emerald-300 font-bold flex items-center justify-center gap-1.5 cursor-pointer">
           <i class="fa-solid fa-wifi"></i>
-          <span>نسخ Wi-Fi: ${escapeHtml(shop.wifi)}</span>
+          <span>نسخ Wi-Fi: ${escapeHtml(shop.wifi || 'مجاني')}</span>
         </button>
       </div>
     </div>
 
-    <div class="flex items-center gap-1.5 overflow-x-auto pb-2 mb-2.5 scrollbar-none">
-      ${categories.map(cat => `
-        <button onclick="setCustomerCategory('${escapeHtml(cat)}')" class="px-3 py-1.5 rounded-xl text-[11px] font-extrabold whitespace-nowrap transition ${
-          activeCategoryFilter === cat
-            ? 'bg-gradient-to-r from-yellow-300 to-amber-500 text-black shadow-md'
-            : 'bg-white/5 text-gray-300 border border-yellow-500/25'
-        }">
-          ${escapeHtml(cat)}
-        </button>
-      `).join('')}
-    </div>
+    ${categories.length > 2 ? `
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-2 mb-2.5 scrollbar-none">
+        ${categories.map(cat => `
+          <button onclick="setCustomerCategory('${escapeHtml(cat)}')" class="px-3 py-1.5 rounded-xl text-[11px] font-extrabold whitespace-nowrap transition ${
+            activeCategoryFilter === cat
+              ? 'bg-gradient-to-r from-yellow-300 to-amber-500 text-black shadow-md'
+              : 'bg-white/5 text-gray-300 border border-yellow-500/25'
+          }">
+            ${escapeHtml(cat)}
+          </button>
+        `).join('')}
+      </div>
+    ` : ''}
 
     <div class="space-y-2.5">
       ${filtered.map(item => {
@@ -1426,13 +1568,12 @@ function buildInteractive3DMenuHTML(shop) {
         return `
           <div class="menu-item-3d">
             <div class="flex items-center gap-3">
-              <div class="icon-pedestal">${escapeHtml(item.icon)}</div>
+              <div class="icon-pedestal">${escapeHtml(item.icon || guessItemIcon(item.name))}</div>
               <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-1">
                   <h4 class="text-xs sm:text-sm font-black text-white m-0 truncate">${escapeHtml(item.name)}</h4>
-                  <span class="text-xs">🔥</span>
                 </div>
-                <div class="text-[10px] text-gray-400 mb-1">${escapeHtml(item.category)}</div>
+                <div class="text-[10px] text-gray-400 mb-1">${escapeHtml(item.category || 'القائمة الرئيسية')}</div>
                 <div class="text-xs font-black text-yellow-400">
                   ${Number(item.price).toLocaleString()} <span class="text-[10px]">${escapeHtml(shop.currency)}</span>
                 </div>
@@ -1446,7 +1587,7 @@ function buildInteractive3DMenuHTML(shop) {
                   </button>
                 ` : `
                   <div class="flex items-center gap-1.5 bg-black/70 border border-yellow-500/50 rounded-xl px-1.5 py-1">
-                    <button onclick="changeCustomerCart(${item.id}, -1)" class="w-6 h-6 rounded-lg bg-red-500/20 text-red-300 font-black text-xs">-</button>
+                    <button onclick="changeCustomerCart(${item.id}, -1)" class="w-6 h-6 rounded-lg bg-red-500/20 text-red-300 font-black text-xs">−</button>
                     <span class="text-xs font-black text-yellow-300 px-1">${qty}</span>
                     <button onclick="changeCustomerCart(${item.id}, 1)" class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-300 font-black text-xs">+</button>
                   </div>
@@ -1473,21 +1614,21 @@ function buildInteractive3DMenuHTML(shop) {
           <select onchange="customerOrderType = this.value" class="luxury-input !py-1.5 !px-2 !text-xs">
             <option value="داخل المحل (طاولة)" ${customerOrderType.includes('طاولة') ? 'selected' : ''}>داخل المحل (طاولة)</option>
             <option value="طلب سفري (استلام)" ${customerOrderType.includes('سفري') ? 'selected' : ''}>طلب سفري</option>
-            <option value="توصيل للمنزل" ${customerOrderType.includes('توصيل') ? 'selected' : ''}>توصيل</option>
+            <option value="توصيل للمنزل" ${customerOrderType.includes('توصيل') ? 'selected' : ''}>توصيل للمنزل</option>
           </select>
         </div>
 
         <button onclick="sendCustomerCartWhatsApp()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-400 to-green-500 text-black font-black text-xs shadow-lg flex items-center justify-center gap-2">
           <i class="fa-brands fa-whatsapp text-base"></i>
-          <span>إرسال الطلب المتكامل عبر واتساب الآن</span>
+          <span>إرسال الطلب للمطعم عبر واتساب الآن</span>
         </button>
       </div>
     ` : ''}
 
     <div class="smartpos-viral-card">
-      <div class="text-[10px] font-extrabold text-yellow-300 mb-0.5">⚡ هل تمتلك مطعماً أو كافيه؟</div>
+      <div class="text-[10px] font-extrabold text-yellow-300 mb-0.5">⚡ تم الإنشاء عبر نظام SmartPOS 3D</div>
       <div class="text-xs font-black text-white mb-2">
-        احصل على نظام الكاشير والمنيو التفاعلي 3D من <span class="text-yellow-400">SmartPOS</span>
+        لطلب نظام الكاشير والمنيو التفاعلي لمطعمك أو محلك:
       </div>
       <div class="flex items-center justify-center gap-2">
         <a href="https://wa.me/${SMARTPOS_PHONE}?text=${encodeURIComponent('مرحباً، أعجبني منيو 3D وأرغب بطلب نظام SmartPOS لمحلي')}" target="_blank" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-yellow-300 to-amber-500 text-black font-black text-[11px] no-underline flex items-center gap-1">
@@ -1500,6 +1641,34 @@ function buildInteractive3DMenuHTML(shop) {
       </div>
     </div>
   `;
+}
+
+function reorderSameInvoiceWhatsApp() {
+  const shop = getActiveShop();
+  if (!shop || !shop.scannedInvoice) return;
+  const inv = shop.scannedInvoice;
+  const waPhone = formatWhatsAppPhone(shop.phone);
+  const lines = inv.items.map(c => `• ${c.icon} *${c.name}* × ${c.qty} = ${(c.price * c.qty).toLocaleString()} ${shop.currency}`);
+  const sub = inv.items.reduce((a, c) => a + c.price * c.qty, 0);
+  const tot = Math.max(0, sub - (inv.discount || 0));
+  const msg = [
+    `🔄 *إعادة طلب الفاتورة رقم #${inv.invoiceNo} من ${shop.name}*`,
+    `━━━━━━━━━━━━━━`,
+    ...lines,
+    `━━━━━━━━━━━━━━`,
+    `💰 *الإجمالي:* ${tot.toLocaleString()} ${shop.currency}`,
+    `📍 *العنوان / رقم الطاولة:* `
+  ].join('\n');
+  window.open(`https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function rateRestaurantWhatsApp() {
+  const shop = getActiveShop();
+  if (!shop) return;
+  const invNo = shop.scannedInvoice ? shop.scannedInvoice.invoiceNo : 1;
+  const waPhone = formatWhatsAppPhone(shop.phone);
+  const msg = `⭐ *تقييم زيارة / فاتورة رقم #${invNo} - ${shop.name}*\n━━━━━━━━━━━━━━\nتقييمي للخدمة والطعم: ⭐⭐⭐⭐⭐\nملاحظاتي: `;
+  window.open(`https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
 function setCustomerCategory(cat) {
@@ -1521,12 +1690,19 @@ function copyShopWifi(wifi) {
   showToast(`تم نسخ رمز الواي فاي: ${wifi}`);
 }
 
+function formatWhatsAppPhone(rawPhone) {
+  let d = String(rawPhone || '').replace(/\D/g, '');
+  if (d.startsWith('00')) d = d.slice(2);
+  if (d.length === 9 && d.startsWith('7')) return '967' + d;
+  if (d.length === 10 && d.startsWith('0')) return '967' + d.slice(1);
+  return d || SMARTPOS_PHONE;
+}
+
 function orderSingleItemWhatsApp(itemId) {
   const shop = getActiveShop();
   const item = shop.items.find(i => i.id === itemId);
   if (!item) return;
-  const cleanPhone = (shop.phone || '').replace(/\D/g, '');
-  const waPhone = cleanPhone.startsWith('967') ? cleanPhone : `967${cleanPhone}`;
+  const waPhone = formatWhatsAppPhone(shop.phone);
   const text = `مرحباً *${shop.name}* ✨\nأود طلب:\n• *${item.name}* — [${Number(item.price).toLocaleString()} ${shop.currency}]`;
   window.open(`https://wa.me/${waPhone}?text=${encodeURIComponent(text)}`, '_blank');
 }
@@ -1541,39 +1717,38 @@ function sendCustomerCartWhatsApp() {
     if (q > 0) {
       const sub = q * Number(item.price);
       total += sub;
-      lines.push(`• ${item.icon} *${item.name}* × ${q} = ${sub.toLocaleString()} ${shop.currency}`);
+      lines.push(`• ${item.icon || guessItemIcon(item.name)} *${item.name}* × ${q} = ${sub.toLocaleString()} ${shop.currency}`);
     }
   });
 
   if (!lines.length) return;
-  const cleanPhone = (shop.phone || '').replace(/\D/g, '');
-  const waPhone = cleanPhone.startsWith('967') ? cleanPhone : `967${cleanPhone}`;
+  const waPhone = formatWhatsAppPhone(shop.phone);
   const msg = [
-    `مرحباً *${shop.name}* 🌟`,
-    `طلب جديد من *المنيو التفاعلي 3D*:`,
-    `────────────────`,
+    `🧾 *طلب جديد من منيو ${shop.name}*`,
+    `━━━━━━━━━━━━━━`,
     ...lines,
-    `────────────────`,
+    `━━━━━━━━━━━━━━`,
     `💰 *الإجمالي:* ${total.toLocaleString()} ${shop.currency}`,
     `📍 *نوع الطلب:* ${customerOrderType}`,
-    customerTableInput ? `🪑 *الطاولة / العنوان:* ${customerTableInput}` : ''
+    customerTableInput ? `🪑 *الطاولة / العنوان:* ${customerTableInput}` : '',
+    `━━━━━━━━━━━━━━`,
+    `⚡ تم الطلب عبر منيو SmartPOS الذكي`
   ].filter(Boolean).join('\n');
 
   window.open(`https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
 /* =========================================================================
-   توليد الباركود وتحديث المعاينات
+   توليد الباركود بمربعات كبيرة جداً وبدون حواف مزدوجة (Level L + Padding 0)
    ========================================================================= */
-function generateQRDataURL(text, size = 500) {
-  const safeAsciiUrl = encodeURI(String(text || '').trim());
+function generateQRDataURL(text, size = 800) {
   const qr = new QRious({
-    value: safeAsciiUrl,
+    value: String(text || '').trim(),
     size: size,
-    level: 'M',
+    level: 'L', // أقل كثافة نقاط ممكنة لتكبير حجم المربعات السوداء لأقصى درجة
     background: '#FFFFFF',
     foreground: '#000000',
-    padding: 0
+    padding: 0 // الحافة البيضاء موجودة في الإطار الخارجي، مما يمنح المربعات كامل المساحة!
   });
   return qr.toDataURL('image/png');
 }
@@ -1592,33 +1767,74 @@ function refreshAllPreviews() {
   const topName = document.getElementById('topCustomerShopName');
   if (topName) topName.textContent = shop.name;
 
+  if (scannedCustomerShop) return;
+
   const wifiFloat = document.getElementById('badgeWifiFloating');
   if (wifiFloat) wifiFloat.textContent = `Wi-Fi: ${shop.wifi || 'مجاني'}`;
 
-  const qrUrl = getActiveQRTargetUrl(shop);
-  const qrImgData = generateQRDataURL(qrUrl, 520);
+  // 1. باركود الطاولة الخفيف (يفتح المنيو فقط)
+  const tableQrUrl = getTableQRUrl(shop);
+  const tableQrImgData = generateQRDataURL(tableQrUrl, 800);
+
+  // 2. باركود الفاتورة فائق الخفة (يحمل أصناف الفاتورة فقط فتكون نقاطه قليلة جداً!)
+  const invoiceQrUrl = getInvoiceQRUrl(shop);
+  const invoiceQrImgData = generateQRDataURL(invoiceQrUrl, 800);
 
   const urlLabel = document.getElementById('activeQrUrlText');
-  if (urlLabel) urlLabel.textContent = qrUrl;
+  if (urlLabel) urlLabel.textContent = tableQrUrl;
 
-  const modeBadge = document.getElementById('qrModeIndicator');
-  if (modeBadge) {
-    if (getEffective3DUrl(shop)) {
-      modeBadge.textContent = 'يفتح المنيو 3D مباشرة';
-    } else if (isCleanAsciiTelegraphUrl(shop.cloudUrl)) {
-      modeBadge.textContent = 'منيو سحابي نشط';
-    } else {
-      modeBadge.textContent = 'جاري التجهيز...';
-    }
+  const tentLogo = document.getElementById('tentLogoMount');
+  if (tentLogo) {
+    if (shop.logo) tentLogo.innerHTML = `<img src="${shop.logo}" alt="Logo">`;
+    else if (shop.logoUrl) tentLogo.innerHTML = `<img src="${escapeHtml(shop.logoUrl)}" alt="Logo" onerror="this.remove()">`;
+    else tentLogo.innerHTML = `<span>${escapeHtml(shop.emoji || '🍽️')}</span>`;
   }
-
   document.getElementById('tentShopName').textContent = shop.name;
   document.getElementById('tentWelcome').textContent = shop.welcome || '';
   document.getElementById('tentPhone').textContent = shop.phone || '';
   document.getElementById('tentWifi').textContent = shop.wifi || '';
-  document.getElementById('tentQrImg').src = qrImgData;
+  document.getElementById('tentQrImg').src = tableQrImgData;
 
-  renderInvoicePreview(shop, qrImgData);
+  renderCashierQuickPicker(shop);
+  renderInvoicePreview(shop, invoiceQrImgData);
+}
+
+/* =========================================================================
+   لوحة الكاشير والفاتورة (إضافة + / إنقاص − / حذف الصنف 🗑)
+   ========================================================================= */
+function renderCashierQuickPicker(shop) {
+  const mount = document.getElementById('cashierQuickPicker');
+  if (!mount) return;
+  if (!Array.isArray(shop.invoiceCart)) shop.invoiceCart = [];
+
+  mount.innerHTML = shop.items.map(item => {
+    const inCart = shop.invoiceCart.find(c => c.id === item.id);
+    const qty = inCart ? inCart.qty : 0;
+    return `
+      <div class="flex items-center justify-between gap-2 p-2.5 rounded-xl border transition ${
+        qty > 0 ? 'bg-yellow-500/15 border-yellow-400' : 'bg-white/5 border-white/10'
+      }">
+        <div class="flex items-center gap-2 min-w-0 flex-1 cursor-pointer" onclick="addItemToInvoice(${item.id})">
+          <span class="text-lg">${escapeHtml(item.icon)}</span>
+          <div class="min-w-0">
+            <div class="text-xs font-black text-white truncate">${escapeHtml(item.name)}</div>
+            <div class="text-[10px] text-yellow-300 font-bold">${Number(item.price).toLocaleString()} ${escapeHtml(shop.currency)}</div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-1">
+          <button onclick="updateInvoiceItemQty(${item.id}, -1)" class="w-7 h-7 rounded-lg bg-amber-500/25 text-amber-200 font-black text-sm hover:bg-amber-500/40" title="إنقاص الكمية 1">−</button>
+          <span class="w-7 text-center text-xs font-black ${qty > 0 ? 'text-yellow-300' : 'text-gray-400'}">${qty}</span>
+          <button onclick="addItemToInvoice(${item.id})" class="w-7 h-7 rounded-lg bg-emerald-500/30 text-emerald-200 font-black text-sm hover:bg-emerald-500/50" title="إضافة 1 للفاتورة">+</button>
+          ${qty > 0 ? `
+            <button onclick="removeInvoiceItemCompletely(${item.id})" class="w-7 h-7 rounded-lg bg-red-500/30 text-red-200 text-xs hover:bg-red-500/50 flex items-center justify-center" title="حذف الصنف من الفاتورة">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          ` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
 function addItemToInvoice(itemId) {
@@ -1626,22 +1842,54 @@ function addItemToInvoice(itemId) {
   const item = shop.items.find(i => i.id === itemId);
   if (!item) return;
   if (!Array.isArray(shop.invoiceCart)) shop.invoiceCart = [];
+
   const existing = shop.invoiceCart.find(c => c.id === item.id);
-  if (existing) existing.qty += 1;
-  else shop.invoiceCart.push({ id: item.id, name: item.name, price: Number(item.price), qty: 1 });
+  if (existing) {
+    existing.qty += 1;
+    existing.name = item.name;
+    existing.price = Number(item.price);
+  } else {
+    shop.invoiceCart.push({ id: item.id, name: item.name, price: Number(item.price), qty: 1 });
+  }
   saveAllShops();
+  renderEditorItems();
   refreshAllPreviews();
-  showToast(`تمت إضافة "${item.name}" للفاتورة #${shop.invoiceNo}`);
 }
 
 function updateInvoiceItemQty(id, delta) {
   const shop = getActiveShop();
+  if (!Array.isArray(shop.invoiceCart)) shop.invoiceCart = [];
   const idx = shop.invoiceCart.findIndex(c => c.id === id);
-  if (idx === -1) return;
+  if (idx === -1) {
+    if (delta > 0) addItemToInvoice(id);
+    return;
+  }
   shop.invoiceCart[idx].qty += delta;
-  if (shop.invoiceCart[idx].qty <= 0) shop.invoiceCart.splice(idx, 1);
+  if (shop.invoiceCart[idx].qty <= 0) {
+    shop.invoiceCart.splice(idx, 1);
+  }
   saveAllShops();
+  renderEditorItems();
   refreshAllPreviews();
+}
+
+function removeInvoiceItemCompletely(id) {
+  const shop = getActiveShop();
+  if (!Array.isArray(shop.invoiceCart)) return;
+  shop.invoiceCart = shop.invoiceCart.filter(c => c.id !== id);
+  saveAllShops();
+  renderEditorItems();
+  refreshAllPreviews();
+  showToast('تم حذف الصنف من الفاتورة');
+}
+
+function clearInvoiceCart() {
+  const shop = getActiveShop();
+  shop.invoiceCart = [];
+  saveAllShops();
+  renderEditorItems();
+  refreshAllPreviews();
+  showToast('تم إفراغ أصناف الفاتورة');
 }
 
 function resetInvoiceNumberToOne() {
@@ -1650,6 +1898,7 @@ function resetInvoiceNumberToOne() {
   document.getElementById('inpInvoiceNo').value = 1;
   saveAllShops();
   refreshAllPreviews();
+  showToast('تم تصفير رقم الفاتورة إلى #1');
 }
 
 function nextInvoiceOrder() {
@@ -1658,7 +1907,9 @@ function nextInvoiceOrder() {
   shop.invoiceCart = [];
   document.getElementById('inpInvoiceNo').value = shop.invoiceNo;
   saveAllShops();
+  renderEditorItems();
   refreshAllPreviews();
+  showToast(`جاهز لفاتورة جديدة رقم #${shop.invoiceNo}`);
 }
 
 function renderInvoicePreview(shop, qrImgData) {
@@ -1671,43 +1922,56 @@ function renderInvoicePreview(shop, qrImgData) {
   const finalTotal = Math.max(0, subtotal - discount);
   const nowStr = new Date().toLocaleString('ar-YE', { dateStyle: 'short', timeStyle: 'short' });
 
+  const logoHtml = shop.logo
+    ? `<img src="${shop.logo}" class="w-14 h-14 rounded-full object-cover mx-auto mb-1 border-2 border-yellow-600">`
+    : (shop.logoUrl ? `<img src="${escapeHtml(shop.logoUrl)}" class="w-14 h-14 rounded-full object-cover mx-auto mb-1 border-2 border-yellow-600" onerror="this.remove()">` : '');
+
   sheet.innerHTML = `
     <div class="text-center border-b-2 border-dashed border-gray-300 pb-3 mb-3">
+      ${logoHtml}
       <div class="text-lg font-black text-gray-900">${escapeHtml(shop.name)}</div>
       <div class="text-xs text-gray-600">${escapeHtml(shop.welcome || '')}</div>
       <div class="text-xs font-bold text-gray-800 mt-1" dir="ltr">Tel: ${escapeHtml(shop.phone)} | Wi-Fi: ${escapeHtml(shop.wifi)}</div>
     </div>
-    <div class="flex items-center justify-between text-xs font-bold bg-gray-100 px-3 py-2 rounded-lg mb-3 text-gray-900">
-      <span>فاتورة رقم: <b class="text-sm">#${shop.invoiceNo || 1}</b></span>
+
+    <div class="flex flex-wrap items-center justify-between gap-1 text-xs font-bold bg-gray-100 px-3 py-2 rounded-lg mb-3 text-gray-900">
+      <span>فاتورة: <b class="text-sm">#${shop.invoiceNo || 1}</b></span>
       <span>${escapeHtml(shop.tableNo || 'طاولة 1')}</span>
+      <span>الدفع: ${escapeHtml(shop.payMethod || 'نقداً')}</span>
       <span class="text-[11px] text-gray-600">${nowStr}</span>
     </div>
+
     <table class="w-full text-xs border-collapse mb-3 text-gray-900">
       <thead>
         <tr class="border-b-2 border-gray-800 text-gray-900 font-black">
           <th class="text-right py-1.5">الصنف</th>
           <th class="text-center py-1.5">الكمية</th>
           <th class="text-left py-1.5">الإجمالي</th>
+          <th class="w-6 no-print"></th>
         </tr>
       </thead>
       <tbody>
         ${cart.length ? cart.map(c => `
           <tr class="border-b border-gray-200">
-            <td class="py-1.5 font-bold">${escapeHtml(c.name)}</td>
-            <td class="py-1.5 text-center">
-              <span class="inline-flex items-center gap-1">
-                <button onclick="updateInvoiceItemQty(${c.id}, -1)" class="px-1.5 rounded bg-gray-200 text-gray-800 font-black print:hidden">-</button>
-                <b>${c.qty}</b>
-                <button onclick="updateInvoiceItemQty(${c.id}, 1)" class="px-1.5 rounded bg-gray-200 text-gray-800 font-black print:hidden">+</button>
+            <td class="py-2 font-bold">${escapeHtml(c.name)}</td>
+            <td class="py-2 text-center">
+              <span class="inline-flex items-center gap-1.5">
+                <button onclick="updateInvoiceItemQty(${c.id}, -1)" class="w-6 h-6 rounded bg-gray-200 hover:bg-gray-300 text-gray-900 font-black no-print" title="إنقاص 1">−</button>
+                <b class="text-sm px-1">${c.qty}</b>
+                <button onclick="updateInvoiceItemQty(${c.id}, 1)" class="w-6 h-6 rounded bg-gray-200 hover:bg-gray-300 text-gray-900 font-black no-print" title="زيادة 1">+</button>
               </span>
             </td>
-            <td class="py-1.5 text-left font-bold">${(c.price * c.qty).toLocaleString()} ${escapeHtml(shop.currency)}</td>
+            <td class="py-2 text-left font-bold">${(c.price * c.qty).toLocaleString()} ${escapeHtml(shop.currency)}</td>
+            <td class="py-2 text-left no-print">
+              <button onclick="removeInvoiceItemCompletely(${c.id})" class="text-red-600 hover:text-red-800 font-black px-1" title="حذف الصنف من الفاتورة">🗑</button>
+            </td>
           </tr>
         `).join('') : `
-          <tr><td colspan="3" class="text-center py-4 text-gray-400">اضغط على أي صنف من القائمة لإضافته للفاتورة</td></tr>
+          <tr><td colspan="4" class="text-center py-5 text-gray-500 font-bold">اختر الأصناف من لوحة الكاشير بالأعلى لإضافتها للفاتورة</td></tr>
         `}
       </tbody>
     </table>
+
     <div class="border-t-2 border-dashed border-gray-400 pt-2 space-y-1 text-xs text-gray-900">
       <div class="flex justify-between">
         <span>المجموع الفرعي:</span>
@@ -1719,21 +1983,26 @@ function renderInvoicePreview(shop, qrImgData) {
           <b>- ${discount.toLocaleString()} ${escapeHtml(shop.currency)}</b>
         </div>
       ` : ''}
-      <div class="flex justify-between text-base font-black bg-yellow-100 px-2.5 py-1.5 rounded-lg border border-yellow-500">
+      <div class="flex justify-between text-base font-black bg-yellow-100 px-2.5 py-2 rounded-lg border border-yellow-500">
         <span>الإجمالي النهائي:</span>
         <span>${finalTotal.toLocaleString()} ${escapeHtml(shop.currency)}</span>
       </div>
     </div>
+
+    <!-- باركود كبير جداً (w-56 h-56 = 224px) بنقاط قليلة جداً وعريضة يفتح الفاتورة الإلكترونية وإعادة الطلب -->
     <div class="mt-4 pt-3 border-t border-gray-300 text-center">
-      <div class="qr-box-full w-28 h-28 mx-auto mb-1.5 !p-1.5 !rounded-xl">
-        <img src="${qrImgData}" alt="Menu QR">
+      <div class="qr-box-full w-56 h-56 mx-auto mb-2 !p-3.5 !rounded-2xl shadow-md">
+        <img src="${qrImgData}" alt="Smart Invoice QR">
       </div>
-      <div class="text-[11px] font-bold text-gray-700">امسح الباركود لفتح المنيو والطلب عبر واتساب</div>
+      <div class="text-xs font-black text-gray-900">📱 امسح الباركود لعرض فاتورتك الإلكترونية أو إعادة طلبها للتوصيل</div>
       <div class="text-[10px] text-gray-500 font-bold mt-1" dir="ltr">Powered by SmartPOS 3D | ${SMARTPOS_DISPLAY_PHONE} | ${SMARTPOS_IG}</div>
     </div>
   `;
 }
 
+/* =========================================================================
+   التبديل بين التبويبات، الطباعة، ومعاينة تجربة الزبون
+   ========================================================================= */
 function switchStudioTab(tab) {
   ['3d', 'tent', 'invoice'].forEach(t => {
     const panel = document.getElementById('panel' + t.charAt(0).toUpperCase() + t.slice(1));
@@ -1745,8 +2014,7 @@ function switchStudioTab(tab) {
 
 function setTentTheme(themeClass) {
   const card = document.getElementById('tentCardElement');
-  if (!card) return;
-  card.className = `table-tent-card ${themeClass}`;
+  if (card) card.className = `table-tent-card ${themeClass}`;
 }
 
 function setInvoiceFormat(fmt) {
@@ -1781,24 +2049,33 @@ function openCustomerFullView(isDirectCustomerScan = false) {
 }
 
 function closeCustomerFullView() {
+  const shop = shops.find(s => s.id === activeShopId) || shops[0];
+  if (shop) delete shop.scannedInvoice;
   const view = document.getElementById('customerFullView');
   if (view) view.classList.remove('active');
+  refreshAllPreviews();
 }
 
-function openLiveQRLinkInBrowser() {
-  const shop = getActiveShop();
-  if (getEffective3DUrl(shop)) {
-    window.open(getEffective3DUrl(shop), '_blank');
+function openLiveQRLinkInBrowser(mode = 'table') {
+  const shop = shops.find(s => s.id === activeShopId) || shops[0];
+  if (!shop) return;
+  if (mode === 'invoice') {
+    const token = packInvoiceUltraLight(shop);
+    const decoded = unpackUltraLight(token);
+    if (decoded) shop.scannedInvoice = decoded.scannedInvoice;
+    customerOrderType = 'توصيل للمنزل';
   } else {
-    openCustomerFullView(false);
+    delete shop.scannedInvoice;
+    customerOrderType = 'داخل المحل (طاولة)';
   }
+  openCustomerFullView(false);
 }
 
 function copyActiveQRLink() {
   const shop = getActiveShop();
-  const url = getActiveQRTargetUrl(shop);
+  const url = getTableQRUrl(shop);
   navigator.clipboard?.writeText(url);
-  showToast('تم نسخ رابط الباركود الفعال');
+  showToast('تم نسخ رابط منيو الزبون المستقل ✓');
 }
 
 function escapeHtml(str) {
@@ -1811,7 +2088,7 @@ function escapeHtml(str) {
 }
 
 /* =========================================================================
-   الخلفية العصبية والمؤثرات (Neural Background & Tilt)
+   الخلفية العصبية والمؤثرات البصرية
    ========================================================================= */
 function initNeuralBackground() {
   const canvas = document.getElementById('neuralCanvas');
@@ -1826,7 +2103,7 @@ function initNeuralBackground() {
   window.addEventListener('resize', resize);
   resize();
 
-  for (let i = 0; i < 42; i++) {
+  for (let i = 0; i < 38; i++) {
     particles.push({
       x: Math.random() * w,
       y: Math.random() * h,
@@ -1849,18 +2126,6 @@ function initNeuralBackground() {
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(212, 175, 55, 0.45)';
       ctx.fill();
-
-      for (let j = i + 1; j < particles.length; j++) {
-        const p2 = particles[j];
-        const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-        if (dist < 135) {
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(p2.x, p2.y);
-          ctx.strokeStyle = `rgba(212, 175, 55, ${0.12 * (1 - dist / 135)})`;
-          ctx.stroke();
-        }
-      }
     }
     requestAnimationFrame(animate);
   }
@@ -1873,23 +2138,6 @@ function initTiltAndSpotlight() {
     if (spotlight) {
       spotlight.style.background = `radial-gradient(650px circle at ${e.clientX}px ${e.clientY}px, rgba(212, 175, 55, 0.14), rgba(245, 158, 11, 0.04) 40%, transparent 70%)`;
     }
-    document.querySelectorAll('.luxury-glass').forEach(card => {
-      const rect = card.getBoundingClientRect();
-      card.style.setProperty('--gx', `${e.clientX - rect.left}px`);
-      card.style.setProperty('--gy', `${e.clientY - rect.top}px`);
-    });
-  });
-
-  document.querySelectorAll('[data-tilt]').forEach(el => {
-    el.addEventListener('mousemove', e => {
-      const rect = el.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      el.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`;
-    });
-    el.addEventListener('mouseleave', () => {
-      el.style.transform = 'rotateY(0deg) rotateX(0deg)';
-    });
   });
 }
 
