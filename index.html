@@ -2,541 +2,1862 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>SmartPOS | منيو 3D وبطاقة QR وفواتير مجاناً</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+<title>SmartPOS Studio 3D | نظام المنيو التفاعلي 3D والباركود والفواتير</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<style id="pg"></style>
+<style id="pageSizeStyle"></style>
 <style>
-:root{--g:#D4AF37;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-[hidden]{display:none!important}
-html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:#030509;color:#f5efe0;font-family:Cairo,Tajawal,sans-serif;overflow-x:hidden}
-#cv{position:fixed;inset:0;z-index:0;pointer-events:none}
-#spot{position:fixed;inset:0;z-index:1;pointer-events:none}
-#studio,footer{position:relative;z-index:2}
-.gl{background:rgba(12,16,28,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(212,175,55,.28);border-radius:22px;box-shadow:0 20px 50px rgba(0,0,0,.5),inset 0 1px 1px rgba(255,245,192,.12)}
-.gt{background:linear-gradient(135deg,#FFE680,#D4AF37 50%,#F59E0B);-webkit-background-clip:text;background-clip:text;color:transparent}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:14px;font-weight:800;cursor:pointer;border:1px solid rgba(212,175,55,.45);color:#f5efe0;transition:.2s;text-align:center;text-decoration:none;font-family:inherit;font-size:14px;background:transparent}
-.btn:hover{transform:translateY(-2px)}
-.gold{background:linear-gradient(135deg,#FFE680,#D4AF37 55%,#F59E0B);color:#1a1200;border:0;box-shadow:0 0 24px rgba(245,158,11,.4)}
-.in{background:rgba(4,7,14,.8);border:1px solid rgba(212,175,55,.3);border-radius:10px;padding:9px 11px;color:#fff;font-family:inherit;width:100%;font-size:14px}
-.in:focus{outline:2px solid var(--g)}
-.tb,.pill{padding:8px 15px;border-radius:12px;border:1px solid rgba(212,175,55,.3);cursor:pointer;font-weight:700;font-size:13px;white-space:nowrap;background:rgba(255,255,255,.04);color:#f5efe0;font-family:inherit}
-.tb.on,.pill.on{background:linear-gradient(135deg,#FFE680,#D4AF37 55%,#F59E0B);color:#1a1200;border-color:transparent}
-[data-tilt]{transition:transform .15s ease-out;transform-style:preserve-3d}
-.x,.q{border:1px solid rgba(212,175,55,.4);border-radius:8px;width:28px;height:28px;cursor:pointer;flex:none;background:transparent;color:inherit}
-.vh{position:absolute;opacity:0;width:1px;height:1px;overflow:hidden}
-.ph{width:300px;height:620px;margin:auto;border-radius:52px;border:10px solid #2a2620;background:#05070c;box-shadow:0 40px 80px #000c,0 0 0 2px #D4AF37,0 0 0 5px #12100b,0 0 40px rgba(212,175,55,.3);position:relative;overflow:hidden;display:flex;flex-direction:column}
-.ph:before{content:'';position:absolute;top:9px;left:50%;transform:translateX(-50%);width:96px;height:25px;background:#000;border-radius:20px;z-index:5;border:1px solid rgba(212,175,55,.3)}
-.ph:after{content:'';position:absolute;inset:0;background:linear-gradient(125deg,rgba(255,255,255,.09),transparent 40%);pointer-events:none;z-index:6}
-.scr{flex:1;overflow:auto;padding:44px 12px 8px;scrollbar-width:none}
-.scr::-webkit-scrollbar{display:none}
-.holo{position:absolute;z-index:7;background:rgba(15,20,34,.88);border:1.5px solid #D4AF37;border-radius:14px;padding:6px 11px;font-size:11px;font-weight:800;color:#FFF5C0;box-shadow:0 14px 30px #000b;pointer-events:none;animation:fl 3.5s ease-in-out infinite}
-@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-.mv{font-family:Cairo,Tajawal,sans-serif;color:#f5efe0;direction:rtl;perspective:900px}
-.mv .hd{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.mv .lg0{position:relative;width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:27px;background:linear-gradient(145deg,rgba(212,175,55,.3),rgba(212,175,55,.06));border:1px solid #D4AF37;overflow:hidden;flex:none;box-shadow:0 6px 18px #0008}
-.mv .lg0 img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.mv .nm{font-weight:800;font-size:18px;background:linear-gradient(135deg,#FFE680,#D4AF37 50%,#F59E0B);-webkit-background-clip:text;background-clip:text;color:transparent}
-.mv .sub{font-size:12px;opacity:.8;display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
-.mv .open{color:#34d399;font-weight:800}
-.mv .wfr{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px;margin-bottom:10px;border-radius:14px;border:1px dashed rgba(212,175,55,.5);font-size:12px}
-.mv .wfr button{border:0;border-radius:9px;padding:4px 12px;background:linear-gradient(135deg,#D4AF37,#F59E0B);color:#1a1200;font-weight:800;cursor:pointer;font-family:inherit}
-.mv .sq{width:100%;padding:10px 14px;border-radius:14px;border:1px solid rgba(212,175,55,.3);background:rgba(4,7,14,.7);color:#fff;font-family:inherit;font-size:14px;margin-bottom:10px}
-.mv .sq:focus{outline:2px solid #D4AF37}
-.mv .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:6px;scrollbar-width:none}
-.mv .chips::-webkit-scrollbar{display:none}
-.mv .chip{flex:none;padding:6px 14px;border-radius:999px;border:1px solid rgba(212,175,55,.4);font-size:13px;cursor:pointer;font-weight:600}
-.mv .chip.on{background:linear-gradient(135deg,#D4AF37,#F59E0B);color:#1a1200;font-weight:800;border-color:transparent}
-.mv .it{display:flex;align-items:center;gap:12px;padding:12px;margin-bottom:10px;border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(20,25,40,.72));border:1px solid rgba(212,175,55,.28);box-shadow:0 10px 24px #0007,inset 0 1px 1px rgba(255,255,255,.12);transition:transform .25s,border-color .25s}
-.mv .it:hover{transform:translateY(-3px) rotateX(4deg);border-color:rgba(245,158,11,.8)}
-.mv .ic{width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;flex:none;background:radial-gradient(circle at 30% 30%,rgba(255,230,128,.3),rgba(212,175,55,.06));border:1px solid rgba(212,175,55,.45);box-shadow:inset 0 2px 6px rgba(255,255,255,.2),0 8px 16px #0006}
-.mv .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-.mv .tx b{font-size:15px}
-.mv .tx small{font-size:11px;opacity:.55}
-.mv .pr{color:#F5C842;font-weight:800;font-size:14px}
-.mv .add,.mv .qs button{width:34px;height:34px;border-radius:12px;border:0;font-size:20px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#D4AF37,#F59E0B);color:#1a1200;flex:none;font-family:inherit;line-height:1}
-.mv .qs{display:flex;align-items:center;gap:8px;font-weight:800}
-.mv .cb{position:sticky;bottom:8px;padding:11px 14px;margin:8px 0;border-radius:18px;background:linear-gradient(135deg,#FFE680,#D4AF37 55%,#F59E0B);color:#1a1200;font-weight:800;font-size:14px;box-shadow:0 10px 28px rgba(245,158,11,.45);z-index:3}
-.mv .cbi{display:flex;justify-content:space-between;align-items:center}
-.mv .cbb{display:flex;gap:8px;margin-top:8px}
-.mv .cbb button{border:0;border-radius:11px;padding:8px 10px;cursor:pointer;font-weight:800;color:#fff;background:#128C7E;font-family:inherit;font-size:13px;flex:1}
-.mv .cbb button[data-a=clrc]{flex:none;background:rgba(0,0,0,.18);color:#1a1200}
-.mv .empty{text-align:center;opacity:.6;padding:20px}
-.wm{margin-top:12px;padding:9px 11px;border-radius:12px;background:linear-gradient(135deg,#D4AF37,#F59E0B);color:#1a1200;font-size:11px;font-weight:600;text-align:center;line-height:1.7;font-family:Cairo,Tajawal,sans-serif}
-.wm a{color:#1a1200;margin:0 6px;text-decoration:underline;font-weight:800}
-.mv .sp{margin-top:16px;padding:18px;border-radius:22px;text-align:center;background:linear-gradient(135deg,#1A1304,#2E2105 55%,#150F02);border:1.5px solid #D4AF37;box-shadow:0 14px 34px #000a,0 0 22px rgba(212,175,55,.2)}
-.mv .sp h3{margin:0;font-size:26px;font-weight:800;background:linear-gradient(135deg,#FFE680,#D4AF37 50%,#F59E0B);-webkit-background-clip:text;background-clip:text;color:transparent}
-.mv .sp p{margin:6px 0;font-size:13px;opacity:.8}
-.mv .sp ul{list-style:none;padding:0;margin:10px 0;text-align:right;font-size:13px;line-height:2}
-.mv .sp li:before{content:'✓ ';color:#D4AF37;font-weight:800}
-.mv .btn2{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:14px;font-weight:800;text-decoration:none;margin-top:8px;font-size:14px}
-.mv .g{background:linear-gradient(135deg,#D4AF37,#F59E0B);color:#1a1200}
-.mv .o{border:1px solid rgba(212,175,55,.5);color:#f5efe0}
-.card{width:340px;max-width:100%;margin:auto;padding:24px 18px 14px;border-radius:26px;text-align:center}
-.card.dk{background:radial-gradient(circle at top,#241C08,#080B12 72%);border:2.5px solid #D4AF37;color:#FFF8E7}
-.card.lt{background:linear-gradient(180deg,#fff,#FFF9E6);border:2.5px solid #D4AF37;color:#181204}
-.card.em{background:radial-gradient(circle at top,#073325,#04120E 75%);border:2.5px solid #D4AF37;color:#F0FDF4}
-.wf{display:inline-block;margin-top:8px;padding:5px 12px;border-radius:999px;border:1px dashed #D4AF37;font-size:12px}
-.lgw{width:72px;height:72px;border-radius:50%;margin:auto;display:flex;align-items:center;justify-content:center;font-size:34px;background:rgba(212,175,55,.15);border:1.5px solid #D4AF37;overflow:hidden;flex:none}
-.lg{width:100%;height:100%;object-fit:cover}
-#qrb{display:inline-block;background:#fff;padding:12px;border-radius:18px;border:3px solid #D4AF37;margin:12px 0;line-height:0}
-#iqr{display:inline-block;background:#fff;padding:8px;border:3px solid #D4AF37;border-radius:14px;line-height:0}
-.paper{background:#fff;color:#1a1a1a;border-radius:16px;padding:18px;margin:auto}
-.i80{max-width:302px;border-top:6px dashed #D4AF37;border-bottom:6px dashed #D4AF37;border-radius:8px}
-.ia5{max-width:480px;border:2px solid #D4AF37}
-.paper table{width:100%;border-collapse:collapse;font-size:13px}
-.paper th{background:#D4AF37;color:#1a1200;padding:6px}
-.paper td{padding:6px;border-bottom:1px solid #eee;text-align:center}
-.fb{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 6px 20px #0008;text-decoration:none}
-.wa{background:#25D366;animation:pl 1.6s infinite}
-.ig{background:linear-gradient(45deg,#f09433,#dc2743,#bc1888)}
-@keyframes pl{0%{box-shadow:0 0 0 0 rgba(37,211,102,.7)}100%{box-shadow:0 0 0 22px rgba(37,211,102,0)}}
-#fab{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:90;display:flex;gap:10px}
-body.pv #fab,body.cu #fab{display:none}
-#cmode{display:none;position:fixed;inset:0;z-index:100;overflow:auto;background:radial-gradient(circle at top,#181307,#04060B 70%);padding-top:env(safe-area-inset-top,0px)}
-#cmode.on{display:block}
-#cmode .mv{max-width:480px;margin:0 auto;padding:16px 14px 100px}
-.ovl{display:none;position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.92);flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px;text-align:center}
-.ovl.on{display:flex}
-#ovi{max-width:92%;max-height:62vh;background:#fff;border-radius:12px}
-#toast{position:fixed;top:calc(16px + env(safe-area-inset-top,0px));left:50%;transform:translate(-50%,-110px);z-index:200;background:#0f1422;border:1.5px solid #D4AF37;color:#FFF5C0;padding:10px 20px;border-radius:999px;font-weight:800;font-size:13px;transition:.35s;pointer-events:none;max-width:90vw;text-align:center}
-#toast.on{transform:translate(-50%,0)}
-#pr{display:none}
-@media print{body>*:not(#pr){display:none!important}#pr{display:block!important}html,body{background:#fff!important;margin:0!important}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}#pr .card{zoom:1.5}#pr .paper{box-shadow:none;margin:0 auto}}
+:root {
+  --gold-1: #FFF5C0;
+  --gold-2: #D4AF37;
+  --gold-3: #F59E0B;
+  --bg-deep: #030509;
+  --bg-card: rgba(12, 16, 28, 0.78);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background-color: var(--bg-deep);
+  color: #F9F6F0;
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+  overflow-x: hidden;
+}
+
+#neuralCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+#mouseSpotlight {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(650px circle at 50% 50%, rgba(212, 175, 55, 0.15), rgba(245, 158, 11, 0.04) 40%, transparent 70%);
+}
+.content-layer { position: relative; z-index: 2; }
+
+.luxury-glass {
+  background: var(--bg-card);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  border-radius: 26px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 245, 192, 0.18);
+  position: relative;
+  overflow: hidden;
+}
+.luxury-glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(380px circle at var(--gx, -500px) var(--gy, -500px), rgba(255, 235, 150, 0.15), transparent 70%);
+  pointer-events: none;
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #FFF7CC 0%, #D4AF37 45%, #F59E0B 80%, #FFF3B0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.btn-luxury {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  padding: 12px 20px; border-radius: 16px; font-weight: 800; font-size: 13.5px;
+  cursor: pointer; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: rgba(255, 255, 255, 0.05); color: #F9F6F0;
+  text-decoration: none; user-select: none;
+}
+.btn-luxury:hover {
+  transform: translateY(-3px) scale(1.01);
+  border-color: #F59E0B;
+  box-shadow: 0 12px 28px rgba(212, 175, 55, 0.22);
+}
+.btn-gold-solid {
+  background: linear-gradient(135deg, #FFE885 0%, #D4AF37 50%, #F59E0B 100%);
+  color: #140E00; border: none;
+  box-shadow: 0 8px 30px rgba(245, 158, 11, 0.42), inset 0 1px 2px rgba(255, 255, 255, 0.7);
+}
+.btn-gold-solid:hover {
+  box-shadow: 0 14px 38px rgba(245, 158, 11, 0.68);
+  color: #000;
+}
+
+.luxury-input {
+  background: rgba(4, 7, 14, 0.82);
+  border: 1px solid rgba(212, 175, 55, 0.32);
+  border-radius: 12px; padding: 10px 14px;
+  color: #FFF; font-family: inherit; font-size: 13.5px; width: 100%;
+  transition: 0.2s;
+}
+.luxury-input:focus {
+  outline: none; border-color: #F59E0B;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.22);
+}
+
+.studio-tab {
+  flex: 1; min-width: 130px; padding: 11px 14px; border-radius: 15px;
+  border: 1px solid rgba(212, 175, 55, 0.28); background: rgba(0, 0, 0, 0.4);
+  color: #d1cbb8; font-weight: 800; font-size: 13px; cursor: pointer;
+  transition: 0.25s; display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.studio-tab.active {
+  background: linear-gradient(135deg, #FFE680, #D4AF37 55%, #F59E0B);
+  color: #120C00; border-color: transparent;
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+}
+
+.shop-pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 14px; border-radius: 14px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: rgba(255, 255, 255, 0.04);
+  color: #E5E7EB; font-size: 12px; font-weight: 800;
+  cursor: pointer; transition: 0.2s; white-space: nowrap;
+}
+.shop-pill.active {
+  background: linear-gradient(135deg, #FFE680, #D4AF37 55%, #F59E0B);
+  color: #120C00; border-color: transparent;
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.35);
+}
+
+/* مجسم المنيو الثلاثي الأبعاد الفائق (Ultra 3D Showcase) */
+.phone-3d-stage {
+  perspective: 1400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 10px 30px;
+  position: relative;
+}
+.phone-3d-rig {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.16s cubic-bezier(0.03, 0.98, 0.52, 0.99);
+}
+.phone-3d-aura {
+  position: absolute;
+  inset: -25px;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.28) 0%, rgba(212, 175, 55, 0.08) 45%, transparent 70%);
+  filter: blur(25px);
+  transform: translateZ(-40px);
+  pointer-events: none;
+}
+.floating-3d-badge {
+  position: absolute;
+  z-index: 30;
+  background: rgba(15, 20, 34, 0.88);
+  backdrop-filter: blur(12px);
+  border: 1.5px solid #D4AF37;
+  border-radius: 16px;
+  padding: 8px 13px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #FFF5C0;
+  box-shadow: 0 18px 35px rgba(0,0,0,0.75), 0 0 15px rgba(212, 175, 55, 0.25);
+  transform: translateZ(55px);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  animation: floatBadge 3.5s ease-in-out infinite;
+}
+.floating-3d-badge.badge-right { top: 68px; right: -42px; }
+.floating-3d-badge.badge-left { bottom: 135px; left: -45px; animation-delay: 1.7s; }
+@keyframes floatBadge {
+  0%, 100% { transform: translateZ(55px) translateY(0px); }
+  50% { transform: translateZ(65px) translateY(-7px); }
+}
+@media (max-width: 640px) {
+  .floating-3d-badge.badge-right { right: -10px; transform: translateZ(35px) scale(0.88); }
+  .floating-3d-badge.badge-left { left: -10px; transform: translateZ(35px) scale(0.88); }
+}
+
+.iphone-mockup {
+  width: 345px;
+  height: 690px;
+  margin: 0 auto;
+  border-radius: 54px;
+  border: 10px solid #221E17;
+  background: linear-gradient(165deg, #0B0F1A 0%, #05070C 100%);
+  box-shadow:
+    0 40px 90px rgba(0, 0, 0, 0.9),
+    0 0 0 2.5px #D4AF37,
+    0 0 0 6px #12100B,
+    0 0 35px rgba(212, 175, 55, 0.35),
+    inset 0 0 22px rgba(212, 175, 55, 0.12);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transform-style: preserve-3d;
+}
+.iphone-screen-glare {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(125deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.01) 35%, transparent 50%);
+  pointer-events: none;
+  z-index: 15;
+}
+.dynamic-island {
+  position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+  width: 118px; height: 27px; background: #000; border-radius: 24px; z-index: 25;
+  display: flex; align-items: center; justify-content: space-between; padding: 0 11px;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.8);
+}
+.island-dot { width: 8px; height: 8px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981; animation: pulseDot 2s infinite; }
+@keyframes pulseDot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+
+.phone-screen {
+  flex: 1; overflow-y: auto; padding: 44px 13px 16px;
+  scrollbar-width: none; position: relative; z-index: 10;
+}
+.phone-screen::-webkit-scrollbar { display: none; }
+
+.menu-item-3d {
+  position: relative;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.09) 0%, rgba(20, 25, 40, 0.72) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  border-radius: 22px;
+  padding: 12px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.14);
+  transform-style: preserve-3d;
+}
+.menu-item-3d:hover {
+  transform: translateY(-4px) scale(1.015);
+  border-color: rgba(245, 158, 11, 0.8);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.75), 0 0 20px rgba(212, 175, 55, 0.25);
+}
+.icon-pedestal {
+  width: 54px; height: 54px; border-radius: 17px;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 230, 128, 0.32), rgba(212, 175, 55, 0.08));
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 27px; flex-shrink: 0;
+  box-shadow: inset 0 2px 6px rgba(255,255,255,0.22), 0 8px 16px rgba(0,0,0,0.45);
+}
+
+.smartpos-viral-card {
+  margin-top: 16px;
+  background: linear-gradient(135deg, #1A1304 0%, #2E2105 50%, #150F02 100%);
+  border: 1.5px solid #D4AF37;
+  border-radius: 20px;
+  padding: 14px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 14px 34px rgba(0,0,0,0.7), 0 0 22px rgba(212, 175, 55, 0.2);
+}
+
+.table-tent-card {
+  width: 365px; margin: 0 auto; border-radius: 28px; padding: 26px 22px 18px;
+  text-align: center; position: relative; overflow: hidden; transition: 0.3s;
+}
+.tent-royal {
+  background: radial-gradient(circle at top, #241C08 0%, #080B12 72%);
+  border: 2.5px solid #D4AF37; color: #FFF8E7;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.8), inset 0 0 35px rgba(212,175,55,0.15);
+}
+.tent-light {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF9E6 100%);
+  border: 2.5px solid #D4AF37; color: #181204;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+}
+.tent-emerald {
+  background: radial-gradient(circle at top, #073325 0%, #04120E 75%);
+  border: 2.5px solid #D4AF37; color: #F0FDF4;
+}
+
+.invoice-sheet {
+  background: #FFFFFF; color: #111827; margin: 0 auto;
+  border-radius: 16px; padding: 22px; box-shadow: 0 20px 50px rgba(0,0,0,0.65);
+}
+.invoice-thermal {
+  max-width: 345px; font-family: 'Cairo', monospace;
+  border-top: 6px dashed #D4AF37; border-bottom: 6px dashed #D4AF37;
+  border-radius: 8px; padding: 16px 14px;
+}
+.invoice-a5 { max-width: 495px; border: 2px solid #D4AF37; }
+
+/* مربع الباركود القياسي الممتلئ 100% */
+.qr-box-full {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF !important;
+  padding: 10px !important;
+  border-radius: 20px;
+  border: 3px solid #D4AF37;
+  line-height: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.qr-box-full img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: contain !important;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+[data-tilt] {
+  transition: transform 0.16s cubic-bezier(0.03, 0.98, 0.52, 0.99);
+  transform-style: preserve-3d; will-change: transform;
+}
+
+.floating-bar {
+  position: fixed; bottom: 20px; left: 20px; z-index: 60;
+  display: flex; align-items: center; gap: 12px;
+}
+.fab-btn {
+  width: 56px; height: 56px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 25px; color: #FFF; text-decoration: none;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.55); transition: 0.25s;
+}
+.fab-btn:hover { transform: scale(1.1) translateY(-4px); }
+.fab-wa { background: linear-gradient(135deg, #25D366, #128C7E); animation: waPulse 1.8s infinite; }
+.fab-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+@keyframes waPulse {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.75); }
+  100% { box-shadow: 0 0 0 22px rgba(37, 211, 102, 0); }
+}
+
+#customerFullView {
+  position: fixed; inset: 0; z-index: 100;
+  background: radial-gradient(circle at top, rgba(30, 22, 6, 0.94) 0%, rgba(3, 5, 9, 0.98) 75%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow-y: auto; display: none;
+}
+#customerFullView.active { display: block; }
+
+#toastNotif {
+  position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
+  z-index: 200; background: rgba(15, 23, 42, 0.95); border: 1.5px solid #D4AF37;
+  color: #FFF5C0; padding: 10px 20px; border-radius: 999px; font-weight: 800; font-size: 13px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.8); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+#toastNotif.show { transform: translateX(-50%) translateY(0); }
+
+#printContainer { display: none; }
+@media print {
+  html, body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  body > *:not(#printContainer) {
+    display: none !important;
+  }
+  #printContainer {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    width: 100% !important;
+    background: #FFFFFF !important;
+    padding: 3mm !important;
+    margin: 0 auto !important;
+  }
+  #printContainer .table-tent-card,
+  #printContainer .invoice-sheet {
+    box-shadow: none !important;
+    margin: 0 auto !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
 </style>
 </head>
 <body>
-<canvas id="cv"></canvas><div id="spot"></div><div id="toast"></div>
 
-<div id="ld" hidden style="position:fixed;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;font-weight:800;color:#D4AF37;font-family:Cairo,sans-serif">جارٍ التحميل…</div>
-<div id="studio">
-<section class="max-w-5xl mx-auto px-4 pt-12 pb-6 text-center">
-  <div class="inline-block gl px-5 py-2 mb-5 text-sm gt font-extrabold">✦ مُقدم مجاناً من نظام الكاشير الذكي SmartPOS ✦</div>
-  <h1 class="text-3xl md:text-6xl font-extrabold leading-tight mb-4 gt">حوّل مطعمك أو متجرك إلى تجربة رقمية فاخرة في 60 ثانية مجاناً</h1>
-  <p class="opacity-75 max-w-2xl mx-auto mb-6">منيو 3D تفاعلي، وبطاقة طاولة بـ QR يفتح منيو محلك مباشرة بدون تسجيل، وفاتورة احترافية، وطلبات زبائنك تصلك على واتساب.</p>
-  <div class="flex flex-wrap gap-3 justify-center">
-    <a href="#ws" class="btn gl">🚀 ابدأ تصميم المنيو والفاتورة الآن</a>
-    <a data-wa class="btn gold">💬 اطلب النظام الكامل عبر واتساب (785619054)</a>
-    <a data-ig class="btn gl">📸 تابع @SMAR.TPOS على إنستغرام</a>
-  </div>
-</section>
+<canvas id="neuralCanvas"></canvas>
+<div id="mouseSpotlight"></div>
+<div id="toastNotif">تم الحفظ بنجاح</div>
 
-<section class="max-w-6xl mx-auto px-4 mb-5">
-  <div class="gl p-4">
-    <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-      <b class="gt">🏪 مطاعمك ومحلاتك (كل واحد مستقل بمنيوه وباركوده وفواتيره)</b>
-      <div class="flex flex-wrap gap-2">
-        <button class="pill" data-a="newshop" data-v="cafe">☕ كافيه</button>
-        <button class="pill" data-a="newshop" data-v="restaurant">🍖 مطعم</button>
-        <button class="pill" data-a="newshop" data-v="store">📱 متجر</button>
-        <button class="pill" data-a="newshop" data-v="blank">➕ فارغ</button>
-        <button class="pill" data-a="delshop" style="border-color:rgba(248,113,113,.5);color:#fca5a5">🗑 حذف الحالي</button>
+<!-- =========================================================================
+     شاشة الزبون التفاعلية 3D الكاملة (تفتح تلقائياً عند مسح الباركود)
+     ========================================================================= -->
+<div id="customerFullView">
+  <div class="sticky top-0 z-30 backdrop-blur-xl bg-black/85 border-b border-yellow-500/30 px-4 py-3">
+    <div class="max-w-lg mx-auto flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2 text-xs">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+        <span class="px-3 py-1 rounded-full bg-yellow-500/20 border border-yellow-400/50 text-yellow-300 font-extrabold">
+          ⚡ منيو <span id="topCustomerShopName">المطعم</span> 3D
+        </span>
+      </div>
+      <div class="flex items-center gap-2">
+        <a data-wa-link target="_blank" class="px-3 py-1.5 rounded-full bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500 text-black font-black text-xs shadow-lg">
+          اطلب نظام SmartPOS لمحلك
+        </a>
+        <button id="exitCustomerBtn" onclick="closeCustomerFullView()" class="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-bold">
+          ✕ رجوع للاستوديو
+        </button>
       </div>
     </div>
-    <div id="shops" class="flex gap-2 overflow-x-auto pb-1"></div>
-  </div>
-</section>
-
-<section id="ws" class="max-w-6xl mx-auto px-4 pb-8 grid lg:grid-cols-2 gap-6 items-start">
-  <div class="gl p-5">
-    <h2 class="text-xl font-extrabold gt mb-3">① بيانات المحل والأصناف <span class="text-xs opacity-60">(تُحفظ تلقائياً)</span></h2>
-    <div class="grid grid-cols-2 gap-2 mb-3">
-      <input id="sn" class="in" data-f="name" placeholder="اسم المطعم / المحل">
-      <input id="sp" class="in" dir="ltr" inputmode="tel" data-f="phone" placeholder="واتساب المحل للطلبات 734755062">
-      <select id="sc" class="in" data-f="cur"><option value="ر.ي">ريال يمني</option><option value="ر.س">ريال سعودي</option><option value="$">دولار</option></select>
-      <input id="sw" class="in" dir="ltr" data-f="wifi" placeholder="كلمة سر الواي فاي (اختياري)">
-      <label class="in cursor-pointer text-center relative overflow-hidden" style="padding:0"><input type="file" accept="image/*" id="lf" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:0"><span class="block" style="padding:9px 11px;pointer-events:none">🖼️ رفع شعار المحل</span></label>
-      <input id="se" class="in" data-f="emo" maxlength="4" placeholder="أو إيموجي الشعار 🍽️">
-      <div id="ls" class="col-span-2 text-xs opacity-75">الشعار المرفوع يظهر في البطاقة والفاتورة. لإظهاره في منيو الزبون ضع رابط صورته أدناه.</div>
-      <input id="su" class="in col-span-2" dir="ltr" data-f="logoUrl" placeholder="رابط صورة الشعار للمنيو (اختياري) https://...">
-    </div>
-    <div class="flex flex-wrap gap-2 mb-3">
-      <button class="btn gold" data-a="add">＋ إضافة صنف</button>
-      <button class="btn" data-a="rst">↺ إعادة ضبط بيانات تجريبية</button>
-    </div>
-    <div id="list" class="overflow-auto" style="max-height:420px"></div>
-    <a data-wa class="btn gold w-full mt-3">⭐ ترقية الحساب وحذف العلامة المائية</a>
   </div>
 
-  <div class="gl p-5">
-    <h2 class="text-xl font-extrabold gt mb-3">② المعاينة الحية والطباعة</h2>
-    <div class="flex flex-wrap gap-2 mb-4">
-      <button class="tb on" data-a="tab" data-v="1">📱 المنيو 3D</button>
-      <button class="tb" data-a="tab" data-v="2">🔳 بطاقة الطاولة</button>
-      <button class="tb" data-a="tab" data-v="3">🧾 الفاتورة</button>
-    </div>
-    <div id="p1" class="pane">
-      <div class="relative" style="padding:6px 0 10px">
-        <div id="phoneWrap" data-tilt class="relative">
-          <div id="phone" class="ph"><div class="scr"><div class="mv mvr" data-src="s"></div></div></div>
-          <div class="holo" style="top:70px;right:-6px">⚡ منيو 3D</div>
-          <div class="holo" style="bottom:130px;left:-6px;animation-delay:1.7s">🛒 طلب واتساب</div>
-        </div>
-      </div>
-      <button class="btn w-full mt-3" data-a="cm">👁️ معاينة شاشة الزبون بملء الشاشة</button>
-    </div>
-    <div id="p2" class="pane" hidden>
-      <div class="flex flex-wrap gap-2 justify-center mb-3">
-        <button class="btn" data-a="theme">🎨 تبديل الثيم</button>
-        <button class="btn gold" data-a="print" data-v="#card">🖨️ طباعة / PDF</button>
-        <button class="btn" data-a="img" data-v="#card" data-n="table-card">🖼️ حفظ كصورة</button>
-      </div>
-      <div id="cardWrap" data-tilt><div id="card" class="card dk"></div></div>
-      <div id="dn" class="text-center text-sm mt-3 font-bold"></div>
-      <div class="gl p-4 mt-4">
-        <b class="gt">🔗 رابط موقعك الفعال (مضبوط على Smart-POS-System)</b>
-        <p class="text-xs opacity-75 my-2 leading-6">الـ QR يفتح هذه الصفحة نفسها وفيها بيانات منيو محلك داخل الرابط مباشرة بدون تسجيل:</p>
-        <input id="site" class="in" dir="ltr" data-f="site" placeholder="https://mekozeko303-droid.github.io/Smart-POS-System/">
-        <div class="mt-3 p-3 rounded-2xl" style="border:1px dashed rgba(212,175,55,.5)">
-          <b class="gt text-sm">⚡ رمز قصير ومنيو بشعارك عبر GitHub</b>
-          <input id="gh" class="in mt-2" dir="ltr" data-f="gh" placeholder="mekozeko303-droid/Smart-POS-System">
-          <input id="tk" class="in mt-2" dir="ltr" type="password" data-f="tk" placeholder="GitHub token (اختياري للرمز القصير)" autocomplete="off">
-          <button id="pubb" class="btn gold w-full mt-2" data-a="pub">🚀 نشر / تحديث المنيو (رمز قصير + الشعار)</button>
-        </div>
-        <a id="tl" class="btn w-full mt-2" target="_blank" rel="noopener">🔎 اختبر فتح رابط الباركود الآن</a>
-      </div>
-    </div>
-    <div id="p3" class="pane" hidden>
-      <div class="grid grid-cols-2 gap-2 mb-2">
-        <input id="cust" class="in" data-f="cust" placeholder="اسم الزبون / رقم الطاولة">
-        <select id="pay" class="in" data-f="pay"><option>نقداً</option><option>كريمي / محفظة</option><option>شبكة</option><option>آجل</option></select>
-        <input id="disc" class="in" type="number" min="0" inputmode="numeric" data-f="disc" placeholder="الخصم">
-        <div class="flex gap-2"><button class="tb flex-1" data-a="size" data-v="80" id="s80">80mm</button><button class="tb flex-1" data-a="size" data-v="a5" id="sa5">A5</button></div>
-      </div>
-      <div id="invc" class="mb-3 overflow-auto" style="max-height:190px"></div>
-      <div class="flex flex-wrap gap-2 mb-4">
-        <button class="btn gold flex-1" data-a="print" data-v="#inv">🖨️ طباعة / PDF</button>
-        <button class="btn flex-1" data-a="img" data-v="#inv" data-n="invoice">🖼️ حفظ كصورة</button>
-      </div>
-      <div id="inv" class="paper i80"></div>
-    </div>
+  <div class="max-w-lg mx-auto px-4 py-6">
+    <div id="customerFullMount" class="luxury-glass p-4 sm:p-6 border-2 border-yellow-500/40 shadow-2xl"></div>
   </div>
-</section>
-
-<section class="max-w-6xl mx-auto px-4 py-12">
-  <h2 class="text-2xl md:text-4xl font-extrabold gt text-center mb-2">ارتقِ إلى نظام SmartPOS الكامل</h2>
-  <p class="text-center opacity-70 mb-8">للمطاعم والكافيهات والسوبرماركت وكل محل يريد إدارة احترافية</p>
-  <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-    <div class="gl p-5 text-center" data-tilt><div class="text-3xl mb-2">🚫</div><b>حذف العلامة المائية نهائياً ووضع هويتك الخاصة 100%</b></div>
-    <div class="gl p-5 text-center" data-tilt><div class="text-3xl mb-2">📴</div><b>نظام كاشير ونقاط بيع متكامل يعمل بدون إنترنت (Offline)</b></div>
-    <div class="gl p-5 text-center" data-tilt><div class="text-3xl mb-2">📦</div><b>إدارة المخزون والمستودعات وتنبيهات النواقص</b></div>
-    <div class="gl p-5 text-center" data-tilt><div class="text-3xl mb-2">🏷️</div><b>توليد وطباعة الباركود ودعم قارئ الباركود والطابعات الحرارية</b></div>
-    <div class="gl p-5 text-center" data-tilt><div class="text-3xl mb-2">📊</div><b>تقارير الأرباح والمبيعات اليومية والشهرية بدقة</b></div>
-  </div>
-  <div class="flex flex-wrap gap-4 justify-center">
-    <a data-wa class="btn gold text-lg px-8 py-4">💬 اطلب النسخة الكاملة الآن عبر واتساب (785619054)</a>
-    <a data-ig class="btn gl text-lg px-8 py-4">📸 شاهد أعمالنا وتابعنا على إنستغرام (@SMAR.TPOS)</a>
-  </div>
-</section>
-<footer class="text-center text-xs opacity-60 pt-4 pb-28">© SmartPOS — @SMAR.TPOS — واتساب: 785619054</footer>
 </div>
 
-<div id="cmode">
-  <div id="cbk" class="sticky top-0 z-10 flex items-center justify-between gap-2 px-4 py-3" style="background:rgba(4,6,11,.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(212,175,55,.3)">
-    <span class="text-sm font-extrabold gt">معاينة شاشة الزبون</span>
-    <button class="btn" style="padding:6px 14px" data-a="closecm">✕ رجوع</button>
-  </div>
-  <div id="cmm" class="mv" data-src="c"></div>
+<!-- =========================================================================
+     واجهة الاستوديو الرئيسية (SmartPOS Studio)
+     ========================================================================= -->
+<div class="content-layer" id="studioMainWrapper">
+  <header class="sticky top-0 z-40 backdrop-blur-xl bg-black/55 border-b border-yellow-500/20">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-yellow-300 via-yellow-500 to-amber-600 flex items-center justify-center text-black font-black text-xl shadow-lg shadow-amber-500/30">
+          SP
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-black text-lg tracking-wide gold-gradient-text">SmartPOS 3D</span>
+            <span class="text-[11px] bg-yellow-500/15 border border-yellow-500/40 text-yellow-300 px-2 py-0.5 rounded-full font-bold" dir="ltr">@SMAR.TPOS</span>
+          </div>
+          <p class="text-xs text-gray-400 m-0">نظام المنيو التفاعلي 3D والباركود المستقل والفواتير للمطاعم</p>
+        </div>
+      </div>
+
+      <div class="flex items-center flex-wrap gap-2">
+        <button onclick="openLiveQRLinkInBrowser()" class="btn-luxury !py-2 !px-3.5 text-xs border-emerald-400/50 text-emerald-300">
+          <i class="fa-solid fa-up-right-from-square"></i>
+          <span>اختبار فتح رابط الباركود</span>
+        </button>
+        <button onclick="openCustomerFullView(false)" class="btn-luxury !py-2 !px-3.5 text-xs">
+          <i class="fa-solid fa-mobile-screen-button text-yellow-400"></i>
+          <span>معاينة شاشة الزبون 3D</span>
+        </button>
+        <a data-wa-link target="_blank" class="btn-luxury btn-gold-solid !py-2 !px-4 text-xs">
+          <i class="fa-brands fa-whatsapp text-base"></i>
+          <span>النظام الكامل: 785619054</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="max-w-6xl mx-auto px-4 pt-7 pb-3 text-center">
+    <div class="inline-flex items-center gap-2 luxury-glass px-5 py-2 mb-3 text-xs sm:text-sm font-extrabold text-yellow-300 border-yellow-400/40">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+      <span>مُقدم من نظام الكاشير والمحاسبة الذكي SmartPOS 3D</span>
+    </div>
+
+    <h1 class="text-2xl sm:text-4xl font-black leading-tight mb-2 gold-gradient-text">
+      لكل مطعم منيو 3D وباركود QR مستقل وفواتير حرارية فورية
+    </h1>
+
+    <p class="text-gray-300 max-w-2xl mx-auto text-xs sm:text-sm mb-3 leading-relaxed">
+      يفتح الباركود <b class="text-yellow-400">المنيو التفاعلي 3D مع سلة الطلبات</b> مباشرة عند رفع الملف أو تحديد رابط استضافتك، كما يدعم <b class="text-emerald-400">النشر السحابي الفوري</b> بتصميم مرتب ومنسق عند التشغيل المحلي.
+    </p>
+  </section>
+
+  <!-- شريط إدارة المطاعم والمحلات المستقلة -->
+  <section class="max-w-7xl mx-auto px-4 mb-5">
+    <div class="luxury-glass p-4 border-yellow-400/40">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-xl bg-yellow-500/20 border border-yellow-400/50 flex items-center justify-center text-yellow-300">
+            <i class="fa-solid fa-store"></i>
+          </span>
+          <div>
+            <h3 class="text-sm font-black text-yellow-300 m-0">إدارة المطاعم والمحلات المستقلة (بدون تشابك)</h3>
+            <p class="text-[11px] text-gray-400 m-0">كل مطعم هنا له قاعدة بيانات، عداد فواتير يبدأ من 1، وباركود QR خاص به وحده:</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="createNewIndependentShop()" class="btn-luxury btn-gold-solid !py-2 !px-4 !text-xs">
+            <i class="fa-solid fa-plus-circle"></i>
+            <span>إنشاء مطعم / محل جديد مستقل</span>
+          </button>
+          <button onclick="deleteCurrentShop()" class="btn-luxury !py-2 !px-3 !text-xs border-red-500/40 text-red-300 hover:bg-red-500/15" title="حذف هذا المطعم">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="shopsSwitcherBar" class="flex items-center gap-2 overflow-x-auto pb-1"></div>
+    </div>
+  </section>
+
+  <!-- مساحة العمل التفاعلية -->
+  <section id="studioSection" class="max-w-7xl mx-auto px-4 py-2 grid lg:grid-cols-12 gap-7 items-start pb-16">
+    
+    <!-- العمود الأيمن: بيانات المحل والباركود الذكي والأصناف -->
+    <div class="lg:col-span-5 luxury-glass p-5 sm:p-6 space-y-5">
+      <div class="flex items-center justify-between border-b border-yellow-500/20 pb-3">
+        <h2 class="text-base sm:text-lg font-black gold-gradient-text flex items-center gap-2 m-0">
+          <i class="fa-solid fa-sliders text-yellow-400"></i>
+          <span>1. بيانات وأصناف: <span id="editorActiveShopTitle" class="text-white"></span></span>
+        </h2>
+        <span id="saveStatusBadge" class="text-[11px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 rounded-full font-bold">
+          <i class="fa-solid fa-floppy-disk"></i> محفوظ ومستقل
+        </span>
+      </div>
+
+      <!-- الحقول الأساسية للمطعم -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="col-span-2 sm:col-span-1">
+          <label class="text-xs text-gray-300 font-bold mb-1 block">اسم المطعم / الكافيه / المحل</label>
+          <input id="inpName" class="luxury-input" placeholder="مثال: كافيه لافنة" oninput="updateField('name', this.value)">
+        </div>
+        <div class="col-span-2 sm:col-span-1">
+          <label class="text-xs text-gray-300 font-bold mb-1 block">رقم واتساب / هاتف المحل</label>
+          <input id="inpPhone" class="luxury-input" dir="ltr" placeholder="734755062" oninput="updateField('phone', this.value)">
+        </div>
+
+        <div>
+          <label class="text-xs text-gray-300 font-bold mb-1 block">رمز الواي فاي (Wi-Fi)</label>
+          <input id="inpWifi" class="luxury-input" dir="ltr" placeholder="12345678" oninput="updateField('wifi', this.value)">
+        </div>
+        <div>
+          <label class="text-xs text-gray-300 font-bold mb-1 block">العملة المعتمدة</label>
+          <select id="inpCurrency" class="luxury-input" onchange="updateField('currency', this.value)">
+            <option value="ر.ي">ريال يمني (ر.ي)</option>
+            <option value="ر.س">ريال سعودي (ر.س)</option>
+            <option value="$">دولار أمريكي ($)</option>
+            <option value="د.إ">درهم إماراتي (د.إ)</option>
+          </select>
+        </div>
+
+        <div class="col-span-2">
+          <label class="text-xs text-gray-300 font-bold mb-1 block">رسالة الترحيب / العنوان في المنيو والفاتورة</label>
+          <input id="inpWelcome" class="luxury-input" placeholder="أهلاً بكم في منيو كافيه لافنة - أرقى المشروبات والمخبوزات الطازجة" oninput="updateField('welcome', this.value)">
+        </div>
+      </div>
+
+      <!-- إعدادات رابط الباركود الذكي 3D والسحابة -->
+      <div class="p-3.5 rounded-2xl bg-yellow-500/5 border border-yellow-500/30 space-y-2.5">
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-xs font-extrabold text-yellow-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-qrcode"></i>
+            <span>محرك الباركود الذكي (منيو 3D + سحابة فورية)</span>
+          </span>
+          <span id="qrModeIndicator" class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold">
+            جاهز للمسح
+          </span>
+        </div>
+
+        <div>
+          <label class="text-[11px] text-gray-300 font-bold mb-1 block">
+            رابط استضافة المنيو 3D (ضع رابط موقعك/GitHub Pages ليفتح المنيو 3D مباشرة حتى من ملف محلي):
+          </label>
+          <div class="flex gap-2">
+            <input id="inpHostUrl" class="luxury-input !text-xs" dir="ltr" placeholder="https://username.github.io/smartpos/index.html" oninput="updateHostUrl(this.value)">
+            <button onclick="syncCloudTelegraphMenu(true)" id="btnCloudSync" class="btn-luxury btn-gold-solid !py-2 !px-3 !text-xs whitespace-nowrap">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span>تحديث الرابط السحابي</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between gap-2 pt-1 text-[11px] text-gray-400">
+          <span class="truncate">الرابط الفعال في الباركود: <b id="activeQrUrlText" class="text-yellow-300" dir="ltr">...</b></span>
+          <button onclick="copyActiveQRLink()" class="text-yellow-400 hover:underline font-bold flex-shrink-0">
+            <i class="fa-regular fa-copy"></i> نسخ الرابط
+          </button>
+        </div>
+      </div>
+
+      <!-- إضافة وتعديل أصناف المنيو -->
+      <div class="border-t border-yellow-500/20 pt-4">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-black text-yellow-300 m-0 flex items-center gap-2">
+            <i class="fa-solid fa-utensils"></i>
+            <span>أصناف المنيو (<span id="itemsCountLabel">0</span>)</span>
+          </h3>
+          <span class="text-[11px] text-gray-400">اضغط على أي صنف لإضافته للفاتورة</span>
+        </div>
+
+        <!-- نموذج إضافة صنف جديد -->
+        <div class="p-3 rounded-2xl bg-black/40 border border-white/10 space-y-2.5 mb-3">
+          <div class="grid grid-cols-12 gap-2">
+            <div class="col-span-3 sm:col-span-2">
+              <input id="newItemIcon" class="luxury-input text-center !px-1" value="☕" placeholder="أيقونة">
+            </div>
+            <div class="col-span-9 sm:col-span-6">
+              <input id="newItemName" class="luxury-input" placeholder="اسم الصنف (مثال: موكا بارد)">
+            </div>
+            <div class="col-span-6 sm:col-span-4">
+              <input id="newItemPrice" type="number" class="luxury-input" placeholder="السعر (2000)">
+            </div>
+            <div class="col-span-6 sm:col-span-7">
+              <input id="newItemCategory" class="luxury-input !text-xs" placeholder="القسم (مثال: قهوة باردة)">
+            </div>
+            <div class="col-span-12 sm:col-span-5">
+              <button onclick="addNewMenuItem()" class="btn-luxury btn-gold-solid w-full !py-2.5 !text-xs">
+                <i class="fa-solid fa-plus"></i>
+                <span>إضافة للمنيو</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- قائمة الأصناف الحالية -->
+        <div id="editorItemsList" class="space-y-2 max-h-64 overflow-y-auto pr-1"></div>
+      </div>
+
+      <!-- إعدادات الفاتورة الفورية (تبدأ من رقم 1) -->
+      <div class="border-t border-yellow-500/20 pt-4 space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-black text-yellow-300 m-0 flex items-center gap-2">
+            <i class="fa-solid fa-receipt"></i>
+            <span>إدارة الفاتورة الحرارية والضريبية</span>
+          </h3>
+          <div class="flex items-center gap-1.5">
+            <button onclick="resetInvoiceNumberToOne()" class="px-2.5 py-1 rounded-lg bg-yellow-500/15 border border-yellow-500/40 text-yellow-300 text-[11px] font-bold hover:bg-yellow-500/25">
+              تصفير لـ #1
+            </button>
+            <button onclick="nextInvoiceOrder()" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-bold hover:bg-emerald-500/30">
+              + فاتورة جديدة
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2">
+          <div>
+            <label class="text-[11px] text-gray-400 font-bold block mb-1">رقم الفاتورة</label>
+            <input id="inpInvoiceNo" type="number" min="1" class="luxury-input text-center font-black text-yellow-300" oninput="updateField('invoiceNo', Math.max(1, parseInt(this.value)||1))">
+          </div>
+          <div>
+            <label class="text-[11px] text-gray-400 font-bold block mb-1">الطاولة / العميل</label>
+            <input id="inpTableNo" class="luxury-input text-center" placeholder="طاولة 1" oninput="updateField('tableNo', this.value)">
+          </div>
+          <div>
+            <label class="text-[11px] text-gray-400 font-bold block mb-1">الخصم</label>
+            <input id="inpDiscount" type="number" min="0" class="luxury-input text-center" placeholder="0" oninput="updateField('discount', parseFloat(this.value)||0)">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- العمود الأيسر: منصة العرض الثلاثي الأبعاد والباركود والفواتير -->
+    <div class="lg:col-span-7 space-y-5">
+      <!-- أزرار التبديل بين أوضاع الاستوديو -->
+      <div class="luxury-glass p-3 flex flex-wrap gap-2">
+        <button class="studio-tab active" id="tabBtn3d" onclick="switchStudioTab('3d')">
+          <i class="fa-solid fa-cube"></i>
+          <span>1. المنيو التفاعلي 3D</span>
+        </button>
+        <button class="studio-tab" id="tabBtnTent" onclick="switchStudioTab('tent')">
+          <i class="fa-solid fa-qrcode"></i>
+          <span>2. ستاند باركود الطاولات</span>
+        </button>
+        <button class="studio-tab" id="tabBtnInvoice" onclick="switchStudioTab('invoice')">
+          <i class="fa-solid fa-file-invoice-dollar"></i>
+          <span>3. الفاتورة الحرارية / A5</span>
+        </button>
+      </div>
+
+      <!-- اللوحة 1: مجسم الآيفون ثلاثي الأبعاد للمنيو -->
+      <div id="panel3d" class="luxury-glass p-4 sm:p-6">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+          <div>
+            <h3 class="text-base font-black gold-gradient-text m-0">معاينة جوال الزبون الثلاثية الأبعاد (Live 3D Menu)</h3>
+            <p class="text-xs text-gray-400 m-0">جرب إضافة الأصناف للسلة وإرسال الطلب عبر واتساب كما يراه الزبون تماماً</p>
+          </div>
+          <button onclick="openCustomerFullView(false)" class="btn-luxury !py-2 !px-3.5 !text-xs">
+            <i class="fa-solid fa-expand text-yellow-400"></i>
+            <span>تكبير بملء الشاشة</span>
+          </button>
+        </div>
+
+        <div class="phone-3d-stage">
+          <div class="phone-3d-rig" data-tilt>
+            <div class="phone-3d-aura"></div>
+            <div class="floating-3d-badge badge-right">
+              <i class="fa-solid fa-bolt text-yellow-400"></i>
+              <span>سلة طلبات ذكية + واتساب</span>
+            </div>
+            <div class="floating-3d-badge badge-left">
+              <i class="fa-solid fa-wifi text-emerald-400"></i>
+              <span id="badgeWifiFloating">واي فاي مجاني للزبائن</span>
+            </div>
+
+            <div class="iphone-mockup">
+              <div class="iphone-screen-glare"></div>
+              <div class="dynamic-island">
+                <span class="text-[9px] text-yellow-400 font-black">SmartPOS</span>
+                <span class="island-dot"></span>
+              </div>
+              <div id="phoneScreenMount" class="phone-screen"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- اللوحة 2: ستاند باركود الطاولات القابل للطباعة -->
+      <div id="panelTent" class="luxury-glass p-5 sm:p-6 hidden">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+          <div class="flex items-center gap-2">
+            <button onclick="setTentTheme('tent-royal')" class="btn-luxury !py-1.5 !px-3 !text-xs">ملكي ذهبي</button>
+            <button onclick="setTentTheme('tent-light')" class="btn-luxury !py-1.5 !px-3 !text-xs">أبيض فاخر</button>
+            <button onclick="setTentTheme('tent-emerald')" class="btn-luxury !py-1.5 !px-3 !text-xs">زمردي ملكي</button>
+          </div>
+          <button onclick="printElement('tent')" class="btn-luxury btn-gold-solid !py-2 !px-5 !text-xs">
+            <i class="fa-solid fa-print"></i>
+            <span>طباعة ستاند الباركود (صفحة واحدة)</span>
+          </button>
+        </div>
+
+        <div id="tentPrintTarget">
+          <div id="tentCardElement" class="table-tent-card tent-royal">
+            <div class="text-xs font-extrabold tracking-widest uppercase text-yellow-400 mb-1">
+              ★ DIGITAL 3D MENU ★
+            </div>
+            <h2 id="tentShopName" class="text-2xl font-black mb-1">كافيه لافنة</h2>
+            <p id="tentWelcome" class="text-xs opacity-85 mb-4">أهلاً بكم في منيو كافيه لافنة</p>
+
+            <div class="qr-box-full w-56 h-56 mx-auto mb-4 shadow-2xl">
+              <img id="tentQrImg" alt="QR Code">
+            </div>
+
+            <div class="text-sm font-black text-yellow-400 mb-3">
+              📱 وجّه كاميرا جوالك لمسح الباركود وفتح المنيو
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 text-xs font-bold bg-black/30 p-2.5 rounded-2xl border border-yellow-500/30 mb-3">
+              <div><i class="fa-solid fa-phone text-yellow-400"></i> <span id="tentPhone" dir="ltr">734755062</span></div>
+              <div><i class="fa-solid fa-wifi text-emerald-400"></i> Wi-Fi: <span id="tentWifi" dir="ltr">12345678</span></div>
+            </div>
+
+            <div class="text-[11px] opacity-85 font-bold pt-2 border-t border-yellow-500/20 flex items-center justify-between">
+              <span>نظام SmartPOS الذكي</span>
+              <span dir="ltr">@SMAR.TPOS | 785619054</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- اللوحة 3: الفاتورة الحرارية 80mm وفاتورة A5 -->
+      <div id="panelInvoice" class="luxury-glass p-5 sm:p-6 hidden">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+          <div class="flex items-center gap-2">
+            <button id="btnThermalMode" onclick="setInvoiceFormat('thermal')" class="btn-luxury btn-gold-solid !py-1.5 !px-3.5 !text-xs">
+              <i class="fa-solid fa-receipt"></i> حرارية 80mm
+            </button>
+            <button id="btnA5Mode" onclick="setInvoiceFormat('a5')" class="btn-luxury !py-1.5 !px-3.5 !text-xs">
+              <i class="fa-solid fa-file-lines"></i> قياس A5 رسمي
+            </button>
+          </div>
+          <button onclick="printElement('invoice')" class="btn-luxury btn-gold-solid !py-2 !px-5 !text-xs">
+            <i class="fa-solid fa-print"></i>
+            <span>طباعة الفاتورة الآن</span>
+          </button>
+        </div>
+
+        <div id="invoicePrintTarget">
+          <div id="invoiceSheetElement" class="invoice-sheet invoice-thermal"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
 </div>
 
-<div id="ov" class="ovl"><div id="ovm" class="text-sm font-bold"></div><img id="ovi" alt=""><div class="flex gap-2"><button id="dlb" class="btn gold" data-a="dl" hidden>⬇️ تنزيل الصورة</button><button class="btn" data-a="ovx">إغلاق</button></div></div>
-<div id="fab"><a data-wa class="fb wa" aria-label="واتساب">💬</a><a data-ig class="fb ig" aria-label="إنستغرام">📸</a></div>
-<div id="pr"></div>
+<!-- حاوية الطباعة النظيفة -->
+<div id="printContainer"></div>
+
+<!-- أزرار التواصل العائمة -->
+<div class="floating-bar">
+  <a data-wa-link target="_blank" class="fab-btn fab-wa" title="تواصل واتساب لطلب نظام SmartPOS">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+  <a href="https://instagram.com/SMAR.TPOS" target="_blank" class="fab-btn fab-ig" title="حساب انستقرام @SMAR.TPOS">
+    <i class="fa-brands fa-instagram"></i>
+  </a>
+</div>
 
 <script>
-// الرابط الرسمي الصحيح لمستودعك الذي رفعت فيه الملف
-const DEF_SITE='https://mekozeko303-droid.github.io/Smart-POS-System/';
-const DEF_GH='mekozeko303-droid/Smart-POS-System';
-const WA='https://wa.me/967785619054?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20SmartPOS%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%AD%D8%B5%D9%88%D9%84%20%D8%B9%D9%84%D9%89%20%D9%86%D8%B8%D8%A7%D9%85%20%D8%A7%D9%84%D9%83%D8%A7%D8%B4%D9%8A%D8%B1%20%D8%A7%D9%84%D9%83%D8%A7%D9%85%D9%84%20%D9%88%D8%AD%D8%B0%D9%81%20%D8%A7%D9%84%D8%B9%D9%84%D8%A7%D9%85%D8%A9%20%D8%A7%D9%84%D9%85%D8%A7%D8%A6%D9%8A%D8%A9';
-const IG='https://www.instagram.com/smar.tpos?rpxt=YzUwMTR4ZWl2b3J6';
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const AB='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+/* =========================================================================
+   إعدادات الهوية الرسمية لنظام SmartPOS 3D
+   ========================================================================= */
+const SMARTPOS_PHONE = '967785619054';
+const SMARTPOS_DISPLAY_PHONE = '785619054';
+const SMARTPOS_IG = '@SMAR.TPOS';
+const STORAGE_KEY = 'SMARTPOS_3D_SHOPS_V4';
+const HOST_URL_KEY = 'SMARTPOS_3D_HOST_URL_V4';
 
-function t2b(s){const o=[];for(const ch of s){const c=ch.codePointAt(0);if(c<128)o.push(c);else if(c>=0x621&&c<=0x64A)o.push(c-0x621+128);else{const u=new TextEncoder().encode(ch);o.push(255,u.length);for(const x of u)o.push(x)}}return o}
-function b2t(b){let s='';for(let i=0;i<b.length;i++){const x=b[i];if(x<128)s+=String.fromCharCode(x);else if(x==255){const n=b[i+1];s+=new TextDecoder().decode(new Uint8Array(b.slice(i+2,i+2+n)));i+=1+n}else s+=String.fromCharCode(x-128+0x621)}return s}
-function enc(s){let n=0n;for(const x of [1,...t2b(s)])n=n*256n+BigInt(x);let o='';while(n>0n){o=AB[Number(n%62n)]+o;n/=62n}return o}
-function dec(s){let n=0n;for(const c of s){const k=AB.indexOf(c);if(k<0)throw new Error('bad');n=n*62n+BigInt(k)}const b=[];while(n>0n){b.unshift(Number(n%256n));n/=256n}return b2t(b.slice(1))}
-const cl=s=>String(s==null?'':s).replace(/[~:;,]/g,' ').trim();
-function pack(d){const cs=[...new Set(d.items.map(i=>i.cat))];return enc([cl(d.name),cl(d.phone),cl(d.cur),cl(d.emo||'🍽️'),cl(d.wifi),cs.map(cl).join(','),d.items.map(i=>[cl(i.icon),cl(i.name),cs.indexOf(i.cat),Math.round(i.price)||0].join(':')).join(';'),String(d.logoUrl||'').trim()].join('~'))}
-function unpack(t){const p=dec(t).split('~'),cs=p[5].split(',');return{name:p[0],phone:p[1],cur:p[2],emo:p[3],wifi:p[4],logo:'',logoUrl:p.slice(7).join('~'),items:p[6].split(';').filter(Boolean).map((x,i)=>{const a=x.split(':');return{id:i+1,icon:a[0],name:a[1],cat:cs[a[2]]||'',price:+a[3]||0}})}}
-function waNum(p){let d=String(p||'').replace(/\D/g,'');if(d.startsWith('00'))d=d.slice(2);if(d.length==9&&d[0]=='7')d='967'+d;else if(d.length==10&&d[0]=='0')d='967'+d.slice(1);return d.length>=9?d:''}
-const fmt=(D,n)=>Number(n).toLocaleString('en-US')+' '+D.cur;
+/* =========================================================================
+   البيانات الافتراضية المستقلة (تشمل كافيه لافنة كما في صورة الزبون)
+   ========================================================================= */
+const DEFAULT_SHOPS = [
+  {
+    id: 'S101',
+    name: 'كافيه لافنة',
+    phone: '734755062',
+    wifi: '12345678',
+    currency: 'ر.ي',
+    welcome: 'أهلاً بكم في منيو كافيه لافنة',
+    invoiceNo: 1,
+    tableNo: 'طاولة 1',
+    discount: 0,
+    cloudUrl: '',
+    items: [
+      { id: 1, icon: '🧋', name: 'آيس موكا بالكراميل', price: 2000, category: 'قهوة باردة', popular: true },
+      { id: 2, icon: '🫖', name: 'قهوة مختصة V60 إثيوبي', price: 2200, category: 'قهوة مقطرة', popular: true },
+      { id: 3, icon: '🥐', name: 'كرواسون زبدة فرنسي', price: 1200, category: 'المخبوزات', popular: true }
+    ],
+    invoiceCart: [
+      { id: 1, name: 'آيس موكا بالكراميل', price: 2000, qty: 1 },
+      { id: 2, name: 'قهوة مختصة V60 إثيوبي', price: 2200, qty: 1 },
+      { id: 3, name: 'كرواسون زبدة فرنسي', price: 1200, qty: 1 }
+    ]
+  },
+  {
+    id: 'S102',
+    name: 'مطعم ومطبخ المندي الملكي',
+    phone: '770000000',
+    wifi: '88889999',
+    currency: 'ر.ي',
+    welcome: 'أهلاً بكم في مطعم المندي الملكي - الطعم الأصيل',
+    invoiceNo: 1,
+    tableNo: 'طاولة 3',
+    discount: 0,
+    cloudUrl: '',
+    items: [
+      { id: 101, icon: '🍖', name: 'مندي لحم بلدي نفر', price: 6500, category: 'الأطباق الرئيسية', popular: true },
+      { id: 102, icon: '🍗', name: 'مندي دجاج نصف حبة', price: 2800, category: 'الأطباق الرئيسية', popular: true },
+      { id: 103, icon: '🥘', name: 'فحسة يمنية بالحلبة', price: 3200, category: 'الشعبيات', popular: true },
+      { id: 104, icon: '🥗', name: 'سلطة خضراء مع سحاوق', price: 700, category: 'المقبلات', popular: false }
+    ],
+    invoiceCart: [
+      { id: 101, name: 'مندي لحم بلدي نفر', price: 6500, qty: 1 }
+    ]
+  }
+];
 
-function orderURL(D,st){
-  let t=0;
-  const L=D.items.filter(i=>st.cart[i.id]>0).map(i=>{const v=i.price*st.cart[i.id];t+=v;return '• '+st.cart[i.id]+'× '+i.icon+' '+i.name+' — '+fmt(D,v)});
-  const m='🧾 طلب جديد من منيو '+D.name+'\n━━━━━━━━━━━━━━\n'+L.join('\n')+'\n━━━━━━━━━━━━━━\nالإجمالي: '+fmt(D,t)+'\n━━━━━━━━━━━━━━\n⚡ تم الطلب عبر منيو SmartPOS الذكي\nلطلب النظام المحاسبي والرقمي لمحلك: @SMAR.TPOS | واتساب: 785619054';
-  return 'https://wa.me/'+waNum(D.phone)+'?text='+encodeURIComponent(m);
-}
-function catOf(D,st){const c=[...new Set(D.items.map(i=>i.cat))];if(st.cat!='الكل'&&!c.includes(st.cat))st.cat='الكل';return st.cat}
-function mvChips(el,D,st){
-  const cats=['الكل',...new Set(D.items.map(i=>i.cat))],cat=catOf(D,st);
-  el.querySelector('.chips').innerHTML=cats.map(c=>'<span class="chip'+(c==cat?' on':'')+'" data-a="cat" data-v="'+esc(c)+'">'+esc(c)+'</span>').join('');
-}
-function mvList(el,D,st){
-  const cat=catOf(D,st),q=(st.q||'').trim().toLowerCase();
-  const its=D.items.filter(i=>(cat=='الكل'||i.cat==cat)&&(!q||(i.name+' '+i.cat).toLowerCase().includes(q)));
-  const n=D.items.reduce((a,i)=>a+(st.cart[i.id]||0),0),t=D.items.reduce((a,i)=>a+(st.cart[i.id]||0)*i.price,0);
-  let h=its.map(i=>{const k=st.cart[i.id]||0;return '<div class="it"><div class="ic">'+esc(i.icon)+'</div><div class="tx"><b>'+esc(i.name)+'</b><small>'+esc(i.cat)+'</small><div class="pr">'+fmt(D,i.price)+'</div></div>'+(k?'<div class="qs"><button data-a="dec" data-i="'+i.id+'">−</button><b>'+k+'</b><button data-a="addc" data-i="'+i.id+'">+</button></div>':'<button class="add" data-a="addc" data-i="'+i.id+'">+</button>')+'</div>'}).join('')||'<div class="empty">لا توجد أصناف مطابقة</div>';
-  if(n)h+='<div class="cb"><div class="cbi"><span>🛒 '+n+' صنف</span><b>'+fmt(D,t)+'</b></div><div class="cbb"><button data-a="ord">إرسال الطلب للمحل عبر واتساب</button><button data-a="clrc">إفراغ</button></div></div>';
-  el.querySelector('.itl').innerHTML=h;
-}
-function mvBuild(el,D,st,o){
-  const img=D.logo?'<img src="'+D.logo+'" alt="">':(D.logoUrl&&/^https?:\/\//i.test(D.logoUrl)?'<img src="'+esc(D.logoUrl)+'" alt="" onerror="this.remove()">':'');
-  let h='<div class="hd"><div class="lg0"><span>'+esc(D.emo||'🍽️')+'</span>'+img+'</div><div><div class="nm">'+esc(D.name||'')+'</div><div class="sub"><span class="open">● مفتوح للطلبات</span>'+(D.phone?'<span dir="ltr">📞 '+esc(D.phone)+'</span>':'')+'</div></div></div>';
-  if(D.wifi)h+='<div class="wfr"><span>📶 الواي فاي: <b dir="ltr">'+esc(D.wifi)+'</b></span><button data-a="wifi">نسخ</button></div>';
-  h+='<input class="sq" data-sq="1" placeholder="🔍 ابحث في المنيو..." value="'+esc(st.q||'')+'"><div class="chips"></div><div class="itl"></div>';
-  h+='<div class="wm"><b>تم الإنشاء مجاناً عبر نظام SmartPOS</b> | صمم منيوك أو اطلب نظام الكاشير الكامل: @SMAR.TPOS - واتساب: 785619054<div><a href="'+WA+'" target="_blank" rel="noopener">واتساب 785619054</a><a href="'+IG+'" target="_blank" rel="noopener">إنستغرام @SMAR.TPOS</a></div></div>';
-  if(o.promo)h+='<div class="sp"><h3>SmartPOS</h3><p>نظام الكاشير والمبيعات الذكي للمطاعم والمتاجر</p><ul><li>كاشير ونقاط بيع يعمل بدون إنترنت</li><li>إدارة المخزون وتنبيهات النواقص</li><li>باركود وطابعات حرارية</li><li>تقارير أرباح ومبيعات يومية وشهرية</li><li>هويتك أنت بدون علامة مائية</li></ul><a class="btn2 g" href="'+WA+'" target="_blank" rel="noopener">💬 اطلب النظام عبر واتساب 785619054</a><a class="btn2 o" href="'+IG+'" target="_blank" rel="noopener">📸 تابعنا @SMAR.TPOS</a>'+(o.home?'<a class="btn2 o" href="'+esc(o.home)+'">✨ صمّم منيو محلك مجاناً</a>':'')+'</div>';
-  el.innerHTML=h;el._o=o;
-  mvChips(el,D,st);mvList(el,D,st);
+let shops = [];
+let activeShopId = 'S101';
+let customHostUrl = '';
+let activeCategoryFilter = 'الكل';
+let customerCart = {}; // { itemId: qty }
+let customerOrderType = 'داخل المحل (طاولة)';
+let customerTableInput = '';
+let invoiceFormat = 'thermal';
+let cloudSyncTimer = null;
+
+/* =========================================================================
+   تشفير وفك تشفير بيانات المنيو 3D داخل رابط الباركود
+   ========================================================================= */
+function encodeShopPayload(shop) {
+  const minimal = {
+    i: shop.id,
+    n: shop.name,
+    p: shop.phone,
+    w: shop.wifi,
+    c: shop.currency,
+    m: shop.welcome,
+    it: shop.items.map(x => [x.icon, x.name, x.price, x.category])
+  };
+  const jsonStr = JSON.stringify(minimal);
+  return btoa(unescape(encodeURIComponent(jsonStr)));
 }
 
-const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
-const TPL={
- cafe:{name:'كافيه لافنة',phone:'734755062',cur:'ر.ي',emo:'☕',wifi:'12345678',items:'🧋|آيس موكا بالكراميل|قهوة باردة|2000;🫖|قهوة مختصة V60 إثيوبي|قهوة مقطرة|2200;🥐|كرواسون زبدة فرنسي|المخبوزات|1200'},
- restaurant:{name:'مطعم الأصالة الملكي',phone:'777000000',cur:'ر.ي',emo:'🍽️',wifi:'',items:'🍖|مندي لحم|مشويات|6500;🔥|مشوي مشكل|مشويات|9000;🍗|فحسة|مشويات|4000;🍵|شاي عدني|مشروبات|500;☕|قهوة عربية|مشروبات|800;🥭|عصير مانجو|مشروبات|1500;🍮|بنت الصحن|حلويات|2500;🍰|كنافة بالجبن|حلويات|2000'},
- store:{name:'متجر التقنية',phone:'777000000',cur:'$',emo:'📱',wifi:'',items:'🔌|شاحن سريع 25W|إكسسوارات|12;🎧|سماعة بلوتوث|صوتيات|25;📱|جراب حماية|إكسسوارات|6;🔋|باور بانك 20000|طاقة|30;⌚|ساعة ذكية|أجهزة|45;💾|فلاش 64GB|تخزين|8'},
- blank:{name:'محل جديد',phone:'',cur:'ر.ي',emo:'🏪',wifi:'',items:'🍴|صنف جديد|عام|1000'}
-};
-
-function cleanSiteUrl(u){
-  if(!u||typeof u!=='string')return DEF_SITE;
-  let s=u.trim();
-  // إصلاح الروابط المدمجة بالخطأ أو التي تشير للمستودع القديم الفارغ
-  if(s.includes('-smart-pos-')||s.indexOf('http',5)>0||s.includes('google.com'))return DEF_SITE;
-  if(!/^https?:\/\//i.test(s))s='https://'+s;
-  s=s.split('#')[0].split('?')[0];
-  if(!/\/$|\.html?$/i.test(s))s+='/';
-  return s;
+function decodeShopPayload(b64) {
+  try {
+    const jsonStr = decodeURIComponent(escape(atob(b64)));
+    const d = JSON.parse(jsonStr);
+    return {
+      id: d.i || 'S101',
+      name: d.n || 'منيو المطعم',
+      phone: d.p || '',
+      wifi: d.w || '',
+      currency: d.c || 'ر.ي',
+      welcome: d.m || '',
+      items: Array.isArray(d.it) ? d.it.map((arr, idx) => ({
+        id: idx + 1,
+        icon: arr[0] || '🍽️',
+        name: arr[1] || 'صنف',
+        price: Number(arr[2]) || 0,
+        category: arr[3] || 'عام',
+        popular: true
+      })) : []
+    };
+  } catch (e) {
+    return null;
+  }
 }
 
-let DB=(function(){
-  try{
-    const j=JSON.parse(localStorage.getItem('spos3_v2'));
-    if(j&&j.shops&&j.shops.length){
-      j.site=cleanSiteUrl(j.site);
-      if(!j.gh||j.gh.includes('-smart-pos-'))j.gh=DEF_GH;
-      return j;
+/* =========================================================================
+   التهيئة الأولية وفحص ما إذا كان الرابط مفتوحاً من جوال الزبون
+   ========================================================================= */
+function initApp() {
+  // ربط أزرار واتساب النظام
+  const sysWaUrl = `https://wa.me/${SMARTPOS_PHONE}?text=${encodeURIComponent('مرحباً، أرغب بالحصول على نظام SmartPOS 3D للمنيو والكاشير لمحلي')}`;
+  document.querySelectorAll('[data-wa-link]').forEach(el => el.setAttribute('href', sysWaUrl));
+
+  // استرجاع البيانات المخزنة
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    shops = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_SHOPS));
+    if (!Array.isArray(shops) || !shops.length) shops = JSON.parse(JSON.stringify(DEFAULT_SHOPS));
+    customHostUrl = localStorage.getItem(HOST_URL_KEY) || '';
+  } catch (e) {
+    shops = JSON.parse(JSON.stringify(DEFAULT_SHOPS));
+  }
+
+  // فحص بارامترات الرابط (إذا مسح الزبون الباركود)
+  const params = new URLSearchParams(window.location.search);
+  const encodedShop = params.get('s');
+  if (encodedShop) {
+    const decoded = decodeShopPayload(encodedShop);
+    if (decoded) {
+      const existingIdx = shops.findIndex(s => s.id === decoded.id);
+      if (existingIdx >= 0) {
+        shops[existingIdx] = { ...shops[existingIdx], ...decoded };
+      } else {
+        shops.unshift({ ...decoded, invoiceNo: 1, tableNo: 'طاولة 1', discount: 0, invoiceCart: [] });
+      }
+      activeShopId = decoded.id;
+      openCustomerFullView(true);
     }
-  }catch(e){}
-  return{shops:[],cur:'',site:DEF_SITE,gh:DEF_GH,n:100};
-})();
-
-function mkShop(k){const t=TPL[k]||TPL.blank;let u=0;return{id:'S'+(++DB.n),name:t.name,phone:t.phone,cur:t.cur,emo:t.emo,wifi:t.wifi,logo:'',logoUrl:'',theme:0,size:'80',invN:1,items:t.items.split(';').filter(Boolean).map(r=>{const a=r.split('|');return{id:++u,icon:a[0],name:a[1],cat:a[2],price:+a[3]}})}}
-if(!DB.shops.length)DB.shops.push(mkShop('cafe'),mkShop('restaurant'));
-if(!DB.shops.some(s=>s.id==DB.cur))DB.cur=DB.shops[0].id;
-const cur=()=>DB.shops.find(s=>s.id==DB.cur)||DB.shops[0];
-function save(){try{localStorage.setItem('spos3_v2',JSON.stringify(DB))}catch(e){}}
-let ST_S={cart:{},cat:'الكل',q:''},ST_C={cart:{},cat:'الكل',q:''},CUST=null,inv={},IMG=null,arm=0;
-const f=n=>Number(n).toLocaleString('en-US')+' '+cur().cur;
-const logoH=s=>s.logo?'<img class="lg" src="'+s.logo+'" alt="">':esc(s.emo||'🍽️');
-function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),2400)}
-function openUrl(u){const a=document.createElement('a');a.href=u;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove()}
-
-function siteBase(){
-  if(/^https?:$/.test(location.protocol)&&location.hostname.endsWith('github.io'))return location.href.split('#')[0].split('?')[0];
-  return cleanSiteUrl(DB.site);
-}
-function menuLink(){
-  const b=siteBase(),s=cur();
-  if(!b)return{k:'nosite',u:''};
-  if(s.pub)return{k:s.dirty?'dirty':'pub',u:b.replace(/index\.html?$/,'')+'?s='+s.pid};
-  return{k:'long',u:b+'#m'+pack(s)};
-}
-function qr(el,t,s){
-  try{const c=document.createElement('canvas');new QRious({element:c,value:t,size:s*4,level:t.length>260?'L':'M',foreground:'#000',background:'#fff',padding:0});el.innerHTML='<img src="'+c.toDataURL()+'" width="'+s+'" height="'+s+'" style="image-rendering:pixelated;display:block" alt="QR">'}
-  catch(e){el.textContent='QR'}
-}
-
-function rMenu(){
-  const sc=$('#phone .scr'),y=sc.scrollTop,ch=$('#phone .chips'),x=ch?ch.scrollLeft:0;
-  mvBuild($('#phone .mvr'),cur(),ST_S,{pv:true,promo:false});
-  sc.scrollTop=y;const c2=$('#phone .chips');if(c2)c2.scrollLeft=x;
-  if($('#cmode').classList.contains('on')&&$('#cmode').dataset.pv){CUST=cur();mvBuild($('#cmm'),CUST,ST_C,{pv:true,promo:true})}
-}
-function rCard(){
-  const s=cur(),c=$('#card'),L=menuLink();
-  c.className='card '+['dk','lt','em'][s.theme%3];
-  c.innerHTML='<div class="lgw">'+logoH(s)+'</div><h3 class="text-xl font-extrabold mt-2">'+esc(s.name)+'</h3><p class="text-sm opacity-80">امسح الكود لتصفح المنيو والطلب</p>'+(s.wifi?'<div class="wf">📶 الواي فاي: <b dir="ltr">'+esc(s.wifi)+'</b></div>':'')+'<div id="qrb"></div><div class="text-xs opacity-70">'+esc(s.phone)+'</div><div class="wm">تم الإنشاء مجاناً عبر SmartPOS | واتساب: 785619054 | إنستغرام: @SMAR.TPOS</div>';
-  const qb=$('#qrb');
-  if(L.u)qr(qb,L.u,220);else qb.innerHTML='<div style="width:220px;height:220px;display:flex;align-items:center;justify-content:center;text-align:center;color:#555;font-size:13px;line-height:1.8;border:2px dashed #bbb;padding:14px">ضع رابط موقعك<br>ليظهر رمز QR هنا</div>';
-  $('#tl').href=L.u||'#';
-  const n=L.u.length,M={nosite:['🔶 الصق رابط موقعك أدناه ليظهر الرمز','#F59E0B'],long:[n<=480?'✓ الرمز جاهز ومربوط بمستودعك Smart-POS-System ويفتح المنيو 3D فوراً':'⚠ الرمز كثيف. انشر المنيو عبر GitHub أدناه للحصول على رمز قصير','#34d399'],pub:['✓ رمز قصير ومنشور — يفتح منيو محلك مباشرة','#34d399'],dirty:['⚠ لديك تعديلات غير منشورة — اضغط «نشر / تحديث المنيو»','#F59E0B']}[L.k],d=$('#dn');
-  d.textContent=M[0];d.style.color=M[1];
-}
-function rInv(){
-  const s=cur(),rows=s.items.filter(i=>inv[i.id]>0),sub=rows.reduce((a,i)=>a+i.price*inv[i.id],0),ds=Math.min(sub,Math.max(0,+$('#disc').value||0)),tot=sub-ds,cu=$('#cust').value,iv=$('#invc'),y=iv.scrollTop;
-  iv.innerHTML=s.items.map(i=>'<div class="flex items-center gap-2 py-1"><span class="flex-1 text-sm">'+esc(i.icon)+' '+esc(i.name)+' <small class="opacity-60">'+f(i.price)+'</small></span><button class="q" data-a="iq" data-i="'+i.id+'" data-v="-1">−</button><b class="w-6 text-center">'+(inv[i.id]||0)+'</b><button class="q" data-a="iq" data-i="'+i.id+'" data-v="1">+</button></div>').join('');
-  iv.scrollTop=y;
-  $('#s80').classList.toggle('on',s.size=='80');$('#sa5').classList.toggle('on',s.size=='a5');
-  const e=$('#inv');e.className='paper '+(s.size=='80'?'i80':'ia5');
-  e.innerHTML='<div class="flex items-center gap-3 pb-3" style="border-bottom:2px solid #D4AF37"><div class="lgw" style="width:56px;height:56px;font-size:26px">'+logoH(s)+'</div><div class="flex-1"><b class="text-lg">'+esc(s.name)+'</b><div class="text-xs" style="opacity:.7">'+esc(s.phone)+'</div></div><div class="text-xs">فاتورة<br><b>INV-'+String(s.invN).padStart(4,'0')+'</b></div></div>'
-  +'<div class="text-xs my-2" style="opacity:.8">'+new Date().toLocaleString('en-GB')+(cu?' | الزبون/الطاولة: '+esc(cu):'')+' | الدفع: '+esc($('#pay').value)+'</div>'
-  +'<table><tr><th>الصنف</th><th>الكمية</th><th>السعر</th><th>المجموع</th></tr>'+(rows.map(i=>'<tr><td>'+esc(i.name)+'</td><td>'+inv[i.id]+'</td><td>'+f(i.price)+'</td><td>'+f(i.price*inv[i.id])+'</td></tr>').join('')||'<tr><td colspan="4">اختر أصنافاً من القائمة أعلاه</td></tr>')+'</table>'
-  +(ds?'<div class="flex justify-between text-sm mt-2"><span>المجموع</span><span>'+f(sub)+'</span></div><div class="flex justify-between text-sm"><span>الخصم</span><span>- '+f(ds)+'</span></div>':'')
-  +'<div class="flex justify-between font-extrabold text-lg mt-2 p-2 rounded-lg" style="background:#fff7d6"><span>الإجمالي</span><span>'+f(tot)+'</span></div>'
-  +'<div class="text-center mt-3"><div id="iqr"></div><div class="text-xs mt-1">شكراً لزيارتكم! امسح الكود لتصفح المنيو</div></div>'
-  +'<div class="wm"><b>تم الإنشاء مجاناً عبر نظام SmartPOS</b> | صمم منيوك أو اطلب نظام الكاشير الكامل: @SMAR.TPOS - واتساب: 785619054<div><a href="'+WA+'" target="_blank" rel="noopener">واتساب 785619054</a><a href="'+IG+'" target="_blank" rel="noopener">إنستغرام @SMAR.TPOS</a></div></div>';
-  const L2=menuLink();if(L2.u)qr($('#iqr'),L2.u,190);else $('#iqr').style.display='none';
-}
-function rList(){
-  $('#list').innerHTML=cur().items.map(i=>'<div class="flex flex-wrap items-center gap-2 mb-2 p-2 rounded-xl bg-black/30" data-id="'+i.id+'"><input class="in" style="width:50px;text-align:center" data-k="icon" value="'+esc(i.icon)+'"><input class="in" style="flex:1;min-width:110px" data-k="name" value="'+esc(i.name)+'"><input class="in" style="width:92px" data-k="cat" value="'+esc(i.cat)+'"><input class="in" style="width:82px" type="number" min="0" inputmode="numeric" data-k="price" value="'+i.price+'"><button class="x" data-a="del" data-i="'+i.id+'">🗑</button></div>').join('');
-}
-function rShops(){$('#shops').innerHTML=DB.shops.map(s=>'<button class="pill'+(s.id==DB.cur?' on':'')+'" data-a="shop" data-i="'+s.id+'">'+esc(s.emo||'🍽️')+' '+esc(s.name||'بدون اسم')+'</button>').join('')}
-function fill(){const s=cur();$('#sn').value=s.name;$('#sp').value=s.phone;$('#sc').value=s.cur;$('#sw').value=s.wifi;$('#se').value=s.emo;$('#su').value=s.logoUrl;$('#site').value=DB.site||DEF_SITE;$('#gh').value=DB.gh||DEF_GH;$('#tk').value=DB.tk||'';$('#site').placeholder=siteBase()}
-function rAll(){for(const fn of [rMenu,rCard,rInv])try{fn()}catch(e){console.error(e)}}
-function switchTo(id){DB.cur=id;inv={};ST_S={cart:{},cat:'الكل',q:''};fill();rShops();rList();rAll();save()}
-function chg(){const s=cur();if(s.pub)s.dirty=1;save()}
-
-async function publishMenu(){
-  const s=cur(),b=siteBase();
-  const gh=(DB.gh||DEF_GH).trim().replace(/^https?:\/\/github\.com\//i,'').replace(/\/+$/,''),tk=(DB.tk||'').trim();
-  if(!b){toast('ضع رابط موقعك أولاً');return}
-  if(!/^[\w.-]+\/[\w.-]+$/.test(gh)||!tk){toast('أدخل المستودع owner/repo والتوكن أولاً');return}
-  if(!s.pid)s.pid=Math.random().toString(36).slice(2,8);
-  const body=JSON.stringify({name:s.name,phone:s.phone,cur:s.cur,emo:s.emo,wifi:s.wifi,logo:s.logo,logoUrl:s.logoUrl,items:s.items});
-  const b64=btoa(unescape(encodeURIComponent(body)));
-  const url='https://api.github.com/repos/'+gh+'/contents/menus/'+s.pid+'.json';
-  const H={Authorization:'Bearer '+tk,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};
-  const btn=$('#pubb');btn.disabled=true;toast('جارٍ النشر…');
-  try{
-    let sha;const g=await fetch(url,{headers:H});
-    if(g.ok)sha=(await g.json()).sha;else if(g.status!=404)throw g.status;
-    const r=await fetch(url,{method:'PUT',headers:Object.assign({'Content-Type':'application/json'},H),body:JSON.stringify({message:'menu '+s.pid,content:b64,sha:sha})});
-    if(!r.ok)throw r.status;
-    s.pub=Date.now();s.dirty=0;save();rCard();rInv();toast('تم النشر ✓ يظهر للزبائن خلال دقيقة تقريباً');
-  }catch(e){toast(e==401||e==403?'التوكن غير صالح أو بلا صلاحية Contents':e==404?'المستودع غير موجود':'تعذر النشر، تحقق من الإنترنت والبيانات')}
-  btn.disabled=false;
-}
-async function getMenu(id){
-  const base=location.href.split('#')[0].split('?')[0].replace(/[^\/]*$/,''),c=[base+'menus/'+id+'.json'];
-  const m=location.hostname.match(/^([\w-]+)\.github\.io$/),repo=location.pathname.split('/')[1]||location.hostname;
-  if(m)for(const br of ['main','master'])c.push('https://raw.githubusercontent.com/'+m[1]+'/'+repo+'/'+br+'/menus/'+id+'.json');
-  for(const x of c){try{const r=await fetch(x+'?t='+Date.now(),{cache:'no-store'});if(r.ok){const j=await r.json();if(j&&Array.isArray(j.items))return j}}catch(e){}}
-  return null;
-}
-async function pr(sel,sz){
-  const r=$('#pr');r.innerHTML=$(sel).outerHTML;$('#pg').textContent='@page{size:'+sz+';margin:4mm}';
-  await Promise.all([...r.querySelectorAll('img')].map(i=>i.decode?i.decode().catch(()=>0):0));
-  setTimeout(()=>{try{window.print()}catch(e){}},60);
-  if(sel=='#inv'){cur().invN++;save();setTimeout(rInv,600)}
-}
-async function saveImg(sel,name){
-  const ov=$('#ov'),im=$('#ovi'),ms=$('#ovm');
-  im.removeAttribute('src');ms.textContent='جارٍ تجهيز الصورة…';ov.classList.add('on');
-  try{const c=await html2canvas($(sel),{scale:2,backgroundColor:null,useCORS:true});IMG={c,name};im.src=c.toDataURL('image/png');ms.textContent='اضغط مطولاً على الصورة لحفظها أو مشاركتها، ثم اطبعها';if(sel=='#inv'){cur().invN++;save();rInv()}}
-  catch(e){ms.textContent='تعذر إنشاء الصورة هنا. جرّب من المتصفح مباشرة.'}
-}
-function copyText(t){
-  const ok=()=>toast('تم النسخ ✓');
-  const fb=()=>{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){toast('تعذر النسخ، انسخه يدوياً')}a.remove()};
-  try{navigator.clipboard.writeText(t).then(ok,fb)}catch(e){fb()}
-}
-function lfH(e){
-  const fl=e.target.files[0],st=$('#ls'),er=()=>{st.textContent='تعذر قراءة الصورة، جرّب غيرها أو استخدم الإيموجي'};
-  if(!fl)return;
-  st.textContent='جارٍ الرفع…';
-  const r=new FileReader();r.onerror=er;
-  r.onload=()=>{const im=new Image();im.onerror=er;im.onload=()=>{const c=document.createElement('canvas'),k=Math.min(1,160/Math.max(im.width,im.height));c.width=Math.max(1,Math.round(im.width*k));c.height=Math.max(1,Math.round(im.height*k));c.getContext('2d').drawImage(im,0,0,c.width,c.height);cur().logo=c.toDataURL('image/png');chg();st.textContent='✓ تم رفع الشعار — يظهر في البطاقة والفاتورة.';toast('تم رفع شعار المحل ✓');rAll()};im.src=r.result};
-  r.readAsDataURL(fl);e.target.value='';
-}
-const gd=el=>el.dataset.src=='c'?CUST:cur(),gs=el=>el.dataset.src=='c'?ST_C:ST_S;
-const A={
-  add(){const s=cur(),id=Math.max(0,...s.items.map(i=>i.id))+1;s.items.push({id,icon:'🍴',name:'صنف جديد',cat:s.items.length?s.items[s.items.length-1].cat:'عام',price:1000});chg();rList();rAll();toast('تمت إضافة صنف ✓');const l=$('#list');l.scrollTop=l.scrollHeight;const q=l.querySelector('[data-id]:last-child [data-k=name]');if(q){q.focus();q.select()}},
-  del(b){const s=cur(),id=+b.dataset.i;s.items=s.items.filter(i=>i.id!=id);delete ST_S.cart[id];delete inv[id];chg();rList();rAll();toast('تم حذف الصنف')},
-  rst(){const s=cur(),k=s.id,t=mkShop('cafe');Object.assign(s,t,{id:k});inv={};ST_S={cart:{},cat:'الكل',q:''};chg();fill();rShops();rList();rAll();toast('تمت إعادة البيانات التجريبية')},
-  shop(b){switchTo(b.dataset.i)},
-  pub(){publishMenu()},
-  newshop(b){const s=mkShop(b.dataset.v);DB.shops.push(s);switchTo(s.id);toast('تم إنشاء محل جديد مستقل ✓')},
-  delshop(){if(DB.shops.length<2){toast('لا يمكن حذف آخر محل');return}if(!arm){arm=1;toast('اضغط «حذف الحالي» مرة أخرى للتأكيد');setTimeout(()=>{arm=0},3000);return}arm=0;DB.shops=DB.shops.filter(s=>s.id!=DB.cur);switchTo(DB.shops[0].id);toast('تم حذف المحل')},
-  cat(b){const r=b.closest('.mv'),st=gs(r);st.cat=b.dataset.v;mvChips(r,gd(r),st);mvList(r,gd(r),st)},
-  addc(b){const r=b.closest('.mv'),st=gs(r),i=+b.dataset.i;st.cart[i]=(st.cart[i]||0)+1;mvList(r,gd(r),st)},
-  dec(b){const r=b.closest('.mv'),st=gs(r),i=+b.dataset.i;st.cart[i]=Math.max(0,(st.cart[i]||0)-1);mvList(r,gd(r),st)},
-  clrc(b){const r=b.closest('.mv'),st=gs(r);st.cart={};mvList(r,gd(r),st)},
-  ord(b){const r=b.closest('.mv'),D=gd(r);if(!waNum(D.phone)){toast('رقم واتساب المحل غير مضبوط');return}openUrl(orderURL(D,gs(r)));toast('جارٍ فتح واتساب…')},
-  wifi(b){copyText(gd(b.closest('.mv')).wifi)},
-  tab(b){$$('[data-a=tab]').forEach(x=>x.classList.toggle('on',x==b));$$('.pane').forEach(p=>{p.hidden=p.id!='p'+b.dataset.v})},
-  theme(){const s=cur();s.theme=(s.theme+1)%3;save();rCard()},
-  size(b){cur().size=b.dataset.v;save();rInv()},
-  iq(b){const i=+b.dataset.i;inv[i]=Math.max(0,(inv[i]||0)+(+b.dataset.v));rInv()},
-  print(b){const v=b.dataset.v;if(v=='#card'&&!menuLink().u){toast('ضع رابط موقعك أولاً ليظهر رمز QR');return}pr(v,v=='#inv'&&cur().size=='80'?'80mm auto':'A5')},
-  img(b){if(b.dataset.v=='#card'&&!menuLink().u){toast('ضع رابط موقعك أولاً ليظهر رمز QR');return}saveImg(b.dataset.v,b.dataset.n)},
-  cm(){CUST=cur();ST_C={cart:{},cat:'الكل',q:''};$('#cmode').dataset.pv='1';$('#cmode').classList.add('on');document.body.classList.add('pv');mvBuild($('#cmm'),CUST,ST_C,{pv:true,promo:true})},
-  closecm(){$('#cmode').classList.remove('on');document.body.classList.remove('pv');delete $('#cmode').dataset.pv},
-  ovx(){$('#ov').classList.remove('on')}
-};
-
-document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(b&&A[b.dataset.a]){e.preventDefault();try{A[b.dataset.a](b)}catch(x){console.error(x)}}});
-document.addEventListener('input',e=>{
-  const t=e.target,k=t.dataset.f;
-  if(t.dataset.sq){const r=t.closest('.mv'),st=gs(r);st.q=t.value;mvList(r,gd(r),st);return}
-  if(k){
-    if(k=='cust'||k=='pay'||k=='disc'){rInv();return}
-    if(k=='gh'||k=='tk'){DB[k]=t.value.trim();save();return}
-    if(k=='site'){DB.site=cleanSiteUrl(t.value);save();rCard();rInv();return}
-    const s=cur();s[k]=(k=='emo'&&!t.value)?'🍽️':t.value;chg();if(k=='name'||k=='emo')rShops();rAll();return;
+  } else {
+    activeShopId = shops[0].id;
   }
-  const r=t.closest('[data-id]');
-  if(r&&t.dataset.k){const it=cur().items.find(i=>i.id==r.dataset.id);if(it){it[t.dataset.k]=t.dataset.k=='price'?(+t.value||0):t.value;chg();rAll()}}
-});
-$('#lf').addEventListener('change',lfH);
-$$('[data-wa]').forEach(a=>{a.href=WA;a.target='_blank';a.rel='noopener'});
-$$('[data-ig]').forEach(a=>{a.href=IG;a.target='_blank';a.rel='noopener'});
-$$('[data-tilt]').forEach(el=>{
-  el.addEventListener('pointermove',e=>{if(e.pointerType=='touch')return;const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform='perspective(900px) rotateY('+x*14+'deg) rotateX('+(-y*14)+'deg)'});
-  el.addEventListener('pointerleave',()=>{el.style.transform=''});
-});
 
-const cv=$('#cv'),cx=cv.getContext('2d');let W,H,mx=-999,my=-999,sx=0,sy=0;const P=[];
-function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight}
-rs();addEventListener('resize',rs);
-addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY});
-for(let i=0;i<70;i++)P.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*1.8+.6});
-(function loop(){
-  cx.clearRect(0,0,W,H);
-  for(let i=0;i<P.length;i++){
-    const p=P[i],dx=p.x-mx,dy=p.y-my,d=Math.hypot(dx,dy)||1;
-    if(d<140){p.x+=dx/d*1.6;p.y+=dy/d*1.6}
-    p.x+=p.vx;p.y+=p.vy;
-    if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
-    for(let j=i+1;j<P.length;j++){const q=P[j],l=Math.hypot(p.x-q.x,p.y-q.y);if(l<100){cx.strokeStyle='rgba(212,175,55,'+(.16*(1-l/100))+')';cx.lineWidth=1;cx.beginPath();cx.moveTo(p.x,p.y);cx.lineTo(q.x,q.y);cx.stroke()}}
-    cx.beginPath();cx.arc(p.x,p.y,p.r,0,7);cx.shadowBlur=8;cx.shadowColor='#D4AF37';cx.fillStyle=d<140?'#F59E0B':'rgba(212,175,55,.7)';cx.fill();cx.shadowBlur=0;
-  }
-  sx+=(mx-sx)*.1;sy+=(my-sy)*.1;
-  $('#spot').style.background='radial-gradient(520px circle at '+sx+'px '+sy+'px,rgba(212,175,55,.16),transparent 60%)';
-  requestAnimationFrame(loop);
-})();
+  const hostInp = document.getElementById('inpHostUrl');
+  if (hostInp) hostInp.value = customHostUrl;
 
-function showCust(D){
-  CUST=D;document.title=D.name||'منيو';
-  document.body.classList.add('cu');
-  $('#ld').hidden=true;$('#studio').hidden=true;$('#cbk').hidden=true;
-  $('#cmode').classList.add('on');
-  mvBuild($('#cmm'),D,ST_C,{pv:false,promo:true,home:location.href.split('#')[0].split('?')[0]});
-}
+  renderShopsSwitcher();
+  loadShopIntoEditor();
+  initNeuralBackground();
+  initTiltAndSpotlight();
 
-function checkRoute(){
-  const SID=(new URLSearchParams(location.search).get('s')||'').toLowerCase(),HS=location.hash;
-  let hashD=null;
-  if(HS.startsWith('#m')&&HS.length>10){try{hashD=unpack(HS.slice(2))}catch(e){}}
-  if(hashD){
-    showCust(hashD);
-  }else if(/^[a-z0-9]{4,12}$/.test(SID)){
-    $('#ld').hidden=false;$('#ld').textContent='جارٍ تحميل المنيو…';
-    getMenu(SID).then(D=>{if(D)showCust(D);else $('#ld').innerHTML='<div style="text-align:center;padding:20px;line-height:1.9">تعذر تحميل المنيو.<br><button class="btn" style="margin-top:14px" onclick="location.reload()">↻ تحديث</button></div>'});
-  }else{
-    $('#ld').hidden=true;$('#studio').hidden=false;
-    fill();rShops();rList();rAll();
+  // إن لم يكن للمحل رابط سحابي بعد، ننشئه في الخلفية
+  const current = getActiveShop();
+  if (current && !current.cloudUrl) {
+    syncCloudTelegraphMenu(false);
   }
 }
 
-window.addEventListener('hashchange',checkRoute);
-window.addEventListener('DOMContentLoaded',checkRoute);
+function getActiveShop() {
+  return shops.find(s => s.id === activeShopId) || shops[0];
+}
+
+function saveAllShops() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(shops));
+  } catch (e) {}
+  const badge = document.getElementById('saveStatusBadge');
+  if (badge) {
+    badge.innerHTML = '<i class="fa-solid fa-check-double"></i> تم الحفظ تلقائياً';
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toastNotif');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+/* =========================================================================
+   إدارة المحلات المستقلة
+   ========================================================================= */
+function renderShopsSwitcher() {
+  const bar = document.getElementById('shopsSwitcherBar');
+  if (!bar) return;
+  bar.innerHTML = shops.map(shop => `
+    <button onclick="switchShop('${shop.id}')" class="shop-pill ${shop.id === activeShopId ? 'active' : ''}">
+      <i class="fa-solid fa-utensils"></i>
+      <span>${escapeHtml(shop.name)}</span>
+      <span class="text-[10px] opacity-75">(${shop.items.length})</span>
+    </button>
+  `).join('');
+}
+
+function switchShop(id) {
+  activeShopId = id;
+  activeCategoryFilter = 'الكل';
+  customerCart = {};
+  renderShopsSwitcher();
+  loadShopIntoEditor();
+  const shop = getActiveShop();
+  if (shop && !shop.cloudUrl) syncCloudTelegraphMenu(false);
+}
+
+function createNewIndependentShop() {
+  const newName = prompt('أدخل اسم المطعم أو الكافيه الجديد:');
+  if (!newName || !newName.trim()) return;
+  const newId = 'S' + (101 + shops.length + Math.floor(Math.random() * 899));
+  const newShop = {
+    id: newId,
+    name: newName.trim(),
+    phone: '770000000',
+    wifi: '12345678',
+    currency: 'ر.ي',
+    welcome: `أهلاً بكم في منيو ${newName.trim()}`,
+    invoiceNo: 1,
+    tableNo: 'طاولة 1',
+    discount: 0,
+    cloudUrl: '',
+    items: [
+      { id: Date.now(), icon: '🍹', name: 'صنف تجريبي أول', price: 1500, category: 'القائمة الرئيسية', popular: true }
+    ],
+    invoiceCart: [
+      { id: Date.now(), name: 'صنف تجريبي أول', price: 1500, qty: 1 }
+    ]
+  };
+  shops.push(newShop);
+  activeShopId = newId;
+  customerCart = {};
+  saveAllShops();
+  renderShopsSwitcher();
+  loadShopIntoEditor();
+  syncCloudTelegraphMenu(true);
+  showToast(`تم إنشاء منيو وباركود مستقل لـ "${newShop.name}"`);
+}
+
+function deleteCurrentShop() {
+  if (shops.length <= 1) {
+    alert('يجب الإبقاء على مطعم واحد على الأقل في النظام.');
+    return;
+  }
+  const shop = getActiveShop();
+  if (!confirm(`هل أنت متأكد من حذف "${shop.name}"؟`)) return;
+  shops = shops.filter(s => s.id !== shop.id);
+  activeShopId = shops[0].id;
+  saveAllShops();
+  renderShopsSwitcher();
+  loadShopIntoEditor();
+  showToast('تم حذف المحل بنجاح');
+}
+
+/* =========================================================================
+   تحديث الحقول والأصناف
+   ========================================================================= */
+function loadShopIntoEditor() {
+  const shop = getActiveShop();
+  if (!shop) return;
+
+  document.getElementById('editorActiveShopTitle').textContent = shop.name;
+  document.getElementById('inpName').value = shop.name || '';
+  document.getElementById('inpPhone').value = shop.phone || '';
+  document.getElementById('inpWifi').value = shop.wifi || '';
+  document.getElementById('inpCurrency').value = shop.currency || 'ر.ي';
+  document.getElementById('inpWelcome').value = shop.welcome || '';
+  document.getElementById('inpInvoiceNo').value = shop.invoiceNo || 1;
+  document.getElementById('inpTableNo').value = shop.tableNo || 'طاولة 1';
+  document.getElementById('inpDiscount').value = shop.discount || 0;
+
+  renderEditorItems();
+  refreshAllPreviews();
+}
+
+function updateField(field, value) {
+  const shop = getActiveShop();
+  if (!shop) return;
+  shop[field] = value;
+  if (field === 'name') {
+    document.getElementById('editorActiveShopTitle').textContent = value;
+    renderShopsSwitcher();
+  }
+  saveAllShops();
+  refreshAllPreviews();
+  scheduleCloudSync();
+}
+
+function updateHostUrl(val) {
+  customHostUrl = val.trim();
+  try { localStorage.setItem(HOST_URL_KEY, customHostUrl); } catch (e) {}
+  refreshAllPreviews();
+}
+
+function renderEditorItems() {
+  const shop = getActiveShop();
+  const list = document.getElementById('editorItemsList');
+  document.getElementById('itemsCountLabel').textContent = shop.items.length;
+
+  list.innerHTML = shop.items.map(item => `
+    <div class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-white/5 border border-yellow-500/20 hover:border-yellow-500/50 transition">
+      <div class="flex items-center gap-2.5 min-w-0 cursor-pointer flex-1" onclick="addItemToInvoice(${item.id})" title="اضغط لإضافته للفاتورة">
+        <span class="w-9 h-9 rounded-xl bg-yellow-500/15 border border-yellow-500/30 flex items-center justify-center text-lg flex-shrink-0">${escapeHtml(item.icon)}</span>
+        <div class="min-w-0">
+          <div class="text-xs font-extrabold text-white truncate">${escapeHtml(item.name)}</div>
+          <div class="text-[10px] text-gray-400">${escapeHtml(item.category)} • <b class="text-yellow-400">${Number(item.price).toLocaleString()} ${escapeHtml(shop.currency)}</b></div>
+        </div>
+      </div>
+      <div class="flex items-center gap-1">
+        <button onclick="addItemToInvoice(${item.id})" class="px-2 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 text-[11px] font-bold hover:bg-emerald-500/30" title="إضافة للفاتورة">
+          + فاتورة
+        </button>
+        <button onclick="removeMenuItem(${item.id})" class="w-7 h-7 rounded-lg bg-red-500/15 text-red-300 hover:bg-red-500/30 text-xs flex items-center justify-center" title="حذف الصنف">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addNewMenuItem() {
+  const shop = getActiveShop();
+  const icon = document.getElementById('newItemIcon').value.trim() || '🍽️';
+  const name = document.getElementById('newItemName').value.trim();
+  const price = parseFloat(document.getElementById('newItemPrice').value) || 0;
+  const category = document.getElementById('newItemCategory').value.trim() || 'الأصناف الرئيسية';
+
+  if (!name || price <= 0) {
+    showToast('يرجى إدخال اسم الصنف والسعر بشكل صحيح');
+    return;
+  }
+
+  const newItem = { id: Date.now(), icon, name, price, category, popular: true };
+  shop.items.push(newItem);
+  document.getElementById('newItemName').value = '';
+  document.getElementById('newItemPrice').value = '';
+
+  saveAllShops();
+  renderShopsSwitcher();
+  renderEditorItems();
+  refreshAllPreviews();
+  scheduleCloudSync();
+  showToast(`تمت إضافة "${name}" إلى المنيو`);
+}
+
+function removeMenuItem(id) {
+  const shop = getActiveShop();
+  shop.items = shop.items.filter(i => i.id !== id);
+  saveAllShops();
+  renderShopsSwitcher();
+  renderEditorItems();
+  refreshAllPreviews();
+  scheduleCloudSync();
+}
+
+/* =========================================================================
+   توليد رابط المنيو 3D المباشر + المزامنة السحابية المحسّنة (بدون كسر السطور)
+   ========================================================================= */
+function getEffective3DUrl(shop) {
+  const payload = encodeShopPayload(shop);
+  if (customHostUrl && /^https?:\/\//i.test(customHostUrl)) {
+    const base = customHostUrl.split('?')[0];
+    return `${base}?s=${encodeURIComponent(payload)}`;
+  }
+  if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+    const base = window.location.origin + window.location.pathname;
+    return `${base}?s=${encodeURIComponent(payload)}`;
+  }
+  return '';
+}
+
+function getActiveQRTargetUrl(shop) {
+  const direct3d = getEffective3DUrl(shop);
+  if (direct3d) return direct3d;
+  if (shop.cloudUrl) return shop.cloudUrl;
+  const cleanPhone = (shop.phone || SMARTPOS_DISPLAY_PHONE).replace(/\D/g, '');
+  const waPhone = cleanPhone.startsWith('967') ? cleanPhone : `967${cleanPhone}`;
+  return `https://wa.me/${waPhone}?text=${encodeURIComponent('مرحباً ' + shop.name + '، أرغب بالاطلاع على المنيو والطلب')}`;
+}
+
+function scheduleCloudSync() {
+  if (cloudSyncTimer) clearTimeout(cloudSyncTimer);
+  cloudSyncTimer = setTimeout(() => syncCloudTelegraphMenu(false), 1200);
+}
+
+async function syncCloudTelegraphMenu(manualNotify = false) {
+  const shop = getActiveShop();
+  if (!shop) return;
+
+  const btn = document.getElementById('btnCloudSync');
+  if (btn && manualNotify) {
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري التحديث...';
+  }
+
+  try {
+    let token = localStorage.getItem('SMARTPOS_TG_TOKEN');
+    if (!token) {
+      const accRes = await fetch('https://api.telegra.ph/createAccount?short_name=SmartPOS3D&author_name=' + encodeURIComponent('نظام SmartPOS الذكي | 785619054'));
+      const accData = await accRes.json();
+      if (accData && accData.ok && accData.result.access_token) {
+        token = accData.result.access_token;
+        localStorage.setItem('SMARTPOS_TG_TOKEN', token);
+      }
+    }
+
+    const cleanShopPhone = (shop.phone || '').replace(/\D/g, '');
+    const waShopPhone = cleanShopPhone.startsWith('967') ? cleanShopPhone : `967${cleanShopPhone}`;
+    const direct3dLink = getEffective3DUrl(shop);
+
+    const nodes = [];
+
+    // ترويسة منسقة ونظيفة
+    nodes.push({
+      tag: 'blockquote',
+      children: [
+        `✨ ${shop.welcome || ('أهلاً بكم في منيو ' + shop.name)}\n`,
+        `📞 للطلب والتواصل المباشر: ${shop.phone || '-'}\n`,
+        `📶 رمز الواي فاي المجاني (Wi-Fi): ${shop.wifi || '-'}`
+      ]
+    });
+
+    // إذا توفر رابط المنيو 3D التفاعلي نضعه في زر بارز بأعلى الصفحة
+    if (direct3dLink) {
+      nodes.push({
+        tag: 'p',
+        children: [
+          {
+            tag: 'a',
+            attrs: { href: direct3dLink },
+            children: ['🌟 اضغط هنا لفتح المنيو التفاعلي 3D الكامل مع سلة الطلبات 🌟']
+          }
+        ]
+      });
+    }
+
+    // تجميع الأصناف حسب القسم بدون كسر السطر في الشاشات الصغيرة
+    const categories = {};
+    shop.items.forEach(item => {
+      const cat = item.category || 'الأصناف الرئيسية';
+      if (!categories[cat]) categories[cat] = [];
+      categories[cat].push(item);
+    });
+
+    Object.keys(categories).forEach(cat => {
+      nodes.push({ tag: 'h4', children: [`🍽️ قسم: ${cat}`] });
+      categories[cat].forEach(item => {
+        const formattedPrice = `${Number(item.price).toLocaleString()} ${shop.currency}`;
+        const waItemLink = `https://wa.me/${waShopPhone}?text=${encodeURIComponent(`مرحباً ${shop.name}، أود طلب:\n• ${item.name} (${formattedPrice})`)}`;
+
+        // وضع الاسم والسعر في سطر متماسك بدون الفاصل العريض الذي يكسر السطر
+        nodes.push({
+          tag: 'p',
+          children: [
+            { tag: 'b', children: [`${item.icon} ${item.name} • [${formattedPrice}] 🔥`] },
+            { tag: 'br' },
+            {
+              tag: 'a',
+              attrs: { href: waItemLink },
+              children: [`🛒 اضغط هنا لطلب (${item.name}) عبر واتساب`]
+            }
+          ]
+        });
+      });
+    });
+
+    // زر طلب مجمع في أسفل المنيو
+    const allOrderWa = `https://wa.me/${waShopPhone}?text=${encodeURIComponent(`مرحباً ${shop.name}، أود إرسال طلبي من المنيو الرقمي:`)}`;
+    nodes.push({ tag: 'hr' });
+    nodes.push({
+      tag: 'p',
+      children: [
+        {
+          tag: 'a',
+          attrs: { href: allOrderWa },
+          children: ['🛍️ اضغط هنا لإرسال طلب متعدد الأصناف مباشرة عبر واتساب']
+        }
+      ]
+    });
+
+    // بطاقة حقوق SmartPOS بدون تداخل أقواس عربي/إنجليزي
+    const sysWa = `https://wa.me/${SMARTPOS_PHONE}?text=${encodeURIComponent('مرحباً، شاهدت منيو SmartPOS وأرغب بطلب النظام لمحلي')}`;
+    nodes.push({
+      tag: 'aside',
+      children: [
+        `⚡ يعمل بواسطة نظام SmartPOS 3D للكاشير والمنيو الذكي\n`,
+        {
+          tag: 'a',
+          attrs: { href: sysWa },
+          children: [`📲 لطلب النظام لمطعمك أو كافيهك تواصل واتساب: ${SMARTPOS_DISPLAY_PHONE} | انستقرام: SMAR.TPOS@`]
+        }
+      ]
+    });
+
+    const formData = new FormData();
+    formData.append('access_token', token);
+    formData.append('title', `منيو ${shop.name} | قائمة الأصناف والأسعار`);
+    formData.append('author_name', `نظام SmartPOS الذكي | ${SMARTPOS_DISPLAY_PHONE}`);
+    formData.append('content', JSON.stringify(nodes));
+    formData.append('return_content', 'false');
+
+    const res = await fetch('https://api.telegra.ph/createPage', { method: 'POST', body: formData });
+    const data = await res.json();
+    if (data && data.ok && data.result && data.result.url) {
+      shop.cloudUrl = data.result.url;
+      saveAllShops();
+      refreshAllPreviews();
+      if (manualNotify) showToast('تم تحديث رابط الباركود السحابي بنجاح');
+    }
+  } catch (err) {
+    if (manualNotify) showToast('تم اعتماد رابط الباركود المباشر');
+  } finally {
+    if (btn && manualNotify) {
+      btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> <span>تحديث الرابط السحابي</span>';
+    }
+  }
+}
+
+/* =========================================================================
+   بناء واجهة المنيو التفاعلي 3D (داخل الآيفون + شاشة الزبون الكاملة)
+   ========================================================================= */
+function buildInteractive3DMenuHTML(shop) {
+  const categories = ['الكل', ...new Set(shop.items.map(i => i.category || 'عام'))];
+  const filtered = activeCategoryFilter === 'الكل'
+    ? shop.items
+    : shop.items.filter(i => (i.category || 'عام') === activeCategoryFilter);
+
+  // حساب سلة الزبون
+  let totalQty = 0;
+  let totalAmount = 0;
+  shop.items.forEach(item => {
+    const q = customerCart[item.id] || 0;
+    if (q > 0) {
+      totalQty += q;
+      totalAmount += q * Number(item.price);
+    }
+  });
+
+  return `
+    <!-- بطاقة الترويسة للمطعم -->
+    <div class="p-3.5 rounded-3xl bg-gradient-to-br from-yellow-500/20 via-amber-500/5 to-black border border-yellow-500/40 mb-3 text-center shadow-lg">
+      <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-[10px] font-bold mb-1">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+        <span>منيو تفاعلي ثلاثي الأبعاد 3D</span>
+      </div>
+      <h2 class="text-lg font-black gold-gradient-text m-0">${escapeHtml(shop.name)}</h2>
+      <p class="text-[11px] text-gray-300 mt-0.5 mb-2.5">${escapeHtml(shop.welcome || '')}</p>
+
+      <div class="grid grid-cols-2 gap-1.5 text-[11px]">
+        <a href="tel:${escapeHtml(shop.phone)}" class="py-1.5 px-2 rounded-xl bg-black/60 border border-yellow-500/30 text-yellow-300 font-bold flex items-center justify-center gap-1.5 no-underline">
+          <i class="fa-solid fa-phone"></i>
+          <span dir="ltr">${escapeHtml(shop.phone)}</span>
+        </a>
+        <button onclick="copyShopWifi('${escapeHtml(shop.wifi)}')" class="py-1.5 px-2 rounded-xl bg-black/60 border border-emerald-500/30 text-emerald-300 font-bold flex items-center justify-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-wifi"></i>
+          <span>نسخ Wi-Fi: ${escapeHtml(shop.wifi)}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- شريط الأقسام -->
+    <div class="flex items-center gap-1.5 overflow-x-auto pb-2 mb-2.5 scrollbar-none">
+      ${categories.map(cat => `
+        <button onclick="setCustomerCategory('${escapeHtml(cat)}')" class="px-3 py-1.5 rounded-xl text-[11px] font-extrabold whitespace-nowrap transition ${
+          activeCategoryFilter === cat
+            ? 'bg-gradient-to-r from-yellow-300 to-amber-500 text-black shadow-md'
+            : 'bg-white/5 text-gray-300 border border-yellow-500/25'
+        }">
+          ${escapeHtml(cat)}
+        </button>
+      `).join('')}
+    </div>
+
+    <!-- بطاقات الأصناف الثلاثية الأبعاد -->
+    <div class="space-y-2.5">
+      ${filtered.map(item => {
+        const qty = customerCart[item.id] || 0;
+        return `
+          <div class="menu-item-3d">
+            <div class="flex items-center gap-3">
+              <div class="icon-pedestal">${escapeHtml(item.icon)}</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1">
+                  <h4 class="text-xs sm:text-sm font-black text-white m-0 truncate">${escapeHtml(item.name)}</h4>
+                  <span class="text-xs">🔥</span>
+                </div>
+                <div class="text-[10px] text-gray-400 mb-1">${escapeHtml(item.category)}</div>
+                <div class="text-xs font-black text-yellow-400">
+                  ${Number(item.price).toLocaleString()} <span class="text-[10px]">${escapeHtml(shop.currency)}</span>
+                </div>
+              </div>
+
+              <!-- أزرار التحكم بالكمية في السلة -->
+              <div class="flex flex-col items-end gap-1.5">
+                ${qty === 0 ? `
+                  <button onclick="changeCustomerCart(${item.id}, 1)" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-yellow-300 to-amber-500 text-black font-black text-[11px] shadow-md flex items-center gap-1">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    <span>إضافة</span>
+                  </button>
+                ` : `
+                  <div class="flex items-center gap-1.5 bg-black/70 border border-yellow-500/50 rounded-xl px-1.5 py-1">
+                    <button onclick="changeCustomerCart(${item.id}, -1)" class="w-6 h-6 rounded-lg bg-red-500/20 text-red-300 font-black text-xs">-</button>
+                    <span class="text-xs font-black text-yellow-300 px-1">${qty}</span>
+                    <button onclick="changeCustomerCart(${item.id}, 1)" class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-300 font-black text-xs">+</button>
+                  </div>
+                `}
+                <button onclick="orderSingleItemWhatsApp(${item.id})" class="text-[10px] text-emerald-400 hover:underline font-bold flex items-center gap-1">
+                  <i class="fa-brands fa-whatsapp"></i> طلب فوري
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+
+    <!-- سلة الطلبات المجمعة للزبون -->
+    ${totalQty > 0 ? `
+      <div class="mt-4 p-3.5 rounded-2xl bg-gradient-to-r from-emerald-950/95 via-slate-900/95 to-emerald-950/95 border-2 border-emerald-400/60 shadow-2xl space-y-2.5">
+        <div class="flex items-center justify-between text-xs font-black">
+          <span class="text-emerald-300"><i class="fa-solid fa-bag-shopping"></i> سلة طلباتك (${totalQty} أصناف)</span>
+          <span class="text-yellow-300 text-sm">${totalAmount.toLocaleString()} ${escapeHtml(shop.currency)}</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-1.5">
+          <input placeholder="رقم الطاولة أو العنوان" value="${escapeHtml(customerTableInput)}" oninput="customerTableInput = this.value" class="luxury-input !py-1.5 !px-2.5 !text-xs">
+          <select onchange="customerOrderType = this.value" class="luxury-input !py-1.5 !px-2 !text-xs">
+            <option value="داخل المحل (طاولة)" ${customerOrderType.includes('طاولة') ? 'selected' : ''}>داخل المحل (طاولة)</option>
+            <option value="طلب سفري (استلام)" ${customerOrderType.includes('سفري') ? 'selected' : ''}>طلب سفري</option>
+            <option value="توصيل للمنزل" ${customerOrderType.includes('توصيل') ? 'selected' : ''}>توصيل</option>
+          </select>
+        </div>
+
+        <button onclick="sendCustomerCartWhatsApp()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-400 to-green-500 text-black font-black text-xs shadow-lg flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-base"></i>
+          <span>إرسال الطلب المتكامل عبر واتساب الآن</span>
+        </button>
+      </div>
+    ` : ''}
+
+    <!-- بطاقة التسويق الفيروسي لنظام SmartPOS -->
+    <div class="smartpos-viral-card">
+      <div class="text-[10px] font-extrabold text-yellow-300 mb-0.5">⚡ هل تمتلك مطعماً أو كافيه؟</div>
+      <div class="text-xs font-black text-white mb-2">
+        احصل على نظام الكاشير والمنيو التفاعلي 3D من <span class="text-yellow-400">SmartPOS</span>
+      </div>
+      <div class="flex items-center justify-center gap-2">
+        <a href="https://wa.me/${SMARTPOS_PHONE}?text=${encodeURIComponent('مرحباً، أعجبني منيو 3D وأرغب بطلب نظام SmartPOS لمحلي')}" target="_blank" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-yellow-300 to-amber-500 text-black font-black text-[11px] no-underline flex items-center gap-1">
+          <i class="fa-brands fa-whatsapp"></i>
+          <span>واتساب: ${SMARTPOS_DISPLAY_PHONE}</span>
+        </a>
+        <a href="https://instagram.com/SMAR.TPOS" target="_blank" class="px-2.5 py-1.5 rounded-xl bg-white/10 text-yellow-300 font-bold text-[11px] no-underline" dir="ltr">
+          ${SMARTPOS_IG}
+        </a>
+      </div>
+    </div>
+  `;
+}
+
+function setCustomerCategory(cat) {
+  activeCategoryFilter = cat;
+  refreshAllPreviews();
+}
+
+function changeCustomerCart(itemId, delta) {
+  const current = customerCart[itemId] || 0;
+  const next = Math.max(0, current + delta);
+  if (next === 0) delete customerCart[itemId];
+  else customerCart[itemId] = next;
+  refreshAllPreviews();
+}
+
+function copyShopWifi(wifi) {
+  if (!wifi) return;
+  navigator.clipboard?.writeText(wifi);
+  showToast(`تم نسخ رمز الواي فاي: ${wifi}`);
+}
+
+function orderSingleItemWhatsApp(itemId) {
+  const shop = getActiveShop();
+  const item = shop.items.find(i => i.id === itemId);
+  if (!item) return;
+  const cleanPhone = (shop.phone || '').replace(/\D/g, '');
+  const waPhone = cleanPhone.startsWith('967') ? cleanPhone : `967${cleanPhone}`;
+  const text = `مرحباً *${shop.name}* ✨\nأود طلب:\n• *${item.name}* — [${Number(item.price).toLocaleString()} ${shop.currency}]`;
+  window.open(`https://wa.me/${waPhone}?text=${encodeURIComponent(text)}`, '_blank');
+}
+
+function sendCustomerCartWhatsApp() {
+  const shop = getActiveShop();
+  const lines = [];
+  let total = 0;
+
+  shop.items.forEach(item => {
+    const q = customerCart[item.id] || 0;
+    if (q > 0) {
+      const sub = q * Number(item.price);
+      total += sub;
+      lines.push(`• ${item.icon} *${item.name}* × ${q} = ${sub.toLocaleString()} ${shop.currency}`);
+    }
+  });
+
+  if (!lines.length) return;
+  const cleanPhone = (shop.phone || '').replace(/\D/g, '');
+  const waPhone = cleanPhone.startsWith('967') ? cleanPhone : `967${cleanPhone}`;
+  const msg = [
+    `مرحباً *${shop.name}* 🌟`,
+    `طلب جديد من *المنيو التفاعلي 3D*:`,
+    `────────────────`,
+    ...lines,
+    `────────────────`,
+    `💰 *الإجمالي:* ${total.toLocaleString()} ${shop.currency}`,
+    `📍 *نوع الطلب:* ${customerOrderType}`,
+    customerTableInput ? `🪑 *الطاولة / العنوان:* ${customerTableInput}` : ''
+  ].filter(Boolean).join('\n');
+
+  window.open(`https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+/* =========================================================================
+   تحديث الباركود، ستاند الطاولة، والفاتورة الحرارية / A5
+   ========================================================================= */
+function generateQRDataURL(text, size = 500) {
+  const qr = new QRious({
+    value: text,
+    size: size,
+    level: 'M',
+    background: '#FFFFFF',
+    foreground: '#000000',
+    padding: 0
+  });
+  return qr.toDataURL('image/png');
+}
+
+function refreshAllPreviews() {
+  const shop = getActiveShop();
+  if (!shop) return;
+
+  // 1. تحديث المنيو 3D في الجوال وفي شاشة الزبون الكاملة
+  const menuHtml = buildInteractive3DMenuHTML(shop);
+  const phoneMount = document.getElementById('phoneScreenMount');
+  if (phoneMount) phoneMount.innerHTML = menuHtml;
+
+  const fullMount = document.getElementById('customerFullMount');
+  if (fullMount) fullMount.innerHTML = menuHtml;
+
+  const topName = document.getElementById('topCustomerShopName');
+  if (topName) topName.textContent = shop.name;
+
+  const wifiFloat = document.getElementById('badgeWifiFloating');
+  if (wifiFloat) wifiFloat.textContent = `Wi-Fi: ${shop.wifi || 'مجاني'}`;
+
+  // 2. تحديث الرابط الفعال والباركود
+  const qrUrl = getActiveQRTargetUrl(shop);
+  const qrImgData = generateQRDataURL(qrUrl, 520);
+
+  const urlLabel = document.getElementById('activeQrUrlText');
+  if (urlLabel) urlLabel.textContent = qrUrl;
+
+  const modeBadge = document.getElementById('qrModeIndicator');
+  if (modeBadge) {
+    if (getEffective3DUrl(shop)) {
+      modeBadge.textContent = 'يفتح المنيو 3D مباشرة';
+    } else if (shop.cloudUrl) {
+      modeBadge.textContent = 'منيو سحابي مباشر';
+    } else {
+      modeBadge.textContent = 'جاهز للمسح';
+    }
+  }
+
+  // 3. تحديث ستاند الطاولة
+  document.getElementById('tentShopName').textContent = shop.name;
+  document.getElementById('tentWelcome').textContent = shop.welcome || '';
+  document.getElementById('tentPhone').textContent = shop.phone || '';
+  document.getElementById('tentWifi').textContent = shop.wifi || '';
+  document.getElementById('tentQrImg').src = qrImgData;
+
+  // 4. تحديث الفاتورة
+  renderInvoicePreview(shop, qrImgData);
+}
+
+/* =========================================================================
+   إدارة الفاتورة الحرارية والضريبية (تبدأ من رقم 1)
+   ========================================================================= */
+function addItemToInvoice(itemId) {
+  const shop = getActiveShop();
+  const item = shop.items.find(i => i.id === itemId);
+  if (!item) return;
+  if (!Array.isArray(shop.invoiceCart)) shop.invoiceCart = [];
+
+  const existing = shop.invoiceCart.find(c => c.id === item.id);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    shop.invoiceCart.push({ id: item.id, name: item.name, price: Number(item.price), qty: 1 });
+  }
+  saveAllShops();
+  refreshAllPreviews();
+  showToast(`تمت إضافة "${item.name}" للفاتورة #${shop.invoiceNo}`);
+}
+
+function updateInvoiceItemQty(id, delta) {
+  const shop = getActiveShop();
+  const idx = shop.invoiceCart.findIndex(c => c.id === id);
+  if (idx === -1) return;
+  shop.invoiceCart[idx].qty += delta;
+  if (shop.invoiceCart[idx].qty <= 0) shop.invoiceCart.splice(idx, 1);
+  saveAllShops();
+  refreshAllPreviews();
+}
+
+function resetInvoiceNumberToOne() {
+  const shop = getActiveShop();
+  shop.invoiceNo = 1;
+  document.getElementById('inpInvoiceNo').value = 1;
+  saveAllShops();
+  refreshAllPreviews();
+  showToast('تم تصفير عداد الفواتير ليبدأ من رقم #1');
+}
+
+function nextInvoiceOrder() {
+  const shop = getActiveShop();
+  shop.invoiceNo = (Number(shop.invoiceNo) || 1) + 1;
+  shop.invoiceCart = [];
+  document.getElementById('inpInvoiceNo').value = shop.invoiceNo;
+  saveAllShops();
+  refreshAllPreviews();
+  showToast(`تم فتح فاتورة جديدة رقم #${shop.invoiceNo}`);
+}
+
+function renderInvoicePreview(shop, qrImgData) {
+  const sheet = document.getElementById('invoiceSheetElement');
+  if (!sheet) return;
+
+  const cart = Array.isArray(shop.invoiceCart) ? shop.invoiceCart : [];
+  const subtotal = cart.reduce((acc, c) => acc + (Number(c.price) * Number(c.qty)), 0);
+  const discount = Number(shop.discount) || 0;
+  const finalTotal = Math.max(0, subtotal - discount);
+  const nowStr = new Date().toLocaleString('ar-YE', { dateStyle: 'short', timeStyle: 'short' });
+
+  sheet.innerHTML = `
+    <div class="text-center border-b-2 border-dashed border-gray-300 pb-3 mb-3">
+      <div class="text-lg font-black text-gray-900">${escapeHtml(shop.name)}</div>
+      <div class="text-xs text-gray-600">${escapeHtml(shop.welcome || '')}</div>
+      <div class="text-xs font-bold text-gray-800 mt-1" dir="ltr">Tel: ${escapeHtml(shop.phone)} | Wi-Fi: ${escapeHtml(shop.wifi)}</div>
+    </div>
+
+    <div class="flex items-center justify-between text-xs font-bold bg-gray-100 px-3 py-2 rounded-lg mb-3 text-gray-900">
+      <span>فاتورة رقم: <b class="text-sm">#${shop.invoiceNo || 1}</b></span>
+      <span>${escapeHtml(shop.tableNo || 'طاولة 1')}</span>
+      <span class="text-[11px] text-gray-600">${nowStr}</span>
+    </div>
+
+    <table class="w-full text-xs border-collapse mb-3 text-gray-900">
+      <thead>
+        <tr class="border-b-2 border-gray-800 text-gray-900 font-black">
+          <th class="text-right py-1.5">الصنف</th>
+          <th class="text-center py-1.5">الكمية</th>
+          <th class="text-left py-1.5">الإجمالي</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${cart.length ? cart.map(c => `
+          <tr class="border-b border-gray-200">
+            <td class="py-1.5 font-bold">${escapeHtml(c.name)}</td>
+            <td class="py-1.5 text-center">
+              <span class="inline-flex items-center gap-1">
+                <button onclick="updateInvoiceItemQty(${c.id}, -1)" class="px-1.5 rounded bg-gray-200 text-gray-800 font-black print:hidden">-</button>
+                <b>${c.qty}</b>
+                <button onclick="updateInvoiceItemQty(${c.id}, 1)" class="px-1.5 rounded bg-gray-200 text-gray-800 font-black print:hidden">+</button>
+              </span>
+            </td>
+            <td class="py-1.5 text-left font-bold">${(c.price * c.qty).toLocaleString()} ${escapeHtml(shop.currency)}</td>
+          </tr>
+        `).join('') : `
+          <tr><td colspan="3" class="text-center py-4 text-gray-400">اضغط على أي صنف من القائمة لإضافته للفاتورة</td></tr>
+        `}
+      </tbody>
+    </table>
+
+    <div class="border-t-2 border-dashed border-gray-400 pt-2 space-y-1 text-xs text-gray-900">
+      <div class="flex justify-between">
+        <span>المجموع الفرعي:</span>
+        <b>${subtotal.toLocaleString()} ${escapeHtml(shop.currency)}</b>
+      </div>
+      ${discount > 0 ? `
+        <div class="flex justify-between text-red-600">
+          <span>الخصم:</span>
+          <b>- ${discount.toLocaleString()} ${escapeHtml(shop.currency)}</b>
+        </div>
+      ` : ''}
+      <div class="flex justify-between text-base font-black bg-yellow-100 px-2.5 py-1.5 rounded-lg border border-yellow-500">
+        <span>الإجمالي النهائي:</span>
+        <span>${finalTotal.toLocaleString()} ${escapeHtml(shop.currency)}</span>
+      </div>
+    </div>
+
+    <div class="mt-4 pt-3 border-t border-gray-300 text-center">
+      <div class="qr-box-full w-28 h-28 mx-auto mb-1.5 !p-1.5 !rounded-xl">
+        <img src="${qrImgData}" alt="Menu QR">
+      </div>
+      <div class="text-[11px] font-bold text-gray-700">امسح الباركود لفتح المنيو والطلب عبر واتساب</div>
+      <div class="text-[10px] text-gray-500 font-bold mt-1" dir="ltr">Powered by SmartPOS 3D | ${SMARTPOS_DISPLAY_PHONE} | ${SMARTPOS_IG}</div>
+    </div>
+  `;
+}
+
+/* =========================================================================
+   التبديل بين التبويبات، الطباعة في صفحة واحدة، واختبار الباركود
+   ========================================================================= */
+function switchStudioTab(tab) {
+  ['3d', 'tent', 'invoice'].forEach(t => {
+    const panel = document.getElementById('panel' + t.charAt(0).toUpperCase() + t.slice(1));
+    const btn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
+    if (panel) panel.classList.toggle('hidden', t !== tab);
+    if (btn) btn.classList.toggle('active', t === tab);
+  });
+}
+
+function setTentTheme(themeClass) {
+  const card = document.getElementById('tentCardElement');
+  if (!card) return;
+  card.className = `table-tent-card ${themeClass}`;
+}
+
+function setInvoiceFormat(fmt) {
+  invoiceFormat = fmt;
+  const sheet = document.getElementById('invoiceSheetElement');
+  document.getElementById('btnThermalMode').classList.toggle('btn-gold-solid', fmt === 'thermal');
+  document.getElementById('btnA5Mode').classList.toggle('btn-gold-solid', fmt === 'a5');
+  sheet.className = `invoice-sheet ${fmt === 'thermal' ? 'invoice-thermal' : 'invoice-a5'}`;
+}
+
+function printElement(type) {
+  const pageStyle = document.getElementById('pageSizeStyle');
+  const container = document.getElementById('printContainer');
+  if (type === 'tent') {
+    pageStyle.innerHTML = '@page { size: A5 portrait; margin: 5mm; }';
+    container.innerHTML = document.getElementById('tentPrintTarget').innerHTML;
+  } else {
+    pageStyle.innerHTML = invoiceFormat === 'thermal'
+      ? '@page { size: 80mm auto; margin: 2mm; }'
+      : '@page { size: A5 portrait; margin: 6mm; }';
+    container.innerHTML = document.getElementById('invoicePrintTarget').innerHTML;
+  }
+  window.print();
+}
+
+function openCustomerFullView(isDirectCustomerScan = false) {
+  refreshAllPreviews();
+  const view = document.getElementById('customerFullView');
+  const exitBtn = document.getElementById('exitCustomerBtn');
+  if (view) view.classList.add('active');
+  if (exitBtn) exitBtn.style.display = isDirectCustomerScan ? 'none' : 'inline-block';
+}
+
+function closeCustomerFullView() {
+  const view = document.getElementById('customerFullView');
+  if (view) view.classList.remove('active');
+}
+
+function openLiveQRLinkInBrowser() {
+  const shop = getActiveShop();
+  if (getEffective3DUrl(shop)) {
+    window.open(getEffective3DUrl(shop), '_blank');
+  } else {
+    openCustomerFullView(false);
+    showToast('هذه معاينة المنيو 3D؛ وعند رفع الملف على استضافة سيفتح الباركود هذه الشاشة مباشرة على جوال الزبون');
+  }
+}
+
+function copyActiveQRLink() {
+  const shop = getActiveShop();
+  const url = getActiveQRTargetUrl(shop);
+  navigator.clipboard?.writeText(url);
+  showToast('تم نسخ رابط الباركود الفعال');
+}
+
+function escapeHtml(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+/* =========================================================================
+   المؤثرات البصرية الثلاثية الأبعاد (Neural Gold Canvas + Tilt)
+   ========================================================================= */
+function initNeuralBackground() {
+  const canvas = document.getElementById('neuralCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [];
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  for (let i = 0; i < 42; i++) {
+    particles.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.45,
+      vy: (Math.random() - 0.5) * 0.45,
+      r: Math.random() * 2 + 1
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0 || p.x > w) p.vx *= -1;
+      if (p.y < 0 || p.y > h) p.vy *= -1;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(212, 175, 55, 0.45)';
+      ctx.fill();
+
+      for (let j = i + 1; j < particles.length; j++) {
+        const p2 = particles[j];
+        const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+        if (dist < 135) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = `rgba(212, 175, 55, ${0.12 * (1 - dist / 135)})`;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+function initTiltAndSpotlight() {
+  const spotlight = document.getElementById('mouseSpotlight');
+  window.addEventListener('mousemove', e => {
+    if (spotlight) {
+      spotlight.style.background = `radial-gradient(650px circle at ${e.clientX}px ${e.clientY}px, rgba(212, 175, 55, 0.14), rgba(245, 158, 11, 0.04) 40%, transparent 70%)`;
+    }
+    document.querySelectorAll('.luxury-glass').forEach(card => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--gx', `${e.clientX - rect.left}px`);
+      card.style.setProperty('--gy', `${e.clientY - rect.top}px`);
+    });
+  });
+
+  document.querySelectorAll('[data-tilt]').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const rect = el.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      el.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`;
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = 'rotateY(0deg) rotateX(0deg)';
+    });
+  });
+}
+
+window.addEventListener('DOMContentLoaded', initApp);
 </script>
 </body>
 </html>
